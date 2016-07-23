@@ -1,8 +1,15 @@
 #pragma once
+
+#include "Player.h"
+
 class City
 {
 public:
-	City();
+	Player player = Player();
+	static City* Instance();
 	~City();
+private:
+	static City *instance;
+	City();
 };
 

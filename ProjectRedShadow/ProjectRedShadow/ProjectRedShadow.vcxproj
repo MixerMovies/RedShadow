@@ -122,12 +122,14 @@
     <ClCompile Include="Gamewindow.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ObjModel.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="City.h" />
     <ClInclude Include="Gamewindow.h" />
     <ClInclude Include="ObjModel.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Texture.h" />
   </ItemGroup>

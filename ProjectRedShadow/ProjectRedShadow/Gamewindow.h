@@ -7,7 +7,7 @@ class Gamewindow
 public:
 	Gamewindow();
 	~Gamewindow();
-	void Setup();
+	void Setup(int, int);
 	void Display();
 };
 
