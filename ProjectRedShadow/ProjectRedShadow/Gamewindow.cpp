@@ -1,12 +1,15 @@
 #include "Gamewindow.h"
 #include "City.h"
 #include "ObjModel.h"
+#include "SoundTest.h"
 
-ObjModel *building;
+SoundTest test = SoundTest();
 
 Gamewindow::Gamewindow()
 {
-	building = new ObjModel("models/Library/library.obj");
+	City::Instance()->building = new ObjModel("models/Library/library.obj");
+	City::Instance()->music = test.LoadSound("Sound/OdeToJoy(Remix).wav");
+	City::Instance()->music->Play();
 }
 
 
@@ -36,7 +39,7 @@ void Gamewindow::Setup(int windowWidth, int windowHeight)
 void Gamewindow::Display()
 {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	building->draw();
+	City::Instance()->building->draw();
 	glFlush();
 	glutSwapBuffers();
 }

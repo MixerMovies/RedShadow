@@ -3,7 +3,7 @@
 #include "City.h"
 
 GLint gameWindowInt;
-Gamewindow gamewindow;
+Gamewindow* gamewindow;
 int windowWidth = 1920;
 int windowHeight = 1080;
 
@@ -33,8 +33,8 @@ void Idle()
 
 void Display()
 {
-	gamewindow.Setup(windowWidth, windowHeight);
-	gamewindow.Display();
+	gamewindow->Setup(windowWidth, windowHeight);
+	gamewindow->Display();
 }
 
 void Reshape(int WindowWidth, int WindowHeight)
@@ -75,7 +75,7 @@ void KeyEventUp(unsigned char key, int x, int y)
 	case 'd':
 		City::Instance()->player.turnRight(false);
 		break;
-	case'w':
+	case 'w':
 		City::Instance()->player.stop();
 		break;
 	case 's':
@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
 	glutSpecialFunc(SpecialKeyEvent);
 	Init();
 
-	gamewindow = Gamewindow();
+	gamewindow = new Gamewindow();
 	
 	City::Instance();
 
