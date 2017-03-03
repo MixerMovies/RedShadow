@@ -4,16 +4,16 @@
 #include "Sound.h"
 #include "ObjModel.h"
 
-class City
+class Space
 {
 public:
 	Player player = Player();
-	static City* Instance();
+	static Space* Instance();
 	Sound *music = nullptr;
 	ObjModel *building;
-	~City();
+	~Space();
 private:
-	static City *instance;
-	City();
+	static Space *instance;
+	Space();
 };
 

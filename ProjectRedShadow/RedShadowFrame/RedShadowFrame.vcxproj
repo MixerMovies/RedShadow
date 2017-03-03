@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{2AAC8FDD-F378-49C8-A3F7-45691681DD0D}</ProjectGuid>
-    <RootNamespace>ProjectRedShadow</RootNamespace>
+    <ProjectGuid>{20B69347-6867-4EAB-BFAF-F1CEBDCBD78B}</ProjectGuid>
+    <RootNamespace>RedShadowFrame</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -74,12 +74,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>freeglut/include</AdditionalIncludeDirectories>
     </ClCompile>
-    <Link>
-      <AdditionalLibraryDirectories>freeglut/lib</AdditionalLibraryDirectories>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -95,14 +90,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>freeglut/include; OpenAL/include</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>freeglut/lib; OpenAL/libs/Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -119,12 +110,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Gamewindow.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <ClInclude Include="..\ProjectRedShadow\ObjModel.h" />
+    <ClInclude Include="..\ProjectRedShadow\Sound.h" />
+    <ClInclude Include="..\ProjectRedShadow\SoundTest.h" />
+    <ClInclude Include="..\ProjectRedShadow\Space.h" />
+    <ClInclude Include="..\ProjectRedShadow\stb_image.h" />
+    <ClInclude Include="..\ProjectRedShadow\Texture.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Gamewindow.h" />
-    <ClInclude Include="Player.h" />
+    <ClCompile Include="..\ProjectRedShadow\ObjModel.cpp" />
+    <ClCompile Include="..\ProjectRedShadow\Player.cpp" />
+    <ClCompile Include="..\ProjectRedShadow\Sound.cpp" />
+    <ClCompile Include="..\ProjectRedShadow\SoundTest.cpp" />
+    <ClCompile Include="..\ProjectRedShadow\Space.cpp" />
+    <ClCompile Include="..\ProjectRedShadow\Texture.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
