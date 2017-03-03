@@ -1,5 +1,5 @@
 #include "Gamewindow.h"
-#include "City.h"
+#include "Space.h"
 #include "ObjModel.h"
 #include "SoundTest.h"
 
@@ -7,9 +7,9 @@ SoundTest test = SoundTest();
 
 Gamewindow::Gamewindow()
 {
-	City::Instance()->building = new ObjModel("models/Library/library.obj");
-	City::Instance()->music = test.LoadSound("Sound/OdeToJoy(Remix).wav");
-	City::Instance()->music->Play();
+	Space::Instance()->building = new ObjModel("models/Library/library.obj");
+	Space::Instance()->music = test.LoadSound("Sound/OdeToJoy(Remix).wav");
+	Space::Instance()->music->Play();
 }
 
 
@@ -30,16 +30,16 @@ void Gamewindow::Setup(int windowWidth, int windowHeight)
 	gluLookAt(0, 0, 0,
 		0, 0, 1,
 		0, 1, 0);
-	glRotatef(City::Instance()->player.rotation[0], 1, 0, 0);
-	glRotatef(City::Instance()->player.rotation[1], 0, 1, 0);
-	glRotatef(City::Instance()->player.rotation[2], 0, 0, 1);
-	glTranslatef(City::Instance()->player.position[0], City::Instance()->player.position[1], City::Instance()->player.position[2]);
+	glRotatef(Space::Instance()->player.rotation[0], 1, 0, 0);
+	glRotatef(Space::Instance()->player.rotation[1], 0, 1, 0);
+	glRotatef(Space::Instance()->player.rotation[2], 0, 0, 1);
+	glTranslatef(Space::Instance()->player.position[0], Space::Instance()->player.position[1], Space::Instance()->player.position[2]);
 }
 
 void Gamewindow::Display()
 {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	City::Instance()->building->draw();
+	Space::Instance()->building->draw();
 	glFlush();
 	glutSwapBuffers();
 }

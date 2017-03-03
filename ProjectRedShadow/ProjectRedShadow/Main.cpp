@@ -1,6 +1,6 @@
 #include "GL\freeglut.h"
 #include "Gamewindow.h"
-#include "City.h"
+#include "Space.h"
 
 GLint gameWindowInt;
 Gamewindow* gamewindow;
@@ -27,7 +27,7 @@ void Init()
 
 void Idle()
 {
-	City::Instance()->player.move();
+	Space::Instance()->player.move();
 	glutPostRedisplay();
 }
 
@@ -48,16 +48,16 @@ void KeyEvent(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case 'a':
-		City::Instance()->player.turnLeft(true);
+		Space::Instance()->player.turnLeft(true);
 		break;
 	case 'd':
-		City::Instance()->player.turnRight(true);
+		Space::Instance()->player.turnRight(true);
 		break;
 	case'w':
-		City::Instance()->player.goForward();
+		Space::Instance()->player.goForward();
 		break;
 	case 's':
-		City::Instance()->player.goBackward();
+		Space::Instance()->player.goBackward();
 		break;
 	case 27:
 		exit(0);
@@ -70,16 +70,16 @@ void KeyEventUp(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case 'a':
-		City::Instance()->player.turnLeft(false);
+		Space::Instance()->player.turnLeft(false);
 		break;
 	case 'd':
-		City::Instance()->player.turnRight(false);
+		Space::Instance()->player.turnRight(false);
 		break;
 	case 'w':
-		City::Instance()->player.stop();
+		Space::Instance()->player.stop();
 		break;
 	case 's':
-		City::Instance()->player.stop();
+		Space::Instance()->player.stop();
 		break;
 	}
 }
@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
 
 	gamewindow = new Gamewindow();
 	
-	City::Instance();
+	Space::Instance();
 
 	glutMainLoop();
 }

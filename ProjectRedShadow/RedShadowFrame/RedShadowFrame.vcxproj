@@ -18,6 +18,23 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ObjModel.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="SoundTest.h" />
+    <ClInclude Include="Space.h" />
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="Texture.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ObjModel.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="SoundTest.cpp" />
+    <ClCompile Include="Space.cpp" />
+    <ClCompile Include="Texture.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{20B69347-6867-4EAB-BFAF-F1CEBDCBD78B}</ProjectGuid>
     <RootNamespace>RedShadowFrame</RootNamespace>
@@ -31,7 +48,7 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -90,10 +107,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>freeglut/include;OpenAL/include;</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>freeglut/lib; OpenAL/libs/Win32</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -109,22 +129,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="..\ProjectRedShadow\ObjModel.h" />
-    <ClInclude Include="..\ProjectRedShadow\Sound.h" />
-    <ClInclude Include="..\ProjectRedShadow\SoundTest.h" />
-    <ClInclude Include="..\ProjectRedShadow\Space.h" />
-    <ClInclude Include="..\ProjectRedShadow\stb_image.h" />
-    <ClInclude Include="..\ProjectRedShadow\Texture.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\ProjectRedShadow\ObjModel.cpp" />
-    <ClCompile Include="..\ProjectRedShadow\Player.cpp" />
-    <ClCompile Include="..\ProjectRedShadow\Sound.cpp" />
-    <ClCompile Include="..\ProjectRedShadow\SoundTest.cpp" />
-    <ClCompile Include="..\ProjectRedShadow\Space.cpp" />
-    <ClCompile Include="..\ProjectRedShadow\Texture.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
