@@ -1,5 +1,6 @@
 #include "Shader.h"
 #include <iostream>
+#include <fstream>
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
@@ -62,5 +63,5 @@ void Shader::use()
 
 void Shader::setUniform(GLuint programId, const GLchar* value)
 {
-	modelViewUniform = glGetUniformLocation(programId, value);	//haal de uniform van modelViewMatrix op
+	int iets = glGetUniformLocation(programId, value);	//haal de uniform van modelViewMatrix op
 }
