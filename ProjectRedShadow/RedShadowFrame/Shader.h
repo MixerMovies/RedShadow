@@ -5,12 +5,15 @@
 
 class Shader
 {
+public:
 	Shader(std::string vsfile, std::string fsfile);
-	void checkShaderErrors(GLuint shaderId);
 	void link(void);
 	void use(void);
-	void setUniform(GLuint, const GLchar*);
-	virtual void bindAttributes() = 0;
+	void setUniform(const GLchar*);
+	void bindAttribute(GLuint index, const GLchar * value);
 	GLuint programId;
 	GLuint Uniform;
+	GLuint modelViewUniform;
+private:
+	void checkShaderErrors(GLuint shaderId);
 };

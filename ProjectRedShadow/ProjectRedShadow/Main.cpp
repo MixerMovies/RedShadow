@@ -1,3 +1,4 @@
+#include "GL\glew.h"
 #include "GL\freeglut.h"
 #include "Gamewindow.h"
 #include "Space.h"
@@ -6,6 +7,7 @@ GLint gameWindowInt;
 Gamewindow* gamewindow;
 int windowWidth = 1920;
 int windowHeight = 1080;
+float lastTime;
 
 void Init();
 void Idle();
@@ -27,8 +29,15 @@ void Init()
 
 void Idle()
 {
+	float time = glutGet(GLUT_ELAPSED_TIME);
+	float elapsed = time - lastTime;
+
+
+	gamewindow->rotation += elapsed / 1000.0f;
+
 	Space::Instance()->player.move();
 	glutPostRedisplay();
+	lastTime = time;
 }
 
 void Display()
@@ -94,8 +103,16 @@ void SpecialKeyEvent(int key, int x, int y)
 	}
 }
 
+void reshape(int newWidth, int newHeight)
+{
+	gamewindow->screenSize.x = newWidth;
+	gamewindow->screenSize.y = newHeight;
+	glutPostRedisplay();
+}
+
 int main(int argc, char *argv[])
 {
+	
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInit(&argc, argv);
 
@@ -106,9 +123,14 @@ int main(int argc, char *argv[])
 	glutKeyboardFunc(KeyEvent);
 	glutKeyboardUpFunc(KeyEventUp);
 	glutSpecialFunc(SpecialKeyEvent);
+	glutReshapeFunc(reshape);
 	Init();
 
+	glewInit();
+	glClearColor(0.5f, 0.5f, 0.0f, 1.0f);
+
 	gamewindow = new Gamewindow();
+	
 	
 	Space::Instance();
 

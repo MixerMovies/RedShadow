@@ -23,13 +23,17 @@ Shader::Shader(std::string vsfile, std::string fsfile)
 	checkShaderErrors(vertexId);								// controleer of er fouten zijn opgetreden bij het compileren
 	glAttachShader(programId, vertexId);						// hang de shader aan het shaderprogramma
 
-
 	GLuint fragmentId = glCreateShader(GL_FRAGMENT_SHADER);		// maak fragment shader aan
 	glShaderSource(fragmentId, 1, &cfragShaderData, NULL);		// laat opengl de shader uit de variabele 'fragmentShader' halen
 	glCompileShader(fragmentId);								// compileer de shader
 	checkShaderErrors(fragmentId);								// controleer of er fouten zijn opgetreden bij het compileren
 	glAttachShader(programId, fragmentId);						// hang de shader aan het shaderprogramma
 
+	if (glDebugMessageCallback)
+	{
+		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB);
+		glEnable(GL_DEBUG_OUTPUT);
+	}
 }
 
 void Shader::checkShaderErrors(GLuint shaderId)
@@ -57,11 +61,18 @@ void Shader::use()
 {
 	glUseProgram(programId);								// Zet dit als actieve programma
 
+	modelViewUniform = glGetUniformLocation(programId, "modelViewProjectionMatrix");	//haal de uniform van modelViewMatrix op
+
 	glEnableVertexAttribArray(0);							// we gebruiken vertex attribute 0
 	glEnableVertexAttribArray(1);							// en vertex attribute 1
 }
 
-void Shader::setUniform(GLuint programId, const GLchar* value)
+void Shader::setUniform(const GLchar* value)
 {
-	int iets = glGetUniformLocation(programId, value);	//haal de uniform van modelViewMatrix op
+	modelViewUniform = glGetUniformLocation(programId, value);	//haal de uniform van modelViewMatrix op
+}
+
+void Shader::bindAttribute(GLuint index, const GLchar* value)
+{
+	glBindAttribLocation(programId, index, value);
 }
