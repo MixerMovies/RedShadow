@@ -1,12 +1,15 @@
 #pragma once
+
+#include <windows.h>
+#include <gl/GL.h>
 #include <string>
 
 class Texture
 {
-	unsigned int textureID;
 public:
-	Texture(const std::string &filename);
-	void bind();
-	int height;
-	int width;
+	Texture(std::string);
+	~Texture();
+
+	GLuint textureId;
 };
+

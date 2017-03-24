@@ -75,7 +75,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)/RedShadowFrame;freeglut/include;OpenAL/include</AdditionalIncludeDirectories>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
@@ -103,6 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>glew/include;$(SolutionDir)/RedShadowFrame;freeglut/include;OpenAL/include; glm/glm;</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -128,14 +129,24 @@
   <ItemGroup>
     <ClCompile Include="Gamewindow.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ObjModel.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="SoundTest.cpp" />
+    <ClCompile Include="Space.cpp" />
+    <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gamewindow.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RedShadowFrame\RedShadowFrame.vcxproj">
-      <Project>{20b69347-6867-4eab-bfaf-f1cebdcbd78b}</Project>
-    </ProjectReference>
+    <ClInclude Include="ObjModel.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="SoundTest.h" />
+    <ClInclude Include="Space.h" />
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -120,6 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>OpenAL/include;freeglut/include;glew/include;glm/glm;</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

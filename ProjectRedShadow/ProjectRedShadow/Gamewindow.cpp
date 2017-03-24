@@ -16,7 +16,7 @@ SoundTest test = SoundTest();
 Gamewindow::Gamewindow()
 {
 	shader = new Shader("Shaders/simple.vs", "Shaders/simple.fs");
-	Space::Instance()->building = new ObjModel("models/Library/library.obj");
+	Space::Instance()->Spaceship = new ObjModel("models/ship/shipA_OBJ.obj");
 	Space::Instance()->music = test.LoadSound("Sound/OdeToJoy(Remix).wav");
 	Space::Instance()->music->Play();
 	shader->bindAttribute(0, "a_position");
@@ -35,7 +35,7 @@ void Gamewindow::Setup(int windowWidth, int windowHeight)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glm::mat4 mvp = glm::perspective(80.0f, screenSize.x / (float)screenSize.y, 0.01f, 100.0f);		//begin met een perspective matrix
-	mvp *= glm::lookAt(glm::vec3(0, 0, 2), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));					//vermenigvuldig met een lookat
+	mvp *= glm::lookAt(glm::vec3(0, 0, 50), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));					//vermenigvuldig met een lookat
 	mvp = glm::translate(mvp, glm::vec3(0, 0, -1));													//of verplaats de camera gewoon naar achter
 	mvp = glm::rotate(mvp, rotation, glm::vec3(0, 1, 0));											//roteer het object een beetje
 	glUniformMatrix4fv(shader->modelViewUniform, 1, 0, glm::value_ptr(mvp));
@@ -57,15 +57,9 @@ void Gamewindow::Setup(int windowWidth, int windowHeight)
 
 void Gamewindow::Display()
 {
-	Vertex vertices[] = {
-		Vertex(glm::vec3(-1, -1, 0), glm::vec4(1, 0, 0,1)),
-		Vertex(glm::vec3(1, -1, 0), glm::vec4(0, 1, 0,1)),
-		Vertex(glm::vec3(-1, 1, 0), glm::vec4(0, 0, 1,1)),
-	};
+	glUseProgram(shader->programId);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, false, 6 * 4, vertices);									//geef aan dat de posities op deze locatie zitten
-	glVertexAttribPointer(1, 3, GL_FLOAT, false, 6 * 4, ((float*)vertices) + 3);					//geef aan dat de kleuren op deze locatie zitten
-	glDrawArrays(GL_TRIANGLES, 0, 3);																//en tekenen :)
+	Space::Instance()->Spaceship->draw();
 
 	//Space::Instance()->building->draw();
 	glutSwapBuffers();

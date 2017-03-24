@@ -17,4 +17,3 @@ public:
 	glm::ivec2 screenSize;
 	float rotation = 0;
 };
-

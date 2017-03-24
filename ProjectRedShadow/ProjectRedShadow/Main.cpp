@@ -19,12 +19,7 @@ void SpecialKeyEvent(int, int, int);
 void Init()
 {
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	GLfloat position[4] = { 0, -10, 0 };
-	glLightfv(GL_LIGHT0, GL_POSITION, position);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
 }
 
 void Idle()
@@ -127,7 +122,7 @@ int main(int argc, char *argv[])
 	Init();
 
 	glewInit();
-	glClearColor(0.5f, 0.5f, 0.0f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	gamewindow = new Gamewindow();
 	
