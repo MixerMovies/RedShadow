@@ -15,16 +15,19 @@ SoundTest test = SoundTest();
 
 Gamewindow::Gamewindow()
 {
-	shader = new Shader("Shaders/simple.vs", "Shaders/simple.fs");
+	Shader* shader = new Shader("Shaders/texture.vs", "Shaders/texture.fs");
 	Space::Instance()->Spaceship = new ObjModel("models/ship/shipA_OBJ.obj");
 	Space::Instance()->music = test.LoadSound("Sound/OdeToJoy(Remix).wav");
-	Space::Instance()->music->Play();
-	shader->bindAttribute(0, "a_position");
-	shader->bindAttribute(1, "a_color");
+	//Space::Instance()->music->Play();
 	shader->link();
-	shader->use();
+	shaders.push_back(shader);
+	Shader* shader2 = new Shader("Shaders/simple.vs", "Shaders/simple.fs");
+	shader2->link();
+	shaders.push_back(shader2);
+	Shader* shader3 = new Shader("Shaders/specular.vs", "Shaders/specular.fs");
+	shader3->link();
+	shaders.push_back(shader3);
 }
-
 
 Gamewindow::~Gamewindow()
 {
@@ -38,7 +41,8 @@ void Gamewindow::Setup(int windowWidth, int windowHeight)
 	mvp *= glm::lookAt(glm::vec3(0, 0, 50), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));					//vermenigvuldig met een lookat
 	mvp = glm::translate(mvp, glm::vec3(0, 0, -1));													//of verplaats de camera gewoon naar achter
 	mvp = glm::rotate(mvp, rotation, glm::vec3(0, 1, 0));											//roteer het object een beetje
-	glUniformMatrix4fv(shader->modelViewUniform, 1, 0, glm::value_ptr(mvp));
+	glUniformMatrix4fv(shaders[currentshader]->modelViewUniform, 1, 0, glm::value_ptr(mvp));
+	glUniformMatrix4fv(shaders[currentshader]->)
 
 	/*glViewport(0, 0, windowWidth, windowHeight);
 	glMatrixMode(GL_PROJECTION);
@@ -57,10 +61,34 @@ void Gamewindow::Setup(int windowWidth, int windowHeight)
 
 void Gamewindow::Display()
 {
-	glUseProgram(shader->programId);
+	shaders[currentshader]->use();
 
 	Space::Instance()->Spaceship->draw();
 
 	//Space::Instance()->building->draw();
 	glutSwapBuffers();
+}
+
+void Gamewindow::NextShader()
+{
+	if (currentshader < shaders.size() - 1)
+	{
+		currentshader++;
+	}
+	else
+	{
+		currentshader = 0;
+	}
+}
+
+void Gamewindow::PreviousShader()
+{
+	if (currentshader == 0)
+	{
+		currentshader = shaders.size() - 1;
+	}
+	else
+	{
+		currentshader--;
+	}
 }

@@ -7,6 +7,7 @@
 
 Shader::Shader(std::string vsfile, std::string fsfile)
 {
+	std::cout << "loading: " << vsfile << " and " << fsfile << std::endl;
 	std::ifstream vertexShaderFile(vsfile);
 	std::string vertexShaderData((std::istreambuf_iterator<char>(vertexShaderFile)), std::istreambuf_iterator<char>());
 	const char* cvertexShaderData = vertexShaderData.c_str();
@@ -28,6 +29,10 @@ Shader::Shader(std::string vsfile, std::string fsfile)
 	glCompileShader(fragmentId);								// compileer de shader
 	checkShaderErrors(fragmentId);								// controleer of er fouten zijn opgetreden bij het compileren
 	glAttachShader(programId, fragmentId);						// hang de shader aan het shaderprogramma
+
+	bindAttribute(0, "a_position");
+	bindAttribute(1, "a_color");
+	bindAttribute(2, "a_texcoord");
 
 	if (glDebugMessageCallback)
 	{
@@ -62,9 +67,6 @@ void Shader::use()
 	glUseProgram(programId);								// Zet dit als actieve programma
 
 	modelViewUniform = glGetUniformLocation(programId, "modelViewProjectionMatrix");	//haal de uniform van modelViewMatrix op
-
-	glEnableVertexAttribArray(0);							// we gebruiken vertex attribute 0
-	glEnableVertexAttribArray(1);							// en vertex attribute 1
 }
 
 void Shader::setUniform(const GLchar* value)

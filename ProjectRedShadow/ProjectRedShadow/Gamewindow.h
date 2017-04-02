@@ -5,6 +5,7 @@
 #include "glm.hpp"
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
+#include <vector>
 
 class Gamewindow
 {
@@ -13,7 +14,10 @@ public:
 	~Gamewindow();
 	void Setup(int, int);
 	void Display();
-	Shader* shader;
+	void NextShader();
+	void PreviousShader();
+	std::vector<Shader*> shaders;
+	int currentshader = 0;
 	glm::ivec2 screenSize;
 	float rotation = 0;
 };

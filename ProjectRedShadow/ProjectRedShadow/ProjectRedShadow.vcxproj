@@ -148,6 +148,20 @@
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Texture.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\procedural.vs" />
+    <None Include="Shaders\procuderal.fs" />
+    <None Include="Shaders\simple.fs" />
+    <None Include="Shaders\simple.vs" />
+    <None Include="Shaders\specular.fs" />
+    <None Include="Shaders\specular.vs" />
+    <None Include="Shaders\texture.fs" />
+    <None Include="Shaders\texture.vs" />
+    <None Include="Shaders\textureanim.fs" />
+    <None Include="Shaders\textureanim.vs" />
+    <None Include="Shaders\toon.fs" />
+    <None Include="Shaders\toon.vs" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

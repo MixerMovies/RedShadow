@@ -25,6 +25,9 @@
     <Filter Include="Source Files\Sound">
       <UniqueIdentifier>{3f8b5a45-2466-4c0d-bb40-4ba0a784d7f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{df6199bf-894a-444f-901f-235fc313c35c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -83,5 +86,43 @@
     <ClInclude Include="SoundTest.h">
       <Filter>Header Files\Sound</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\simple.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\simple.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\texture.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\texture.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\procedural.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\procuderal.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\specular.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\specular.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\textureanim.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\textureanim.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\toon.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\toon.vs">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -20,6 +20,11 @@ void Init()
 {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
+	glewInit();
+	glEnableVertexAttribArray(0);							// positie
+	glEnableVertexAttribArray(1);							// texcoord
+	glEnableVertexAttribArray(2);							// normal
+	glEnableVertexAttribArray(3);							// tangent
 }
 
 void Idle()
@@ -62,6 +67,12 @@ void KeyEvent(unsigned char key, int x, int y)
 		break;
 	case 's':
 		Space::Instance()->player.goBackward();
+		break;
+	case '[':
+		gamewindow->PreviousShader();
+		break;
+	case ']':
+		gamewindow->NextShader();
 		break;
 	case 27:
 		exit(0);
@@ -121,11 +132,9 @@ int main(int argc, char *argv[])
 	glutReshapeFunc(reshape);
 	Init();
 
-	glewInit();
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	gamewindow = new Gamewindow();
-	
 	
 	Space::Instance();
 
