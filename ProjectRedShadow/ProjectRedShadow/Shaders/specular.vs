@@ -1,6 +1,6 @@
 attribute vec3 a_position;
 attribute vec3 a_normal;
-uniform mat4 normalMatrix;
+uniform mat3 normalMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 uniform mat4 modelMatrix;

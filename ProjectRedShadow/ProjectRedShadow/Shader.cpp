@@ -34,7 +34,7 @@ Shader::Shader(std::string vsfile, std::string fsfile)
 	bindAttribute(1, "a_color");
 	bindAttribute(2, "a_texcoord");
 
-	GLuint location = glGetUniformLocation(programId, "modelViewProjectionMatrix");
+	//getUniformLocation("viewMatrix");
 	int iets = 1;
 }
 
