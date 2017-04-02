@@ -2,6 +2,7 @@
 
 #include <GL\glew.h>
 #include <string>
+#include <map>
 
 class Shader
 {
@@ -12,7 +13,7 @@ public:
 	int getUniformLocation(const std::string & name);
 	void bindAttribute(GLuint index, const GLchar * value);
 	GLuint programId;
-	GLuint Uniform;
 private:
 	void checkShaderErrors(GLuint shaderId);
+	std::map<std::string, GLuint> uniforms;
 };

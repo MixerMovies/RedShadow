@@ -13,6 +13,6 @@ void main()
 
 	float specular = pow(max(0.0, dot(r, viewDirection)), shininess);
 
-	float factor = ambient + diffuse + specular;
+	float factor = ambient + diffuse  + specular;
 	gl_FragColor = vec4(factor,factor,factor,1.0);
 }

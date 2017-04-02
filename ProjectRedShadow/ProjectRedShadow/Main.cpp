@@ -19,10 +19,6 @@ void Init()
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glewInit();
-	glEnableVertexAttribArray(0);							// positie
-	glEnableVertexAttribArray(1);							// texcoord
-	glEnableVertexAttribArray(2);							// normal
-	glEnableVertexAttribArray(3);							// tangent
 }
 
 void Idle()

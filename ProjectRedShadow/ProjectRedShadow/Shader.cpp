@@ -4,9 +4,6 @@
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
-#include <map>
-
-std::map<std::string, GLuint> uniforms;
 
 Shader::Shader(std::string vsfile, std::string fsfile)
 {
@@ -36,6 +33,9 @@ Shader::Shader(std::string vsfile, std::string fsfile)
 	bindAttribute(0, "a_position");
 	bindAttribute(1, "a_color");
 	bindAttribute(2, "a_texcoord");
+
+	GLuint location = glGetUniformLocation(programId, "modelViewProjectionMatrix");
+	int iets = 1;
 }
 
 void Shader::checkShaderErrors(GLuint shaderId)

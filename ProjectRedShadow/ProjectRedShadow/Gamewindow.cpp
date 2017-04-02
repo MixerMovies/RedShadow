@@ -23,6 +23,11 @@ Gamewindow::Gamewindow()
 	shader3->use();
 	shaders.push_back(shader3);
 
+	glEnableVertexAttribArray(0);							// positie
+	glEnableVertexAttribArray(1);							// texcoord
+	glEnableVertexAttribArray(2);							// normal
+	glEnableVertexAttribArray(3);							// tangent
+
 	if (glDebugMessageCallback)
 	{
 		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB);
