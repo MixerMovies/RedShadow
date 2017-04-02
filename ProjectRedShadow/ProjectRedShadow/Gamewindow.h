@@ -6,13 +6,14 @@
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
 #include <vector>
+#pragma comment(lib, "glew32.lib")
 
 class Gamewindow
 {
 public:
 	Gamewindow();
 	~Gamewindow();
-	void Setup(int, int);
+	void Setup();
 	void Display();
 	void NextShader();
 	void PreviousShader();

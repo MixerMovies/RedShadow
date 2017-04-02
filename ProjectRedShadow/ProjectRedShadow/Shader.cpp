@@ -4,6 +4,9 @@
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
+#include <map>
+
+std::map<std::string, GLuint> uniforms;
 
 Shader::Shader(std::string vsfile, std::string fsfile)
 {
@@ -33,12 +36,6 @@ Shader::Shader(std::string vsfile, std::string fsfile)
 	bindAttribute(0, "a_position");
 	bindAttribute(1, "a_color");
 	bindAttribute(2, "a_texcoord");
-
-	if (glDebugMessageCallback)
-	{
-		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB);
-		glEnable(GL_DEBUG_OUTPUT);
-	}
 }
 
 void Shader::checkShaderErrors(GLuint shaderId)
@@ -65,13 +62,16 @@ void Shader::link()
 void Shader::use()
 {
 	glUseProgram(programId);								// Zet dit als actieve programma
-
-	modelViewUniform = glGetUniformLocation(programId, "modelViewProjectionMatrix");	//haal de uniform van modelViewMatrix op
 }
 
-void Shader::setUniform(const GLchar* value)
+int Shader::getUniformLocation(const std::string &name)
 {
-	modelViewUniform = glGetUniformLocation(programId, value);	//haal de uniform van modelViewMatrix op
+	auto it = uniforms.find(name);
+	if (it != uniforms.end())
+		return it->second;
+	GLuint location = glGetUniformLocation(programId, name.c_str());
+	uniforms[name] = location;
+	return location;
 }
 
 void Shader::bindAttribute(GLuint index, const GLchar* value)

@@ -5,8 +5,6 @@
 
 GLint gameWindowInt;
 Gamewindow* gamewindow;
-int windowWidth = 1920;
-int windowHeight = 1080;
 float lastTime;
 
 void Init();
@@ -42,14 +40,8 @@ void Idle()
 
 void Display()
 {
-	gamewindow->Setup(windowWidth, windowHeight);
+	gamewindow->Setup();
 	gamewindow->Display();
-}
-
-void Reshape(int WindowWidth, int WindowHeight)
-{
-	windowWidth = WindowWidth;
-	windowHeight = WindowHeight;
 }
 
 void KeyEvent(unsigned char key, int x, int y)
