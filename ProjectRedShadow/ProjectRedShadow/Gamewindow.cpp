@@ -56,6 +56,9 @@ void Gamewindow::Setup()
 	glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("viewMatrix"), 1, 0, glm::value_ptr(view));
 	glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("projectionMatrix"), 1, 0, glm::value_ptr(projection));
 	glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(view));
+
+	glUniform1f(shaders[currentshader]->getUniformLocation("time"), glutGet(GLUT_ELAPSED_TIME) / 1000.0f);
+	glUniform1i(shaders[currentshader]->getUniformLocation("s_texture"), 0);
 	/*glRotatef(Space::Instance()->player.rotation[0], 1, 0, 0);
 	glRotatef(Space::Instance()->player.rotation[1], 0, 1, 0);
 	glRotatef(Space::Instance()->player.rotation[2], 0, 0, 1);

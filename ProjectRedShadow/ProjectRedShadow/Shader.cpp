@@ -33,9 +33,6 @@ Shader::Shader(std::string vsfile, std::string fsfile)
 	bindAttribute(0, "a_position");
 	bindAttribute(1, "a_color");
 	bindAttribute(2, "a_texcoord");
-
-	//getUniformLocation("viewMatrix");
-	int iets = 1;
 }
 
 void Shader::checkShaderErrors(GLuint shaderId)
