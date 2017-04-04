@@ -22,6 +22,10 @@ Gamewindow::Gamewindow()
 	shader3->link();
 	shader3->use();
 	shaders.push_back(shader3);
+	Shader* shader4 = new Shader("Shaders/textureanim.vs", "Shaders/textureanim.fs");
+	shader4->link();
+	shader4->use();
+	shaders.push_back(shader4);
 
 	glEnableVertexAttribArray(0);							// positie
 	glEnableVertexAttribArray(1);							// texcoord

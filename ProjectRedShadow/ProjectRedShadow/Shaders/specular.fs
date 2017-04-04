@@ -1,4 +1,6 @@
+uniform sampler2D s_texture;
 varying vec3 normal;
+varying vec2 texCoord;
 
 void main()
 {
@@ -14,5 +16,5 @@ void main()
 	float specular = pow(max(0.0, dot(r, viewDirection)), shininess);
 
 	float factor = ambient + diffuse + specular;
-	gl_FragColor = vec4(factor,factor,factor,1.0);
+	gl_FragColor = vec4(factor,factor,factor,1.0) * texture2D(s_texture, texCoord);
 }

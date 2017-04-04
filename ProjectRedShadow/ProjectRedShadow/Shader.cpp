@@ -33,7 +33,6 @@ Shader::Shader(std::string vsfile, std::string fsfile)
 	bindAttribute(0, "a_position");
 	bindAttribute(1, "a_color");
 	bindAttribute(2, "a_texcoord");
-	bindAttribute(3, "a_normal");
 }
 
 void Shader::checkShaderErrors(GLuint shaderId)
