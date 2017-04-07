@@ -26,6 +26,10 @@ Gamewindow::Gamewindow()
 	shader4->link();
 	shader4->use();
 	shaders.push_back(shader4);
+	Shader* shader5 = new Shader("Shaders/procedural.vs", "Shaders/procedural.fs");
+	shader5->link();
+	shader5->use();
+	shaders.push_back(shader5);
 
 	glEnableVertexAttribArray(0);							// positie
 	glEnableVertexAttribArray(1);							// texcoord
