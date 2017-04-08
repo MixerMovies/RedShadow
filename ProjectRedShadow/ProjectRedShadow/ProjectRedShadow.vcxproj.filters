@@ -103,9 +103,6 @@
     <None Include="Shaders\procedural.vs">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="Shaders\procuderal.fs">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="Shaders\specular.fs">
       <Filter>Shaders</Filter>
     </None>
@@ -122,6 +119,15 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="Shaders\toon.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\procedural.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\tvgrain.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\tvgrain.vs">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

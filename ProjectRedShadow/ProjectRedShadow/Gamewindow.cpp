@@ -26,10 +26,18 @@ Gamewindow::Gamewindow()
 	shader4->link();
 	shader4->use();
 	shaders.push_back(shader4);
-	Shader* shader5 = new Shader("Shaders/procedural.vs", "Shaders/procedural.fs");
+	Shader* shader5 = new Shader("Shaders/tvgrain.vs", "Shaders/tvgrain.fs");
 	shader5->link();
 	shader5->use();
 	shaders.push_back(shader5);
+	Shader* shader6 = new Shader("Shaders/procedural.vs", "Shaders/procedural.fs");
+	shader6->link();
+	shader6->use();
+	shaders.push_back(shader6);
+	Shader* shader7 = new Shader("Shaders/toon.vs", "Shaders/toon.fs");
+	shader7->link();
+	shader7->use();
+	shaders.push_back(shader7);
 
 	glEnableVertexAttribArray(0);							// positie
 	glEnableVertexAttribArray(1);							// texcoord
