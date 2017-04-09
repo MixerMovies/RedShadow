@@ -153,8 +153,18 @@
     <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shaders\blur.fs" />
+    <None Include="Shaders\blur.vs" />
+    <None Include="Shaders\convolutie.fs" />
+    <None Include="Shaders\convolutie.vs" />
+    <None Include="Shaders\filmgrain.fs" />
+    <None Include="Shaders\filmgrain.vs" />
     <None Include="Shaders\procedural.vs" />
     <None Include="Shaders\procedural.fs" />
+    <None Include="Shaders\rainbow.fs" />
+    <None Include="Shaders\rainbow.vs" />
+    <None Include="Shaders\screenwarp.fs" />
+    <None Include="Shaders\screenwarp.vs" />
     <None Include="Shaders\simple.fs" />
     <None Include="Shaders\simple.vs" />
     <None Include="Shaders\specular.fs" />

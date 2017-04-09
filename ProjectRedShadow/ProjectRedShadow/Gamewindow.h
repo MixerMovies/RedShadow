@@ -6,19 +6,23 @@
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
 #include <vector>
+#include "Space.h"
 #pragma comment(lib, "glew32.lib")
 
 class Gamewindow
 {
 public:
-	Gamewindow();
+	Gamewindow(Space* space);
 	~Gamewindow();
 	void Setup();
 	void Display();
 	void NextShader();
 	void PreviousShader();
 	std::vector<Shader*> shaders;
+	std::vector<Shader*> postProcessingShaders;
 	int currentshader = 0;
+	int currentPostShader = 0;
 	glm::ivec2 screenSize;
 	float rotation = 0;
+	bool postProcessingEnabled = false;
 };

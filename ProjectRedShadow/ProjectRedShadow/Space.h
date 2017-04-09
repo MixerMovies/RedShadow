@@ -7,14 +7,16 @@
 class Space
 {
 public:
+	Space();
 	Player player = Player();
-	static Space* Instance();
 	Sound *music = nullptr;
 	ObjModel *building;
-	ObjModel *Spaceship;
+	std::vector<ObjModel*> previewModels;
+	void NextModel();
+	void PreviousModel();
+	ObjModel* getCurrentModel();
 	~Space();
 private:
-	static Space *instance;
-	Space();
+	int currentModel = 0;
 };
 

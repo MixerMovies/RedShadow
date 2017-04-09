@@ -6,15 +6,19 @@ Space::Space()
 {
 }
 
-Space* Space::instance = NULL;
-
-Space * Space::Instance()
+void Space::NextModel()
 {
-	if (!instance)
-	{
-		instance = new Space();
-	}
-	return instance;
+	currentModel = (currentModel + 1) % previewModels.size();
+}
+
+void Space::PreviousModel()
+{
+	currentModel = (currentModel + previewModels.size() - 1) % previewModels.size();
+}
+
+ObjModel * Space::getCurrentModel()
+{
+	return previewModels[currentModel];
 }
 
 Space::~Space()

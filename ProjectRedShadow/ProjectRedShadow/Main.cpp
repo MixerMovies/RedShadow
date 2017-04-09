@@ -2,9 +2,11 @@
 #include "GL\freeglut.h"
 #include "Gamewindow.h"
 #include "Space.h"
+#include <iostream>
 
 GLint gameWindowInt;
 Gamewindow* gamewindow;
+Space* space;
 float lastTime;
 
 void Init();
@@ -14,11 +16,28 @@ void KeyEvent(unsigned char, int, int);
 void KeyEventUp(unsigned char, int, int);
 void SpecialKeyEvent(int, int, int);
 
+#ifdef WIN32
+void GLAPIENTRY onDebug(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
+#else
+void onDebug(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, GLvoid* userParam)
+#endif
+{
+	std::cout << message << std::endl;
+}
+
 void Init()
 {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
+
 	glewInit();
+
+	if (glDebugMessageCallback)
+	{
+		glDebugMessageCallback(&onDebug, NULL);
+		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB);
+		glEnable(GL_DEBUG_OUTPUT);
+	}
 }
 
 void Idle()
@@ -29,7 +48,7 @@ void Idle()
 
 	gamewindow->rotation += elapsed / 1000.0f;
 
-	Space::Instance()->player.move();
+	space->player.move();
 	glutPostRedisplay();
 	lastTime = time;
 }
@@ -45,22 +64,31 @@ void KeyEvent(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case 'a':
-		Space::Instance()->player.turnLeft(true);
+		space->player.turnLeft(true);
 		break;
 	case 'd':
-		Space::Instance()->player.turnRight(true);
+		space->player.turnRight(true);
 		break;
 	case'w':
-		Space::Instance()->player.goForward();
+		space->player.goForward();
 		break;
 	case 's':
-		Space::Instance()->player.goBackward();
+		space->player.goBackward();
 		break;
 	case '[':
 		gamewindow->PreviousShader();
 		break;
 	case ']':
 		gamewindow->NextShader();
+		break;
+	case '.':
+		space->PreviousModel();
+		break;
+	case '/':
+		space->NextModel();
+		break;
+	case 'p':
+		gamewindow->postProcessingEnabled = !gamewindow->postProcessingEnabled;
 		break;
 	case 27:
 		exit(0);
@@ -73,16 +101,16 @@ void KeyEventUp(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case 'a':
-		Space::Instance()->player.turnLeft(false);
+		space->player.turnLeft(false);
 		break;
 	case 'd':
-		Space::Instance()->player.turnRight(false);
+		space->player.turnRight(false);
 		break;
 	case 'w':
-		Space::Instance()->player.stop();
+		space->player.stop();
 		break;
 	case 's':
-		Space::Instance()->player.stop();
+		space->player.stop();
 		break;
 	}
 }
@@ -120,11 +148,8 @@ int main(int argc, char *argv[])
 	glutReshapeFunc(reshape);
 	Init();
 
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
-	gamewindow = new Gamewindow();
-	
-	Space::Instance();
+	space = new Space();
+	gamewindow = new Gamewindow(space);
 
 	glutMainLoop();
 }

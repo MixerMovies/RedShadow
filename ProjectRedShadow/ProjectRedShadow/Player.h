@@ -1,13 +1,14 @@
 #pragma once
 
+#include <glm.hpp>
 #include <array>
 
 class Player
 {
 public:
 	Player();
-	std::array<float, 3> position = { 0, -5, 0 };
-	std::array<float, 3> rotation = { 0, 0, 0 };
+	glm::vec3 position = { 0, 0, 50 };
+	glm::vec3 rotation = { 0, 0, 0 };
 	void goForward();
 	void goBackward();
 	void turnLeft(bool);

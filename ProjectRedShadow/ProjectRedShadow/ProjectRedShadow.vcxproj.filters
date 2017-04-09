@@ -130,5 +130,35 @@
     <None Include="Shaders\tvgrain.vs">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Shaders\blur.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\blur.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\convolutie.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\convolutie.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\filmgrain.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\filmgrain.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\rainbow.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\rainbow.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\screenwarp.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\screenwarp.vs">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
