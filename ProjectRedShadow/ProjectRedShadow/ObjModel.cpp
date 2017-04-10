@@ -166,6 +166,12 @@ ObjModel::ObjModel(std::string fileName)
 
 	std::ifstream pFile(fileName.c_str());
 
+	if (!pFile.is_open())
+	{
+		std::cout << "Could not open file " << fileName << std::endl;
+		return;
+	}
+
 	std::vector<float>	vertices;
 	std::vector<float>	normals;
 	std::vector<float>	texcoords;
