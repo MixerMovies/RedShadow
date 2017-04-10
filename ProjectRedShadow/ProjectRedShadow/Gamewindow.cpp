@@ -92,11 +92,11 @@ Gamewindow::~Gamewindow()
 
 void Gamewindow::Setup()
 {
-	//if (postProcessingEnabled)
-	//{
-		/*glBindFramebuffer(GL_FRAMEBUFFER, fboId);
-		glViewport(0, 0, 2048, 2048);*/
-	//}
+	if (postProcessingEnabled)
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, fboId);
+		glViewport(0, 0, 2048, 2048);
+	}
 	
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -134,9 +134,12 @@ void Gamewindow::Display()
 
 	//Space::Instance()->building->draw();
 
-	//if (postProcessingEnabled)
-	//{
-		/*glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	if (postProcessingEnabled)
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glViewport(0, 0, screenSize.x, screenSize.y);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -147,15 +150,15 @@ void Gamewindow::Display()
 		verts.push_back(glm::vec2(-1, 1));
 
 		postProcessingShaders[currentPostShader]->use();
-		glUniform1i(postProcessingShaders[currentPostShader]->getUniformLocation("s_texture"), 0);*/
+		glUniform1i(postProcessingShaders[currentPostShader]->getUniformLocation("s_texture"), 0);
 
-		//glBindTexture(GL_TEXTURE_2D, fboTextureId);
-		//glDisableVertexAttribArray(1);
-		//glDisableVertexAttribArray(2);
-		//glDisableVertexAttribArray(3);
-		//glVertexAttribPointer(0, 2, GL_FLOAT, false, 2 * 4, &verts[0]);
-		//glDrawArrays(GL_QUADS, 0, verts.size());
-	//}
+		glBindTexture(GL_TEXTURE_2D, fboTextureId);
+		glDisableVertexAttribArray(1);
+		glDisableVertexAttribArray(2);
+		glDisableVertexAttribArray(3);
+		glVertexAttribPointer(0, 2, GL_FLOAT, false, 2 * 4, &verts[0]);
+		glDrawArrays(GL_QUADS, 0, verts.size());
+	}
 
 	glutSwapBuffers();
 }
