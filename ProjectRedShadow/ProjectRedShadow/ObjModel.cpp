@@ -365,11 +365,11 @@ void ObjModel::draw()
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, material->texture->textureId);
 		}
-		if(material->bumpMap != NULL)
-		{
-			glActiveTexture(GL_TEXTURE1);
-			glBindTexture(GL_TEXTURE_2D, material->bumpMap->textureId);
-		}
+		//if(material->bumpMap != NULL)
+		//{
+		//	glActiveTexture(GL_TEXTURE1);
+		//	glBindTexture(GL_TEXTURE_2D, material->bumpMap->textureId);
+		//}
 		
 		glDrawArrays(GL_TRIANGLES, group->start, group->end - group->start);
 	}

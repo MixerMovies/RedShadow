@@ -48,7 +48,7 @@ void Idle()
 
 	gamewindow->rotation += elapsed / 1000.0f;
 
-	space->player.move();
+	space->player.move(elapsed);
 	glutPostRedisplay();
 	lastTime = time;
 }

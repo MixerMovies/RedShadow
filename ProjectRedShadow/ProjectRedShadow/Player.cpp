@@ -35,19 +35,19 @@ void Player::stop()
 	movingForward = false;
 }
 
-void Player::move()
+void Player::move(int elapsedTime)
 {
 	if (movingForward)
 	{
-		position[0] += (float)0.05 * sin(rotation[1] / 180 * M_PI);
-		position[1] -= (float)0.05 * sin(rotation[0] / 180 * M_PI);
-		position[2] -= (float)0.05 * cos((rotation[1] + rotation[0]) / 180 * M_PI);
+		position[0] += (float)0.05 * elapsedTime * sin(rotation[1] / 180 * M_PI);
+		position[1] -= (float)0.05 * elapsedTime * sin(rotation[0] / 180 * M_PI);
+		position[2] -= (float)0.05 * elapsedTime * cos((rotation[1] + rotation[0]) / 180 * M_PI);
 	}
 	else if (movingBackward)
 	{
-		position[0] -= (float)0.05 * sin(rotation[1] / 180 * M_PI);
-		position[1] += (float)0.05 * sin(rotation[0] / 180 * M_PI);
-		position[2] += (float)0.05 * cos((rotation[1] + rotation[0]) / 180 * M_PI);
+		position[0] -= (float)0.05 * elapsedTime * sin(rotation[1] / 180 * M_PI);
+		position[1] += (float)0.05 * elapsedTime * sin(rotation[0] / 180 * M_PI);
+		position[2] += (float)0.05 * elapsedTime * cos((rotation[1] + rotation[0]) / 180 * M_PI);
 	}
 	if (turningLeft)
 	{

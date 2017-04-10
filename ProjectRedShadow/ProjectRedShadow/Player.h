@@ -14,7 +14,7 @@ public:
 	void turnLeft(bool);
 	void turnRight(bool);
 	void stop();
-	void move();
+	void move(int elapsedTime);
 	~Player();
 private:
 	bool movingForward = false;
