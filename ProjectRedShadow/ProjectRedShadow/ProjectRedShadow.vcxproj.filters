@@ -136,12 +136,6 @@
     <None Include="Shaders\blur.vs">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="Shaders\convolutie.fs">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="Shaders\convolutie.vs">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="Shaders\filmgrain.fs">
       <Filter>Shaders</Filter>
     </None>
@@ -158,6 +152,12 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="Shaders\screenwarp.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\laplace.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\laplace.vs">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

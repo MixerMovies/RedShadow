@@ -155,8 +155,8 @@
   <ItemGroup>
     <None Include="Shaders\blur.fs" />
     <None Include="Shaders\blur.vs" />
-    <None Include="Shaders\convolutie.fs" />
-    <None Include="Shaders\convolutie.vs" />
+    <None Include="Shaders\laplace.fs" />
+    <None Include="Shaders\laplace.vs" />
     <None Include="Shaders\filmgrain.fs" />
     <None Include="Shaders\filmgrain.vs" />
     <None Include="Shaders\procedural.vs" />

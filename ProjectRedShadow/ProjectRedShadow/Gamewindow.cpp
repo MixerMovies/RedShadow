@@ -54,7 +54,10 @@ Gamewindow::Gamewindow(Space* space)
 	pShader1->link();
 	pShader1->use();
 	postProcessingShaders.push_back(pShader1);
-
+	Shader* pShader2 = new Shader("Shaders/laplace.vs", "Shaders/laplace.fs");
+	pShader2->link();
+	pShader2->use();
+	postProcessingShaders.push_back(pShader2);
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	glEnableVertexAttribArray(0);							// positie
