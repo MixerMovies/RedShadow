@@ -18,6 +18,8 @@ public:
 	void Display();
 	void NextShader();
 	void PreviousShader();
+	void NextPostShader();
+	void PreviousPostShader();
 	std::vector<Shader*> shaders;
 	std::vector<Shader*> postProcessingShaders;
 	int currentshader = 0;

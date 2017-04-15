@@ -8,6 +8,7 @@ GLint gameWindowInt;
 Gamewindow* gamewindow;
 Space* space;
 float lastTime;
+bool wireframeEnabled = false;
 
 void Init();
 void Idle();
@@ -89,6 +90,19 @@ void KeyEvent(unsigned char key, int x, int y)
 		break;
 	case 'p':
 		gamewindow->postProcessingEnabled = !gamewindow->postProcessingEnabled;
+		break;
+	case 'l':
+		gamewindow->PreviousPostShader();
+		break;
+	case ';':
+		gamewindow->NextPostShader();
+		break;
+	case 't':
+		if (wireframeEnabled)
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		else
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		wireframeEnabled = !wireframeEnabled;
 		break;
 	case 27:
 		exit(0);

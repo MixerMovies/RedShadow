@@ -165,6 +165,8 @@
     <None Include="Shaders\rainbow.vs" />
     <None Include="Shaders\screenwarp.fs" />
     <None Include="Shaders\screenwarp.vs" />
+    <None Include="Shaders\sharpening.fs" />
+    <None Include="Shaders\sharpening.vs" />
     <None Include="Shaders\simple.fs" />
     <None Include="Shaders\simple.vs" />
     <None Include="Shaders\specular.fs" />

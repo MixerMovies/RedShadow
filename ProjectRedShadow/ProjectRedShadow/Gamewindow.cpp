@@ -22,42 +22,29 @@ Gamewindow::Gamewindow(Space* space)
 
 	//basic shaders
 	Shader* shader = new Shader("Shaders/texture.vs", "Shaders/texture.fs");
-	shader->link();
-	shader->use();
 	shaders.push_back(shader);
 	Shader* shader2 = new Shader("Shaders/simple.vs", "Shaders/simple.fs");
-	shader2->link();
-	shader2->use();
 	shaders.push_back(shader2);
 	Shader* shader3 = new Shader("Shaders/specular.vs", "Shaders/specular.fs");
-	shader3->link();
-	shader3->use();
 	shaders.push_back(shader3);
 	Shader* shader4 = new Shader("Shaders/textureanim.vs", "Shaders/textureanim.fs");
-	shader4->link();
-	shader4->use();
 	shaders.push_back(shader4);
 	Shader* shader5 = new Shader("Shaders/tvgrain.vs", "Shaders/tvgrain.fs");
-	shader5->link();
-	shader5->use();
 	shaders.push_back(shader5);
 	Shader* shader6 = new Shader("Shaders/procedural.vs", "Shaders/procedural.fs");
-	shader6->link();
-	shader6->use();
 	shaders.push_back(shader6);
 	Shader* shader7 = new Shader("Shaders/toon.vs", "Shaders/toon.fs");
-	shader7->link();
-	shader7->use();
 	shaders.push_back(shader7);
 	//post processing shaders
 	Shader* pShader1 = new Shader("Shaders/blur.vs", "Shaders/blur.fs");
-	pShader1->link();
-	pShader1->use();
 	postProcessingShaders.push_back(pShader1);
 	Shader* pShader2 = new Shader("Shaders/laplace.vs", "Shaders/laplace.fs");
-	pShader2->link();
-	pShader2->use();
 	postProcessingShaders.push_back(pShader2);
+	Shader* pShader3 = new Shader("Shaders/sharpening.vs", "Shaders/sharpening.fs");
+	postProcessingShaders.push_back(pShader3);
+	Shader* pShader4 = new Shader("Shaders/filmgrain.vs", "Shaders/filmgrain.fs");
+	postProcessingShaders.push_back(pShader4);
+
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	glEnableVertexAttribArray(0);							// positie
@@ -174,4 +161,14 @@ void Gamewindow::NextShader()
 void Gamewindow::PreviousShader()
 {
 	currentshader = (currentshader + shaders.size() - 1) % shaders.size();
+}
+
+void Gamewindow::NextPostShader()
+{
+	currentPostShader = (currentPostShader + 1) % postProcessingShaders.size();
+}
+
+void Gamewindow::PreviousPostShader()
+{
+	currentPostShader = (currentPostShader + postProcessingShaders.size() - 1) % postProcessingShaders.size();
 }

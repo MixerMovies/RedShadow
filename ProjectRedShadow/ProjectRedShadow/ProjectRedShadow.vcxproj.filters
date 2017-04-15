@@ -160,5 +160,11 @@
     <None Include="Shaders\laplace.vs">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Shaders\sharpening.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\sharpening.vs">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
