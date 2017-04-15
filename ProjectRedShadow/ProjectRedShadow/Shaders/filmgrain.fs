@@ -1,18 +1,17 @@
 #version 150
 uniform sampler2D s_texture;
+uniform float time;
 varying vec2 texCoord;
+
+float random (in vec2 st) { 
+    return fract(sin(dot(st.xy,
+                         vec2(12.9898,78.233)))
+                 * 43758.5453123);
+}
 
 void main()
 {
-    float o = 32/2048.0;
-
-    vec4 color = (texture2D(s_texture, texCoord) +
-                texture2D(s_texture, texCoord + vec2(-o, -o)) +
-                texture2D(s_texture, texCoord + vec2(-o, o)) +
-                texture2D(s_texture, texCoord + vec2(o, o)) +
-                texture2D(s_texture, texCoord + vec2(o, -o))) / 5.0;
-
-
-
+	vec2 noiseseed = vec2(texCoord.x + time, texCoord.y + time);
+    vec4 color = texture2D(s_texture, texCoord) - random(noiseseed) * 0.4 + 0.2;
 	gl_FragColor = color;
 }

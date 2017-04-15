@@ -166,5 +166,17 @@
     <None Include="Shaders\sharpening.vs">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Shaders\blackandwhite.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\blackandwhite.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\negative.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\negative.vs">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

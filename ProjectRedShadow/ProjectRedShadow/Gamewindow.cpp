@@ -44,6 +44,12 @@ Gamewindow::Gamewindow(Space* space)
 	postProcessingShaders.push_back(pShader3);
 	Shader* pShader4 = new Shader("Shaders/filmgrain.vs", "Shaders/filmgrain.fs");
 	postProcessingShaders.push_back(pShader4);
+	Shader* pShader5 = new Shader("Shaders/blackandwhite.vs", "Shaders/blackandwhite.fs");
+	postProcessingShaders.push_back(pShader5);
+	Shader* pShader6 = new Shader("Shaders/negative.vs", "Shaders/negative.fs");
+	postProcessingShaders.push_back(pShader6);
+	Shader* pShader6 = new Shader("Shaders/screenwarp.vs", "Shaders/screenwarp.fs");
+	postProcessingShaders.push_back(pShader6);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
@@ -141,6 +147,7 @@ void Gamewindow::Display()
 
 		postProcessingShaders[currentPostShader]->use();
 		glUniform1i(postProcessingShaders[currentPostShader]->getUniformLocation("s_texture"), 0);
+		glUniform1f(postProcessingShaders[currentPostShader]->getUniformLocation("time"), glutGet(GLUT_ELAPSED_TIME) / 1000.0f);
 
 		glBindTexture(GL_TEXTURE_2D, fboTextureId);
 		glDisableVertexAttribArray(1);
