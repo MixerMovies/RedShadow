@@ -1,5 +1,6 @@
 #version 150
 attribute vec3 a_position;
+uniform float time;
 varying vec2 texCoord;
 
 void main()

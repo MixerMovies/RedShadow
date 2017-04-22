@@ -1,4 +1,6 @@
 uniform sampler2D s_texture;
+uniform float ambient;
+uniform float shininess;
 varying vec3 normal;
 varying vec2 texCoord;
 
@@ -6,9 +8,7 @@ void main()
 {
 	vec3 lightDirection = normalize(vec3(1,1,1));
 	vec3 viewDirection = vec3(0,0,1);
-	float shininess = 10.0;
 
-	float ambient = 0.2;
 	float diffuse = 0.8 * dot(normal, lightDirection);
 
 	vec3 r = reflect(-lightDirection, normal);

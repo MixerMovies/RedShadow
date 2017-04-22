@@ -385,6 +385,12 @@ void ObjModel::loadMaterialFile( std::string fileName, std::string dirName )
 {
 	std::ifstream pFile(fileName.c_str());
 
+	if (!pFile.is_open())
+	{
+		std::cout << "Could not open file " << fileName << std::endl;
+		return;
+	}
+
 	MaterialInfo* currentMaterial = NULL;
 
 	while(!pFile.eof())
@@ -428,6 +434,16 @@ void ObjModel::loadMaterialFile( std::string fileName, std::string dirName )
 		else if(params[0] == "map_bump")
 		{
 			currentMaterial->bumpMap = new Texture(dirName + "/" + params[1]);
+		}
+		else if (params[0] == "ka")
+		{
+			currentMaterial->ambient[0] = std::stof(params[1]);
+			currentMaterial->ambient[1] = std::stof(params[2]);
+			currentMaterial->ambient[2] = std::stof(params[3]);
+		}
+		else if (params[0] == "ns")
+		{
+			currentMaterial->shininess = std::stof(params[1]);
 		}
 		else
 			std::cout<<"Didn't parse "<<params[0]<<" in material file"<<std::endl;
