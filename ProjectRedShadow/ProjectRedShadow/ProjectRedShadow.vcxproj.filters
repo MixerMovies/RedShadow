@@ -178,5 +178,11 @@
     <None Include="Shaders\negative.vs">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="colourwarp.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="colourwarp.fs">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

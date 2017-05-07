@@ -153,6 +153,8 @@
     <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="colourwarp.fs" />
+    <None Include="colourwarp.vs" />
     <None Include="Shaders\blackandwhite.fs" />
     <None Include="Shaders\blackandwhite.vs" />
     <None Include="Shaders\blur.fs" />
