@@ -54,6 +54,8 @@ Gamewindow::Gamewindow(Space* space)
 	postProcessingShaders.push_back(pShader6);
 	Shader* pShader7 = new Shader("Shaders/screenwarp.vs", "Shaders/screenwarp.fs");
 	postProcessingShaders.push_back(pShader7);
+	Shader* pShader8 = new Shader("Shaders/colourwarp.vs", "Shaders/colourwarp.fs");
+	postProcessingShaders.push_back(pShader8);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
@@ -123,6 +125,7 @@ void Gamewindow::Setup()
 	glUniform1i(shaders[currentshader]->getUniformLocation("s_texture"), 0);
 	glUniform1f(shaders[currentshader]->getUniformLocation("ambient"), 0.2f);
 	glUniform1f(shaders[currentshader]->getUniformLocation("shininess"), 10);
+	glUniform1f(shaders[currentshader]->getUniformLocation("alpha"), 0.5f);
 	/*glRotatef(Space::Instance()->player.rotation[0], 1, 0, 0);
 	glRotatef(Space::Instance()->player.rotation[1], 0, 1, 0);
 	glRotatef(Space::Instance()->player.rotation[2], 0, 0, 1);

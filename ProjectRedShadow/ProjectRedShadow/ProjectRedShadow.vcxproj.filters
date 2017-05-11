@@ -178,10 +178,10 @@
     <None Include="Shaders\negative.vs">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="colourwarp.vs">
+    <None Include="Shaders\colourwarp.fs">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="colourwarp.fs">
+    <None Include="Shaders\colourwarp.vs">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
