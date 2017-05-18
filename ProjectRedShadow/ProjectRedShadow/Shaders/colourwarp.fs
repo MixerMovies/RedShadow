@@ -5,8 +5,6 @@ varying vec2 texCoord;
 
 void main()
 {
-	float length = sqrt(((texCoord.x - 0.5) * (texCoord.x - 0.5)) + ((texCoord.y - 0.5) * (texCoord.y - 0.5)));
-
-	vec3 translatedPosition = vec3(texCoord.x - 0.5, texCoord.y - 0.5, 0);
-	gl_FragColor = texture2D(s_texture, vec2((translatedPosition.x * length) + 0.5, (translatedPosition.y * length) + 0.5));
+	vec4 texture = texture2D(s_texture, texCoord);
+	gl_FragColor = vec4(mod(texture.x + mod(time + 2, 6) / 5,1), mod(texture.y + mod(time + 4, 6) / 5,1), mod(texture.z + mod(time, 6) / 5,1), 1.0);
 }
