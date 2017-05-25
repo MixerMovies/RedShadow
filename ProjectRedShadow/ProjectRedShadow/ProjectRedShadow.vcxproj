@@ -159,6 +159,7 @@
     <None Include="Shaders\blur.vs" />
     <None Include="Shaders\colourwarp.fs" />
     <None Include="Shaders\colourwarp.vs" />
+    <None Include="Shaders\explosion.gs" />
     <None Include="Shaders\laplace.fs" />
     <None Include="Shaders\laplace.vs" />
     <None Include="Shaders\filmgrain.fs" />
@@ -177,6 +178,7 @@
     <None Include="Shaders\simple.vs" />
     <None Include="Shaders\specular.fs" />
     <None Include="Shaders\specular.vs" />
+    <None Include="Shaders\standard.gs" />
     <None Include="Shaders\texture.fs" />
     <None Include="Shaders\texture.vs" />
     <None Include="Shaders\textureanim.fs" />

@@ -1,3 +1,5 @@
+#version 150
+
 uniform sampler2D s_texture;
 varying vec2 texCoord;
 

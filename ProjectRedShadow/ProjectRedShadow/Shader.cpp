@@ -5,9 +5,9 @@
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
 
-Shader::Shader(std::string vsfile, std::string fsfile)
+Shader::Shader(std::string vsfile, std::string fsfile, std::string gsfile)
 {
-	std::cout << "loading: " << vsfile << " and " << fsfile << std::endl;
+	std::cout << "loading: " << vsfile << ", " << fsfile << " and " << gsfile << std::endl;
 	std::ifstream vertexShaderFile(vsfile);
 	std::string vertexShaderData((std::istreambuf_iterator<char>(vertexShaderFile)), std::istreambuf_iterator<char>());
 	const char* cvertexShaderData = vertexShaderData.c_str();
@@ -16,6 +16,10 @@ Shader::Shader(std::string vsfile, std::string fsfile)
 	std::string fragShaderData((std::istreambuf_iterator<char>(fragShaderFile)), std::istreambuf_iterator<char>());
 	const char* cfragShaderData = fragShaderData.c_str();
 
+	std::ifstream geometryShaderFile(gsfile);
+	std::string geometryShaderData((std::istreambuf_iterator<char>(geometryShaderFile)), std::istreambuf_iterator<char>());
+	const char* cgeometryShaderData = geometryShaderData.c_str();
+
 	programId = glCreateProgram();								// maak een shaderprogramma aan
 
 	GLuint vertexId = glCreateShader(GL_VERTEX_SHADER);			// maak vertex shader aan
@@ -23,6 +27,12 @@ Shader::Shader(std::string vsfile, std::string fsfile)
 	glCompileShader(vertexId);									// compileer de shader
 	checkShaderErrors(vertexId);								// controleer of er fouten zijn opgetreden bij het compileren
 	glAttachShader(programId, vertexId);						// hang de shader aan het shaderprogramma
+
+	GLuint geometryId = glCreateShader(GL_GEOMETRY_SHADER);
+	glShaderSource(geometryId, 1, &cgeometryShaderData, NULL);
+	glCompileShader(geometryId);
+	checkShaderErrors(geometryId);
+	glAttachShader(programId, geometryId);
 
 	GLuint fragmentId = glCreateShader(GL_FRAGMENT_SHADER);		// maak fragment shader aan
 	glShaderSource(fragmentId, 1, &cfragShaderData, NULL);		// laat opengl de shader uit de variabele 'fragmentShader' halen

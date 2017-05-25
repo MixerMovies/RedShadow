@@ -7,7 +7,7 @@
 class Shader
 {
 public:
-	Shader(std::string vsfile, std::string fsfile);
+	Shader(std::string vsfile, std::string fsfile, std::string gsfile);
 	void link(void);
 	void use(void);
 	int getUniformLocation(const std::string & name);
