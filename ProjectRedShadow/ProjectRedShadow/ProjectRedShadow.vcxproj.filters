@@ -205,5 +205,8 @@
     <None Include="Shaders\test.vs">
       <Filter>Shaders\Standard</Filter>
     </None>
+    <None Include="Shaders\standardpost.gs">
+      <Filter>Shaders\Geometry</Filter>
+    </None>
   </ItemGroup>
 </Project>

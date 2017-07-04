@@ -39,24 +39,24 @@ Gamewindow::Gamewindow(Space* space)
 	shaders.push_back(shader6);
 	Shader* shader7 = new Shader("Shaders/toon.vs", "Shaders/toon.fs", "Shaders/standard.gs");
 	shaders.push_back(shader7);
-	Shader* shader8 = new Shader("Shaders/rainbow.vs", "Shaders/rainbow.fs", "Shaders/standard.gs");
-	shaders.push_back(shader8);
+	//Shader* shader8 = new Shader("Shaders/rainbow.vs", "Shaders/rainbow.fs", "Shaders/standard.gs");
+	//shaders.push_back(shader8);
 	//post processing shaders
-	Shader* pShader1 = new Shader("Shaders/blur.vs", "Shaders/blur.fs", "Shaders/standard.gs");
+	Shader* pShader1 = new Shader("Shaders/blur.vs", "Shaders/blur.fs", "Shaders/standardpost.gs");
 	postProcessingShaders.push_back(pShader1);
-	Shader* pShader2 = new Shader("Shaders/laplace.vs", "Shaders/laplace.fs", "Shaders/standard.gs");
+	Shader* pShader2 = new Shader("Shaders/laplace.vs", "Shaders/laplace.fs", "Shaders/standardpost.gs");
 	postProcessingShaders.push_back(pShader2);
-	Shader* pShader3 = new Shader("Shaders/sharpening.vs", "Shaders/sharpening.fs", "Shaders/standard.gs");
+	Shader* pShader3 = new Shader("Shaders/sharpening.vs", "Shaders/sharpening.fs", "Shaders/standardpost.gs");
 	postProcessingShaders.push_back(pShader3);
-	Shader* pShader4 = new Shader("Shaders/filmgrain.vs", "Shaders/filmgrain.fs", "Shaders/standard.gs");
+	Shader* pShader4 = new Shader("Shaders/filmgrain.vs", "Shaders/filmgrain.fs", "Shaders/standardpost.gs");
 	postProcessingShaders.push_back(pShader4);
-	Shader* pShader5 = new Shader("Shaders/blackandwhite.vs", "Shaders/blackandwhite.fs", "Shaders/standard.gs");
+	Shader* pShader5 = new Shader("Shaders/blackandwhite.vs", "Shaders/blackandwhite.fs", "Shaders/standardpost.gs");
 	postProcessingShaders.push_back(pShader5);
-	Shader* pShader6 = new Shader("Shaders/negative.vs", "Shaders/negative.fs", "Shaders/standard.gs");
+	Shader* pShader6 = new Shader("Shaders/negative.vs", "Shaders/negative.fs", "Shaders/standardpost.gs");
 	postProcessingShaders.push_back(pShader6);
-	Shader* pShader7 = new Shader("Shaders/screenwarp.vs", "Shaders/screenwarp.fs", "Shaders/standard.gs");
+	Shader* pShader7 = new Shader("Shaders/screenwarp.vs", "Shaders/screenwarp.fs", "Shaders/standardpost.gs");
 	postProcessingShaders.push_back(pShader7);
-	Shader* pShader8 = new Shader("Shaders/colourwarp.vs", "Shaders/colourwarp.fs", "Shaders/standard.gs");
+	Shader* pShader8 = new Shader("Shaders/colourwarp.vs", "Shaders/colourwarp.fs", "Shaders/standardpost.gs");
 	postProcessingShaders.push_back(pShader8);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -152,9 +152,11 @@ void Gamewindow::Display()
 
 		std::vector<glm::vec2> verts;
 		verts.push_back(glm::vec2(-1, -1));
-		verts.push_back(glm::vec2(1, -1));
-		verts.push_back(glm::vec2(1, 1));
 		verts.push_back(glm::vec2(-1, 1));
+		verts.push_back(glm::vec2(1, 1));
+		verts.push_back(glm::vec2(-1, -1));
+		verts.push_back(glm::vec2(1, 1));
+		verts.push_back(glm::vec2(1, -1));
 
 		postProcessingShaders[currentPostShader]->use();
 		glUniform1i(postProcessingShaders[currentPostShader]->getUniformLocation("s_texture"), 0);
@@ -165,7 +167,7 @@ void Gamewindow::Display()
 		glDisableVertexAttribArray(2);
 		glDisableVertexAttribArray(3);
 		glVertexAttribPointer(0, 2, GL_FLOAT, false, 2 * 4, &verts[0]);
-		glDrawArrays(GL_QUADS, 0, verts.size());
+		glDrawArrays(GL_TRIANGLES, 0, verts.size());
 	}
 
 	glutSwapBuffers();
