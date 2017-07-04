@@ -25,39 +25,39 @@ Gamewindow::Gamewindow(Space* space)
 	shaderPreviewContent->music->Play();
 
 	//basic shaders
-	Shader* shader = new Shader("Shaders/test.vs", "Shaders/test.fs", "Shaders/standard.gs");
+	Shader* shader = new Shader("Shaders/texture.vs", "Shaders/texture.fs", "Shaders/standard.gs");
 	shaders.push_back(shader);
-	//Shader* shader2 = new Shader("Shaders/simple.vs", "Shaders/simple.fs", "Shaders/standard.gs");
-	//shaders.push_back(shader2);
-	//Shader* shader3 = new Shader("Shaders/specular.vs", "Shaders/specular.fs", "Shaders/standard.gs");
-	//shaders.push_back(shader3);
-	//Shader* shader4 = new Shader("Shaders/textureanim.vs", "Shaders/textureanim.fs", "Shaders/standard.gs");
-	//shaders.push_back(shader4);
-	//Shader* shader5 = new Shader("Shaders/tvgrain.vs", "Shaders/tvgrain.fs", "Shaders/standard.gs");
-	//shaders.push_back(shader5);
-	//Shader* shader6 = new Shader("Shaders/procedural.vs", "Shaders/procedural.fs", "Shaders/standard.gs");
-	//shaders.push_back(shader6);
-	//Shader* shader7 = new Shader("Shaders/toon.vs", "Shaders/toon.fs", "Shaders/standard.gs");
-	//shaders.push_back(shader7);
-	//Shader* shader8 = new Shader("Shaders/rainbow.vs", "Shaders/rainbow.fs", "Shaders/standard.gs");
-	//shaders.push_back(shader8);
-	////post processing shaders
-	//Shader* pShader1 = new Shader("Shaders/blur.vs", "Shaders/blur.fs", "Shaders/standard.gs");
-	//postProcessingShaders.push_back(pShader1);
-	//Shader* pShader2 = new Shader("Shaders/laplace.vs", "Shaders/laplace.fs", "Shaders/standard.gs");
-	//postProcessingShaders.push_back(pShader2);
-	//Shader* pShader3 = new Shader("Shaders/sharpening.vs", "Shaders/sharpening.fs", "Shaders/standard.gs");
-	//postProcessingShaders.push_back(pShader3);
-	//Shader* pShader4 = new Shader("Shaders/filmgrain.vs", "Shaders/filmgrain.fs", "Shaders/standard.gs");
-	//postProcessingShaders.push_back(pShader4);
-	//Shader* pShader5 = new Shader("Shaders/blackandwhite.vs", "Shaders/blackandwhite.fs", "Shaders/standard.gs");
-	//postProcessingShaders.push_back(pShader5);
-	//Shader* pShader6 = new Shader("Shaders/negative.vs", "Shaders/negative.fs", "Shaders/standard.gs");
-	//postProcessingShaders.push_back(pShader6);
-	//Shader* pShader7 = new Shader("Shaders/screenwarp.vs", "Shaders/screenwarp.fs", "Shaders/standard.gs");
-	//postProcessingShaders.push_back(pShader7);
-	//Shader* pShader8 = new Shader("Shaders/colourwarp.vs", "Shaders/colourwarp.fs", "Shaders/standard.gs");
-	//postProcessingShaders.push_back(pShader8);
+	Shader* shader2 = new Shader("Shaders/simple.vs", "Shaders/simple.fs", "Shaders/standard.gs");
+	shaders.push_back(shader2);
+	Shader* shader3 = new Shader("Shaders/specular.vs", "Shaders/specular.fs", "Shaders/standard.gs");
+	shaders.push_back(shader3);
+	Shader* shader4 = new Shader("Shaders/textureanim.vs", "Shaders/textureanim.fs", "Shaders/standard.gs");
+	shaders.push_back(shader4);
+	Shader* shader5 = new Shader("Shaders/tvgrain.vs", "Shaders/tvgrain.fs", "Shaders/standard.gs");
+	shaders.push_back(shader5);
+	Shader* shader6 = new Shader("Shaders/procedural.vs", "Shaders/procedural.fs", "Shaders/standard.gs");
+	shaders.push_back(shader6);
+	Shader* shader7 = new Shader("Shaders/toon.vs", "Shaders/toon.fs", "Shaders/standard.gs");
+	shaders.push_back(shader7);
+	Shader* shader8 = new Shader("Shaders/rainbow.vs", "Shaders/rainbow.fs", "Shaders/standard.gs");
+	shaders.push_back(shader8);
+	//post processing shaders
+	Shader* pShader1 = new Shader("Shaders/blur.vs", "Shaders/blur.fs", "Shaders/standard.gs");
+	postProcessingShaders.push_back(pShader1);
+	Shader* pShader2 = new Shader("Shaders/laplace.vs", "Shaders/laplace.fs", "Shaders/standard.gs");
+	postProcessingShaders.push_back(pShader2);
+	Shader* pShader3 = new Shader("Shaders/sharpening.vs", "Shaders/sharpening.fs", "Shaders/standard.gs");
+	postProcessingShaders.push_back(pShader3);
+	Shader* pShader4 = new Shader("Shaders/filmgrain.vs", "Shaders/filmgrain.fs", "Shaders/standard.gs");
+	postProcessingShaders.push_back(pShader4);
+	Shader* pShader5 = new Shader("Shaders/blackandwhite.vs", "Shaders/blackandwhite.fs", "Shaders/standard.gs");
+	postProcessingShaders.push_back(pShader5);
+	Shader* pShader6 = new Shader("Shaders/negative.vs", "Shaders/negative.fs", "Shaders/standard.gs");
+	postProcessingShaders.push_back(pShader6);
+	Shader* pShader7 = new Shader("Shaders/screenwarp.vs", "Shaders/screenwarp.fs", "Shaders/standard.gs");
+	postProcessingShaders.push_back(pShader7);
+	Shader* pShader8 = new Shader("Shaders/colourwarp.vs", "Shaders/colourwarp.fs", "Shaders/standard.gs");
+	postProcessingShaders.push_back(pShader8);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 

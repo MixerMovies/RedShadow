@@ -1,16 +1,14 @@
-#version 150
-
-attribute vec3 a_position;
-attribute vec3 a_normal;
-attribute vec2 a_texcoord;
+#version 330 core
 uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 uniform mat3 normalMatrix;
-varying vec2 texCoord;
+in vec3 a_position;
+in vec2 a_texcoord;
+out vec2 texCoordIn;
 
 void main()
 {
-	texCoord = a_texcoord;
+	texCoordIn = a_texcoord;
 	gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(a_position,1);
 }
