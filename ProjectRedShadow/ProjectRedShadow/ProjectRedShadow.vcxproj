@@ -179,6 +179,8 @@
     <None Include="Shaders\specular.fs" />
     <None Include="Shaders\specular.vs" />
     <None Include="Shaders\standard.gs" />
+    <None Include="Shaders\test.fs" />
+    <None Include="Shaders\test.vs" />
     <None Include="Shaders\texture.fs" />
     <None Include="Shaders\texture.vs" />
     <None Include="Shaders\textureanim.fs" />

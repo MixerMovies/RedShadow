@@ -199,5 +199,11 @@
     <None Include="Shaders\standard.gs">
       <Filter>Shaders\Geometry</Filter>
     </None>
+    <None Include="Shaders\test.fs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\test.vs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
   </ItemGroup>
 </Project>
