@@ -1,3 +1,5 @@
+#version 330 core
+
 varying vec3 color;
 
 float random (in vec2 st) { 

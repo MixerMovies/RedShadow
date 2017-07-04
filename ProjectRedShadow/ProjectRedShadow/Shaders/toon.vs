@@ -14,7 +14,7 @@ out vec3 normalIn;
 void main()
 {
 	colorIn = vec3(0,0,0);
-	normalIn = a_normal;
+	normalIn = normalMatrix * a_normal;
 	texCoordIn = a_texcoord;
 	gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(a_position,1);
 }

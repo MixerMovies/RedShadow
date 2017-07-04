@@ -1,3 +1,5 @@
+#version 330 core
+
 varying vec3 color;
 
 void main()

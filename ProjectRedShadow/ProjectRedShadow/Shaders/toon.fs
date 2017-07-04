@@ -1,3 +1,5 @@
+#version 330 core
+
 uniform sampler2D s_texture;
 varying vec3 normal;
 varying vec2 texCoord;

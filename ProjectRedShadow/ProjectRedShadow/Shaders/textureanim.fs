@@ -1,3 +1,5 @@
+#version 330 core
+
 uniform sampler2D s_texture;
 uniform float time;
 varying vec2 texCoord;
