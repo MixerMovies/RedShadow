@@ -1,13 +1,15 @@
-#version 330 core
+#version 150
 
 layout (triangles) in;
 layout (triangle_strip, max_vertices = 3) out;
 
 in VS_OUT {
 	vec2 texCoord;
+	vec3 normal;
 } gs_in[];
 
 out vec2 texCoord;
+out vec3 normal;
 
 void main() {
 	gl_Position = gl_in[0].gl_Position;
