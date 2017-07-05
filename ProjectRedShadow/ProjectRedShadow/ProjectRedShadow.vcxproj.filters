@@ -208,5 +208,8 @@
     <None Include="Shaders\standardpost.gs">
       <Filter>Shaders\Geometry</Filter>
     </None>
+    <None Include="Shaders\implosion.gs">
+      <Filter>Shaders\Geometry</Filter>
+    </None>
   </ItemGroup>
 </Project>

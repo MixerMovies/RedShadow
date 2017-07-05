@@ -41,6 +41,10 @@ Gamewindow::Gamewindow(Space* space)
 	shaders.push_back(shader7);
 	//Shader* shader8 = new Shader("Shaders/rainbow.vs", "Shaders/rainbow.fs", "Shaders/standard.gs");
 	//shaders.push_back(shader8);
+	Shader* shader9 = new Shader("Shaders/texture.vs", "Shaders/texture.fs", "Shaders/explosion.gs");
+	shaders.push_back(shader9);
+	Shader* shader10 = new Shader("Shaders/texture.vs", "Shaders/texture.fs", "Shaders/implosion.gs");
+	shaders.push_back(shader10);
 	//post processing shaders
 	Shader* pShader1 = new Shader("Shaders/blur.vs", "Shaders/blur.fs", "Shaders/standardpost.gs");
 	postProcessingShaders.push_back(pShader1);
