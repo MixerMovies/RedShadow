@@ -171,6 +171,8 @@
     <None Include="Shaders\procedural.fs" />
     <None Include="Shaders\rainbow.fs" />
     <None Include="Shaders\rainbow.vs" />
+    <None Include="Shaders\scope.fs" />
+    <None Include="Shaders\scope.vs" />
     <None Include="Shaders\screenwarp.fs" />
     <None Include="Shaders\screenwarp.vs" />
     <None Include="Shaders\sharpening.fs" />

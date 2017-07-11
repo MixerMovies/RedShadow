@@ -211,5 +211,11 @@
     <None Include="Shaders\implosion.gs">
       <Filter>Shaders\Geometry</Filter>
     </None>
+    <None Include="Shaders\scope.vs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\scope.fs">
+      <Filter>Shaders\Post</Filter>
+    </None>
   </ItemGroup>
 </Project>

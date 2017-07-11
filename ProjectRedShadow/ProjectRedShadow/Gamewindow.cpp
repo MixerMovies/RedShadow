@@ -62,6 +62,8 @@ Gamewindow::Gamewindow(Space* space)
 	postProcessingShaders.push_back(pShader7);
 	Shader* pShader8 = new Shader("Shaders/colourwarp.vs", "Shaders/colourwarp.fs", "Shaders/standardpost.gs");
 	postProcessingShaders.push_back(pShader8);
+	Shader* pShader9 = new Shader("Shaders/scope.vs", "Shaders/scope.fs", "Shaders/standardpost.gs");
+	postProcessingShaders.push_back(pShader9);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
