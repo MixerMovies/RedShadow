@@ -11,15 +11,15 @@ Gamewindow::Gamewindow(Space* space)
 {
 	shaderPreviewContent = space;
 	ObjModel* Spaceship = new ObjModel("models/ship/shipA_OBJ.obj");
-	ObjModel* book = new ObjModel("models/book/object.obj");
-	ObjModel* cube = new ObjModel("models/cube/cube-textures.obj");
-	ObjModel* dragon = new ObjModel("models/dragon/Blue-Eyes White Dragon.obj");
-	//ObjModel* library = new ObjModel("models/Library/library.obj");
+	//ObjModel* book = new ObjModel("models/book/object.obj");
+	//ObjModel* cube = new ObjModel("models/cube/cube-textures.obj");
+	//ObjModel* dragon = new ObjModel("models/dragon/Blue-Eyes White Dragon.obj");
+	ObjModel* library = new ObjModel("models/Library/library.obj");
 	shaderPreviewContent->previewModels.push_back(Spaceship);
-	shaderPreviewContent->previewModels.push_back(book);
-	shaderPreviewContent->previewModels.push_back(cube);
-	shaderPreviewContent->previewModels.push_back(dragon);
-	//shaderPreviewContent->previewModels.push_back(library);
+	//shaderPreviewContent->previewModels.push_back(book);
+	//shaderPreviewContent->previewModels.push_back(cube);
+	//shaderPreviewContent->previewModels.push_back(dragon);
+	shaderPreviewContent->previewModels.push_back(library);
 	
 	shaderPreviewContent->music = test.LoadSound("Sound/OdeToJoy(Remix).wav");
 	shaderPreviewContent->music->Play();
