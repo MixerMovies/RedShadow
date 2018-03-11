@@ -1,28 +1,24 @@
 #include "Gamewindow.h"
 #include "ObjModel.h"
 #include "SoundTest.h"
+#include "FileLoader.h"
 
 SoundTest test = SoundTest();
 GLuint fboTextureId;
 GLuint fboId;
-Space* shaderPreviewContent;
+Space* city;
 
 Gamewindow::Gamewindow(Space* space)
 {
-	shaderPreviewContent = space;
+	city = space;
+	FileLoader::loadMap("TowerCity", space);
 	ObjModel* Spaceship = new ObjModel("models/ship/shipA_OBJ.obj");
-	//ObjModel* book = new ObjModel("models/book/object.obj");
-	//ObjModel* cube = new ObjModel("models/cube/cube-textures.obj");
-	//ObjModel* dragon = new ObjModel("models/dragon/Blue-Eyes White Dragon.obj");
-	ObjModel* library = new ObjModel("models/Library/library.obj");
-	shaderPreviewContent->previewModels.push_back(Spaceship);
-	//shaderPreviewContent->previewModels.push_back(book);
-	//shaderPreviewContent->previewModels.push_back(cube);
-	//shaderPreviewContent->previewModels.push_back(dragon);
-	shaderPreviewContent->previewModels.push_back(library);
+	ObjModel* dragon = new ObjModel("models/dragon/Blue-Eyes White Dragon.obj");
+	city->previewModels.push_back(Spaceship);
+	city->previewModels.push_back(dragon);
 	
-	shaderPreviewContent->music = test.LoadSound("Sound/OdeToJoy(Remix).wav");
-	shaderPreviewContent->music->Play();
+	city->music = test.LoadSound("Sound/OdeToJoy(Remix).wav");
+	//city->music->Play();
 
 	//basic shaders
 	Shader* shader = new Shader("Shaders/texture.vs", "Shaders/texture.fs", "Shaders/standard.gs");
@@ -100,22 +96,25 @@ Gamewindow::~Gamewindow()
 {
 }
 
-void Gamewindow::Setup()
+void Gamewindow::Display()
 {
 	if (postProcessingEnabled)
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, fboId);
 		glViewport(0, 0, 2048, 2048);
 	}
-	
+
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glm::mat4 projection = glm::perspective(70.0f, screenSize.x / (float) screenSize.y, 0.01f, 1000.0f);		//begin met een perspective matrix
-	glm::mat4 view = glm::lookAt(shaderPreviewContent->player.position, shaderPreviewContent->player.rotation, glm::vec3(0, 1, 0));					//vermenigvuldig met een lookat
+	glm::mat4 projection = glm::perspective(70.0f, screenSize.x / (float)screenSize.y, 0.01f, 1000.0f);		//begin met een perspective matrix
+	glm::mat4 view = glm::lookAt({ 0,0,0 }, { 0, 0, 1 }, glm::vec3(0, 1, 0));					//vermenigvuldig met een lookat
 	glm::mat4 model = glm::translate(glm::mat4(), glm::vec3(0, 0, -1));													//of verplaats de camera gewoon naar achter
-	model = glm::rotate(model, rotation, glm::vec3(0, 1, 0));											//roteer het object een beetje
-	
+	model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));											//roteer het object een beetje
+
+	view = glm::rotate(view, city->player.rotation[1], { 0, 1, 0 });
+	view = glm::translate(view, city->player.position);
+
 	glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));										//roteer het object een beetje
 
 	shaders[currentshader]->use();
@@ -138,14 +137,11 @@ void Gamewindow::Setup()
 	glRotatef(Space::Instance()->player.rotation[1], 0, 1, 0);
 	glRotatef(Space::Instance()->player.rotation[2], 0, 0, 1);
 	glTranslatef(Space::Instance()->player.position[0], Space::Instance()->player.position[1], Space::Instance()->player.position[2]);*/
-}
 
-void Gamewindow::Display()
-{
-
-	shaderPreviewContent->getCurrentModel()->draw();
-
-	//Space::Instance()->building->draw();
+	for (int i = 0; i < city->worldModels.size(); i++)
+	{
+		city->worldModels[i].objModel->draw();
+	}
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

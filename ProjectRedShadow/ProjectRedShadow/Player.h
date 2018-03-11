@@ -7,7 +7,8 @@ class Player
 {
 public:
 	Player();
-	glm::vec3 position = { 0, 0, 50 };
+	int speed = 1;
+	glm::vec3 position = { 0, -2, 50 };
 	glm::vec3 rotation = { 0, 0, 0 };
 	void goForward();
 	void goBackward();

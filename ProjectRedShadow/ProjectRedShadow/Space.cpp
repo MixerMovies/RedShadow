@@ -1,9 +1,9 @@
 #include "Space.h"
 
 
-
 Space::Space()
 {
+	worldModels = std::vector<WorldObject>();
 }
 
 void Space::NextModel()

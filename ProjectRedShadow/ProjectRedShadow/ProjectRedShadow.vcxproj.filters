@@ -37,6 +37,12 @@
     <Filter Include="Shaders\Geometry">
       <UniqueIdentifier>{734e9404-aed9-4d4f-bce8-256cc60d92ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\IO">
+      <UniqueIdentifier>{0f6f31e3-96c9-4ecc-8754-16563b4f9583}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO">
+      <UniqueIdentifier>{12d9fbf3-5768-4c05-b35d-784a92f2490e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -66,6 +72,9 @@
     <ClCompile Include="SoundTest.cpp">
       <Filter>Source Files\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="FileLoader.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gamewindow.h">
@@ -94,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="SoundTest.h">
       <Filter>Header Files\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="FileLoader.h">
+      <Filter>Header Files\IO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

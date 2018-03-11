@@ -7,10 +7,17 @@
 class Space
 {
 public:
+	struct WorldObject
+	{
+		ObjModel* objModel;
+		std::string name;
+		float vector[3];
+	};
 	Space();
 	Player player = Player();
 	Sound *music = nullptr;
 	ObjModel *building;
+	std::vector<WorldObject> worldModels;
 	std::vector<ObjModel*> previewModels;
 	void NextModel();
 	void PreviousModel();

@@ -56,7 +56,6 @@ void Idle()
 
 void Display()
 {
-	gamewindow->Setup();
 	gamewindow->Display();
 }
 

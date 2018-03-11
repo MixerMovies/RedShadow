@@ -14,7 +14,6 @@ class Gamewindow
 public:
 	Gamewindow(Space* space);
 	~Gamewindow();
-	void Setup();
 	void Display();
 	void NextShader();
 	void PreviousShader();

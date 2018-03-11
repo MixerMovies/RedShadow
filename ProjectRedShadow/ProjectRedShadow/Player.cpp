@@ -2,7 +2,9 @@
 
 #include "Player.h"
 #include <math.h>
-
+#include "glm.hpp"
+#include "gtc/matrix_transform.hpp"
+#include "gtc/type_ptr.hpp"
 
 Player::Player()
 {
@@ -39,23 +41,33 @@ void Player::move(int elapsedTime)
 {
 	if (movingForward)
 	{
-		position[0] += (float)0.05 * elapsedTime * sin(rotation[1] / 180 * M_PI);
-		position[1] -= (float)0.05 * elapsedTime * sin(rotation[0] / 180 * M_PI);
-		position[2] -= (float)0.05 * elapsedTime * cos((rotation[1] + rotation[0]) / 180 * M_PI);
+		glm::mat4 rotMat = glm::translate(glm::mat4(), position);
+		rotMat = glm::rotate(rotMat, rotation.x, glm::vec3(1, 0, 0));
+		rotMat = glm::rotate(rotMat, -rotation.y, glm::vec3(0, 1, 0));
+		rotMat = glm::rotate(rotMat, rotation.z, glm::vec3(0, 0, 1));
+		rotMat = glm::translate(rotMat, glm::vec3(0, 0, -0.1 * elapsedTime));
+		
+		glm::vec4 pos = rotMat * glm::vec4(0, 0, 0, 1);
+		position = glm::vec3(pos.x, pos.y, pos.z);
 	}
 	else if (movingBackward)
 	{
-		position[0] -= (float)0.05 * elapsedTime * sin(rotation[1] / 180 * M_PI);
-		position[1] += (float)0.05 * elapsedTime * sin(rotation[0] / 180 * M_PI);
-		position[2] += (float)0.05 * elapsedTime * cos((rotation[1] + rotation[0]) / 180 * M_PI);
+		glm::mat4 rotMat = glm::translate(glm::mat4(), position);
+		rotMat = glm::rotate(rotMat, rotation.x, glm::vec3(1, 0, 0));
+		rotMat = glm::rotate(rotMat, -rotation.y, glm::vec3(0, 1, 0));
+		rotMat = glm::rotate(rotMat, rotation.z, glm::vec3(0, 0, 1));
+		rotMat = glm::translate(rotMat, glm::vec3(0, 0, 0.1 * elapsedTime));
+
+		glm::vec4 pos = rotMat * glm::vec4(0, 0, 0, 1);
+		position = glm::vec3(pos.x, pos.y, pos.z);
 	}
 	if (turningLeft)
 	{
-		rotation[1]--;
+		rotation[1] -= (float) 0.005 * elapsedTime;
 	}
 	if (turningRight)
 	{
-		rotation[1]++;
+		rotation[1] += (float) 0.005 * elapsedTime;
 	}
 }
 
