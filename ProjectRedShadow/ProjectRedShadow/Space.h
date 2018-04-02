@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Skybox.h"
 #include "Player.h"
 #include "Sound.h"
 #include "ObjModel.h"
@@ -11,13 +12,13 @@ public:
 	{
 		ObjModel* objModel;
 		std::string name;
-		float vector[3];
+		glm::vec3 vector;
 	};
 	Space();
 	Player player = Player();
 	Sound *music = nullptr;
-	ObjModel *building;
 	std::vector<WorldObject> worldModels;
+	Skybox skybox = Skybox(500, 500, 500, new ObjModel("models/Skyboxes/std-skybox.obj"));;
 	std::vector<ObjModel*> previewModels;
 	void NextModel();
 	void PreviousModel();

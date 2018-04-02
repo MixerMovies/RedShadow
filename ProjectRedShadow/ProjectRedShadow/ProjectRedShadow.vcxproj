@@ -137,6 +137,7 @@
     <ClCompile Include="ObjModel.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SoundTest.cpp" />
     <ClCompile Include="Space.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="ObjModel.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Skybox.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundTest.h" />
     <ClInclude Include="Space.h" />
