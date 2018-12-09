@@ -64,15 +64,19 @@ void KeyEvent(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case 'a':
+	case 'A':
 		space->player.turnLeft(true);
 		break;
 	case 'd':
+	case 'D':
 		space->player.turnRight(true);
 		break;
-	case'w':
+	case 'w':
+	case 'W':
 		space->player.goForward();
 		break;
 	case 's':
+	case 'S':
 		space->player.goBackward();
 		break;
 	case '[':
@@ -88,15 +92,18 @@ void KeyEvent(unsigned char key, int x, int y)
 		space->NextModel();
 		break;
 	case 'p':
+	case 'P':
 		gamewindow->postProcessingEnabled = !gamewindow->postProcessingEnabled;
 		break;
 	case 'l':
+	case 'L':
 		gamewindow->PreviousPostShader();
 		break;
 	case ';':
 		gamewindow->NextPostShader();
 		break;
 	case 't':
+	case 'T':
 		if (wireframeEnabled)
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		else
@@ -114,15 +121,19 @@ void KeyEventUp(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case 'a':
+	case 'A':
 		space->player.turnLeft(false);
 		break;
 	case 'd':
+	case 'D':
 		space->player.turnRight(false);
 		break;
 	case 'w':
+	case 'W':
 		space->player.stop();
 		break;
 	case 's':
+	case 'S':
 		space->player.stop();
 		break;
 	}
