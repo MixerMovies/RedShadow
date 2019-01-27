@@ -67,14 +67,14 @@ void Idle()
 
 void Display()
 {
-	GLuint leftEye = gamewindow->Display();
+	Gamewindow::EyeTextures eyeTextures = gamewindow->Display();
 
 	if (m_pHMD)
 	{
 		vr::VRCompositor()->WaitGetPoses(m_rTrackedDevicePose, vr::k_unMaxTrackedDeviceCount, NULL, 0);
 
-		vr::Texture_t leftEyeTexture = { (void*)(uintptr_t)leftEye, vr::TextureType_OpenGL, vr::ColorSpace::ColorSpace_Linear };
-		vr::Texture_t rightEyeTexture = { (void*)(uintptr_t)leftEye, vr::TextureType_OpenGL, vr::ColorSpace::ColorSpace_Gamma };
+		vr::Texture_t leftEyeTexture = { (void*)(uintptr_t)eyeTextures.leftEye, vr::TextureType_OpenGL, vr::ColorSpace::ColorSpace_Linear };
+		vr::Texture_t rightEyeTexture = { (void*)(uintptr_t)eyeTextures.rightEye, vr::TextureType_OpenGL, vr::ColorSpace::ColorSpace_Gamma };
 		vr::VRCompositor()->Submit(vr::Eye_Left, &leftEyeTexture);
 		vr::VRCompositor()->Submit(vr::Eye_Right, &rightEyeTexture);
 		

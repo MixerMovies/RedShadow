@@ -7,9 +7,17 @@ SoundTest test = SoundTest();
 GLuint fboTextureId;
 GLuint fboId;
 GLuint eyeLeftId;
+GLuint eyeLeftDepthId;
 GLuint eyeLeftTextureId;
 GLuint eyeLeftResolveTextureId;
 GLuint eyeLeftResolveFramebufferId;
+
+GLuint eyeRightId;
+GLuint eyeRightDepthId;
+GLuint eyeRightTextureId;
+GLuint eyeRightResolveTextureId;
+GLuint eyeRightResolveFramebufferId;
+
 Space* city;
 
 Gamewindow::Gamewindow(Space* space)
@@ -93,8 +101,15 @@ Gamewindow::Gamewindow(Space* space)
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 2048, 2048);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboId);
 
+	//Left eye VR
+
 	glGenFramebuffers(1, &eyeLeftId);
 	glBindFramebuffer(GL_FRAMEBUFFER, eyeLeftId);
+
+	glGenRenderbuffers(1, &eyeLeftDepthId);
+	glBindRenderbuffer(GL_RENDERBUFFER, eyeLeftDepthId);
+	glRenderbufferStorageMultisample(GL_RENDERBUFFER, 4, GL_DEPTH_COMPONENT, 1000, 1000);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, eyeLeftDepthId);
 
 	glGenTextures(1, &eyeLeftTextureId);
 	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, eyeLeftTextureId);
@@ -112,13 +127,40 @@ Gamewindow::Gamewindow(Space* space)
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, eyeLeftResolveTextureId, 0);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	//Right Eye VR
+
+	glGenFramebuffers(1, &eyeRightId);
+	glBindFramebuffer(GL_FRAMEBUFFER, eyeRightId);
+
+	glGenRenderbuffers(1, &eyeRightDepthId);
+	glBindRenderbuffer(GL_RENDERBUFFER, eyeRightDepthId);
+	glRenderbufferStorageMultisample(GL_RENDERBUFFER, 4, GL_DEPTH_COMPONENT, 1000, 1000);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, eyeRightDepthId);
+
+	glGenTextures(1, &eyeRightTextureId);
+	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, eyeRightTextureId);
+	glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, 4, GL_RGBA8, 1000, 1000, true);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D_MULTISAMPLE, eyeRightTextureId, 0);
+
+	glGenFramebuffers(1, &eyeRightResolveFramebufferId);
+	glBindFramebuffer(GL_FRAMEBUFFER, eyeRightResolveFramebufferId);
+
+	glGenTextures(1, &eyeRightResolveTextureId);
+	glBindTexture(GL_TEXTURE_2D, eyeRightResolveTextureId);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 1000, 1000, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, eyeRightResolveTextureId, 0);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 Gamewindow::~Gamewindow()
 {
 }
 
-GLuint Gamewindow::Display()
+Gamewindow::EyeTextures Gamewindow::Display()
 {
 	if (postProcessingEnabled)
 	{
@@ -207,13 +249,15 @@ GLuint Gamewindow::Display()
 		glDrawArrays(GL_TRIANGLES, 0, verts.size());
 	}
 
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	// Left Eye
+
 	glEnable(GL_MULTISAMPLE);
 
-	// Left Eye
 	glBindFramebuffer(GL_FRAMEBUFFER, eyeLeftId);
 	glViewport(0, 0, 1000, 1000);
-	city->skybox.draw();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//city->skybox.draw();
 
 	for (int i = 0; i < city->worldModels.size(); i++)
 	{
@@ -244,9 +288,44 @@ GLuint Gamewindow::Display()
 
 	glEnable(GL_MULTISAMPLE);
 
+	// Right Eye
+
+	glBindFramebuffer(GL_FRAMEBUFFER, eyeRightId);
+	glViewport(0, 0, 1000, 1000);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//city->skybox.draw();
+
+	for (int i = 0; i < city->worldModels.size(); i++)
+	{
+		glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].vector);													//of verplaats de camera gewoon naar achter
+		model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));											//roteer het object een beetje
+
+		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));										//roteer het object een beetje
+
+		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
+		glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
+
+		city->worldModels[i].objModel->draw();
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	glDisable(GL_MULTISAMPLE);
+
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, eyeRightId);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, eyeRightResolveFramebufferId);
+
+	glBlitFramebuffer(0, 0, 1000, 1000, 0, 0, 1000, 1000,
+		GL_COLOR_BUFFER_BIT,
+		GL_LINEAR);
+
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
 	glutSwapBuffers();
 
-	return eyeLeftResolveTextureId;
+	return EyeTextures{eyeLeftResolveTextureId, eyeRightResolveTextureId};
 }
 
 void Gamewindow::NextShader()

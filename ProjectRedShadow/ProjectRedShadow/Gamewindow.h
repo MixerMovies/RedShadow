@@ -12,9 +12,15 @@
 class Gamewindow
 {
 public:
+	struct EyeTextures
+	{
+		GLuint leftEye;
+		GLuint rightEye;
+	};
+
 	Gamewindow(Space* space);
 	~Gamewindow();
-	GLuint Display();
+	EyeTextures Display();
 	void NextShader();
 	void PreviousShader();
 	void NextPostShader();
