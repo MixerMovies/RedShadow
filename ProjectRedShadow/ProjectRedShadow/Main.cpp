@@ -4,18 +4,25 @@
 #include "Space.h"
 #include <iostream>
 
+#include <openvr.h>
+
 GLint gameWindowInt;
 Gamewindow* gamewindow;
 Space* space;
 float lastTime;
 bool wireframeEnabled = false;
 
+vr::IVRSystem *m_pHMD;
+vr::TrackedDevicePose_t m_rTrackedDevicePose[vr::k_unMaxTrackedDeviceCount];
+
 void Init();
 void Idle();
+void HandleVRInput();
 void Display();
 void KeyEvent(unsigned char, int, int);
 void KeyEventUp(unsigned char, int, int);
 void SpecialKeyEvent(int, int, int);
+void StartVR();
 
 #ifdef WIN32
 void GLAPIENTRY onDebug(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
@@ -46,6 +53,10 @@ void Idle()
 	float time = glutGet(GLUT_ELAPSED_TIME);
 	float elapsed = time - lastTime;
 
+	if (m_pHMD)
+	{
+		HandleVRInput();
+	}
 
 	gamewindow->rotation += elapsed / 1000.0f;
 
@@ -56,7 +67,18 @@ void Idle()
 
 void Display()
 {
-	gamewindow->Display();
+	GLuint leftEye = gamewindow->Display();
+
+	if (m_pHMD)
+	{
+		vr::VRCompositor()->WaitGetPoses(m_rTrackedDevicePose, vr::k_unMaxTrackedDeviceCount, NULL, 0);
+
+		vr::Texture_t leftEyeTexture = { (void*)(uintptr_t)leftEye, vr::TextureType_OpenGL, vr::ColorSpace::ColorSpace_Linear };
+		vr::Texture_t rightEyeTexture = { (void*)(uintptr_t)leftEye, vr::TextureType_OpenGL, vr::ColorSpace::ColorSpace_Gamma };
+		vr::VRCompositor()->Submit(vr::Eye_Left, &leftEyeTexture);
+		vr::VRCompositor()->Submit(vr::Eye_Right, &rightEyeTexture);
+		
+	}
 }
 
 void KeyEvent(unsigned char key, int x, int y)
@@ -110,10 +132,36 @@ void KeyEvent(unsigned char key, int x, int y)
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		wireframeEnabled = !wireframeEnabled;
 		break;
+	case 'v':
+	case 'V':
+		StartVR();
+		break;
 	case 27:
 		exit(0);
 		break;
 	}
+}
+
+void StartVR()
+{
+	vr::EVRInitError eError = vr::VRInitError_None;
+	m_pHMD = vr::VR_Init(&eError, vr::VRApplication_Scene);
+
+	if (eError != vr::VRInitError_None)
+	{
+		m_pHMD = NULL;
+		char buf[1024];
+		sprintf_s(buf, sizeof(buf), "Unable to init VR runtime: %s", vr::VR_GetVRInitErrorAsEnglishDescription(eError));
+	}
+
+	vr::EVRInitError peError = vr::VRInitError_None;
+
+	if (!vr::VRCompositor())
+	{
+		printf("Compositor initialization failed. See log file for details\n");
+	}
+
+	vr::VRCompositor()->ShowMirrorWindow();
 }
 
 void KeyEventUp(unsigned char key, int x, int y)
@@ -149,6 +197,11 @@ void SpecialKeyEvent(int key, int x, int y)
 	}
 }
 
+void HandleVRInput()
+{
+	//vr::VRInput()->TriggerHapticVibrationAction(m_rHand[Left].m_actionHaptic, 0, 1, 4.f, 1.0f, vr::k_ulInvalidInputValueHandle);
+}
+
 void reshape(int newWidth, int newHeight)
 {
 	gamewindow->screenSize.x = newWidth;
@@ -158,7 +211,8 @@ void reshape(int newWidth, int newHeight)
 
 int main(int argc, char *argv[])
 {
-	
+	StartVR();
+
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInit(&argc, argv);
 

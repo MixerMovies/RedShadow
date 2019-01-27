@@ -14,7 +14,7 @@ class Gamewindow
 public:
 	Gamewindow(Space* space);
 	~Gamewindow();
-	void Display();
+	GLuint Display();
 	void NextShader();
 	void PreviousShader();
 	void NextPostShader();

@@ -6,6 +6,10 @@
 SoundTest test = SoundTest();
 GLuint fboTextureId;
 GLuint fboId;
+GLuint eyeLeftId;
+GLuint eyeLeftTextureId;
+GLuint eyeLeftResolveTextureId;
+GLuint eyeLeftResolveFramebufferId;
 Space* city;
 
 Gamewindow::Gamewindow(Space* space)
@@ -18,7 +22,7 @@ Gamewindow::Gamewindow(Space* space)
 	city->previewModels.push_back(dragon);
 	
 	city->music = test.LoadSound("Sound/OdeToJoy(Remix).wav");
-	//city->music->Play();
+	city->music->Play();
 
 	//basic shaders
 	Shader* shader = new Shader("Shaders/texture.vs", "Shaders/texture.fs", "Shaders/standard.gs");
@@ -89,6 +93,24 @@ Gamewindow::Gamewindow(Space* space)
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 2048, 2048);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboId);
 
+	glGenFramebuffers(1, &eyeLeftId);
+	glBindFramebuffer(GL_FRAMEBUFFER, eyeLeftId);
+
+	glGenTextures(1, &eyeLeftTextureId);
+	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, eyeLeftTextureId);
+	glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, 4, GL_RGBA8, 1000, 1000, true);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D_MULTISAMPLE, eyeLeftTextureId, 0);
+
+	glGenFramebuffers(1, &eyeLeftResolveFramebufferId);
+	glBindFramebuffer(GL_FRAMEBUFFER, eyeLeftResolveFramebufferId);
+
+	glGenTextures(1, &eyeLeftResolveTextureId);
+	glBindTexture(GL_TEXTURE_2D, eyeLeftResolveTextureId);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 1000, 1000, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, eyeLeftResolveTextureId, 0);
+
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
@@ -96,7 +118,7 @@ Gamewindow::~Gamewindow()
 {
 }
 
-void Gamewindow::Display()
+GLuint Gamewindow::Display()
 {
 	if (postProcessingEnabled)
 	{
@@ -185,7 +207,46 @@ void Gamewindow::Display()
 		glDrawArrays(GL_TRIANGLES, 0, verts.size());
 	}
 
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glEnable(GL_MULTISAMPLE);
+
+	// Left Eye
+	glBindFramebuffer(GL_FRAMEBUFFER, eyeLeftId);
+	glViewport(0, 0, 1000, 1000);
+	city->skybox.draw();
+
+	for (int i = 0; i < city->worldModels.size(); i++)
+	{
+		glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].vector);													//of verplaats de camera gewoon naar achter
+		model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));											//roteer het object een beetje
+
+		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));										//roteer het object een beetje
+
+		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
+		glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
+
+		city->worldModels[i].objModel->draw();
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	glDisable(GL_MULTISAMPLE);
+
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, eyeLeftId);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, eyeLeftResolveFramebufferId);
+
+	glBlitFramebuffer(0, 0, 1000, 1000, 0, 0, 1000, 1000,
+		GL_COLOR_BUFFER_BIT,
+		GL_LINEAR);
+
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+	glEnable(GL_MULTISAMPLE);
+
 	glutSwapBuffers();
+
+	return eyeLeftResolveTextureId;
 }
 
 void Gamewindow::NextShader()
