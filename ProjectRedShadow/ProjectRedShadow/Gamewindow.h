@@ -8,6 +8,7 @@
 #include <vector>
 #include "Space.h"
 #pragma comment(lib, "glew32.lib")
+#include <openvr.h>
 
 class Gamewindow
 {
@@ -18,7 +19,7 @@ public:
 		GLuint rightEye;
 	};
 
-	Gamewindow(Space* space);
+	Gamewindow(Space* space, vr::IVRSystem* vrSystem);
 	~Gamewindow();
 	EyeTextures Display();
 	void NextShader();

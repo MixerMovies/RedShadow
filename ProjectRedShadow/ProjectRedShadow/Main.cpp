@@ -12,8 +12,7 @@ Space* space;
 float lastTime;
 bool wireframeEnabled = false;
 
-vr::IVRSystem *m_pHMD;
-vr::TrackedDevicePose_t m_rTrackedDevicePose[vr::k_unMaxTrackedDeviceCount];
+vr::IVRSystem *ivrSystem;
 
 void Init();
 void Idle();
@@ -53,7 +52,7 @@ void Idle()
 	float time = glutGet(GLUT_ELAPSED_TIME);
 	float elapsed = time - lastTime;
 
-	if (m_pHMD)
+	if (ivrSystem)
 	{
 		HandleVRInput();
 	}
@@ -69,10 +68,8 @@ void Display()
 {
 	Gamewindow::EyeTextures eyeTextures = gamewindow->Display();
 
-	if (m_pHMD)
+	if (ivrSystem)
 	{
-		vr::VRCompositor()->WaitGetPoses(m_rTrackedDevicePose, vr::k_unMaxTrackedDeviceCount, NULL, 0);
-
 		vr::Texture_t leftEyeTexture = { (void*)(uintptr_t)eyeTextures.leftEye, vr::TextureType_OpenGL, vr::ColorSpace::ColorSpace_Linear };
 		vr::Texture_t rightEyeTexture = { (void*)(uintptr_t)eyeTextures.rightEye, vr::TextureType_OpenGL, vr::ColorSpace::ColorSpace_Gamma };
 		vr::VRCompositor()->Submit(vr::Eye_Left, &leftEyeTexture);
@@ -145,11 +142,11 @@ void KeyEvent(unsigned char key, int x, int y)
 void StartVR()
 {
 	vr::EVRInitError eError = vr::VRInitError_None;
-	m_pHMD = vr::VR_Init(&eError, vr::VRApplication_Scene);
+	ivrSystem = vr::VR_Init(&eError, vr::VRApplication_Scene);
 
 	if (eError != vr::VRInitError_None)
 	{
-		m_pHMD = NULL;
+		ivrSystem = NULL;
 		char buf[1024];
 		sprintf_s(buf, sizeof(buf), "Unable to init VR runtime: %s", vr::VR_GetVRInitErrorAsEnglishDescription(eError));
 	}
@@ -227,7 +224,7 @@ int main(int argc, char *argv[])
 	Init();
 
 	space = new Space();
-	gamewindow = new Gamewindow(space);
+	gamewindow = new Gamewindow(space, ivrSystem);
 
 	glutMainLoop();
 }
