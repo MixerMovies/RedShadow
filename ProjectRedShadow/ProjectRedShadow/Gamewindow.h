@@ -21,11 +21,13 @@ public:
 
 	Gamewindow(Space* space, vr::IVRSystem* vrSystem);
 	~Gamewindow();
+	void initVRShaders();
 	EyeTextures Display();
 	void NextShader();
 	void PreviousShader();
 	void NextPostShader();
 	void PreviousPostShader();
+	void setVRSystem(vr::IVRSystem*);
 	std::vector<Shader*> shaders;
 	std::vector<Shader*> postProcessingShaders;
 	int currentshader = 0;

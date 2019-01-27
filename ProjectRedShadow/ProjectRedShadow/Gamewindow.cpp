@@ -112,6 +112,15 @@ Gamewindow::Gamewindow(Space* space, vr::IVRSystem* vrSystem)
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 2048, 2048);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboId);
 
+	initVRShaders();
+}
+
+Gamewindow::~Gamewindow()
+{
+}
+
+void Gamewindow::initVRShaders()
+{
 	//Left eye VR
 
 	glGenFramebuffers(1, &eyeLeftId);
@@ -165,10 +174,6 @@ Gamewindow::Gamewindow(Space* space, vr::IVRSystem* vrSystem)
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, eyeRightResolveTextureId, 0);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-}
-
-Gamewindow::~Gamewindow()
-{
 }
 
 //-----------------------------------------------------------------------------
@@ -260,8 +265,6 @@ void UpdateHMDMatrixPose()
 
 Gamewindow::EyeTextures Gamewindow::Display()
 {
-	
-
 	if (postProcessingEnabled)
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, fboId);
@@ -347,110 +350,113 @@ Gamewindow::EyeTextures Gamewindow::Display()
 		glDrawArrays(GL_TRIANGLES, 0, verts.size());
 	}
 
-	// Left Eye
-
-	glEnable(GL_MULTISAMPLE);
-
-	glBindFramebuffer(GL_FRAMEBUFFER, eyeLeftId);
-	glViewport(0, 0, 1000, 1000);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glm::mat4 projection2 = GetHMDMatrixProjectionEye(vr::Eye_Left);
-	glm::mat4 view2 = GetHMDMatrixPoseEye(vr::Eye_Left) * inverse(m_mat4HMDPose);
-
-	view2 = glm::rotate(view2, city->player.rotation[1], { 0, 1, 0 });
-	view2 = glm::translate(view2, city->player.position);
-
-	glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("viewMatrix"), 1, 0, glm::value_ptr(view2));
-	glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("projectionMatrix"), 1, 0, glm::value_ptr(projection2));
-	
-	//city->skybox.draw();
-
-	for (int i = 0; i < city->worldModels.size(); i++)
+	if (m_pHMD)
 	{
-		glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].vector);													//of verplaats de camera gewoon naar achter
-		model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));											//roteer het object een beetje
+		// Left Eye
 
-		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));										//roteer het object een beetje
+		glEnable(GL_MULTISAMPLE);
 
-		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
-		glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
+		glBindFramebuffer(GL_FRAMEBUFFER, eyeLeftId);
+		glViewport(0, 0, 1000, 1000);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		city->worldModels[i].objModel->draw();
+		glm::mat4 projection2 = GetHMDMatrixProjectionEye(vr::Eye_Left);
+		glm::mat4 view2 = GetHMDMatrixPoseEye(vr::Eye_Left) * inverse(m_mat4HMDPose);
+
+		view2 = glm::rotate(view2, city->player.rotation[1], { 0, 1, 0 });
+		view2 = glm::translate(view2, city->player.position);
+
+		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("viewMatrix"), 1, 0, glm::value_ptr(view2));
+		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("projectionMatrix"), 1, 0, glm::value_ptr(projection2));
+
+		//city->skybox.draw();
+
+		for (int i = 0; i < city->worldModels.size(); i++)
+		{
+			glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].vector);													//of verplaats de camera gewoon naar achter
+			model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));											//roteer het object een beetje
+
+			glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));										//roteer het object een beetje
+
+			glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
+			glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
+
+			city->worldModels[i].objModel->draw();
+		}
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		glDisable(GL_MULTISAMPLE);
+
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, eyeLeftId);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, eyeLeftResolveFramebufferId);
+
+		glBlitFramebuffer(0, 0, 1000, 1000, 0, 0, 1000, 1000,
+			GL_COLOR_BUFFER_BIT,
+			GL_LINEAR);
+
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+		glEnable(GL_MULTISAMPLE);
+
+		// Right Eye
+
+		glBindFramebuffer(GL_FRAMEBUFFER, eyeRightId);
+		glViewport(0, 0, 1000, 1000);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		glm::mat4 projection3 = GetHMDMatrixProjectionEye(vr::Eye_Right) * inverse(m_mat4HMDPose);
+		glm::mat4 view3 = GetHMDMatrixPoseEye(vr::Eye_Right);
+
+		view3 = glm::rotate(view3, city->player.rotation[1], { 0, 1, 0 });
+		view3 = glm::translate(view3, city->player.position);
+
+		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("viewMatrix"), 1, 0, glm::value_ptr(view3));
+		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("projectionMatrix"), 1, 0, glm::value_ptr(projection3));
+
+		//city->skybox.draw();
+
+		for (int i = 0; i < city->worldModels.size(); i++)
+		{
+			glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].vector);													//of verplaats de camera gewoon naar achter
+			model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));											//roteer het object een beetje
+
+			glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));										//roteer het object een beetje
+
+			glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
+			glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
+
+			city->worldModels[i].objModel->draw();
+		}
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		glDisable(GL_MULTISAMPLE);
+
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, eyeRightId);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, eyeRightResolveFramebufferId);
+
+		glBlitFramebuffer(0, 0, 1000, 1000, 0, 0, 1000, 1000,
+			GL_COLOR_BUFFER_BIT,
+			GL_LINEAR);
+
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+		vr::VRCompositor()->WaitGetPoses(m_rTrackedDevicePose, vr::k_unMaxTrackedDeviceCount, NULL, 0);
+
+		UpdateHMDMatrixPose();
 	}
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	glDisable(GL_MULTISAMPLE);
-
-	glBindFramebuffer(GL_READ_FRAMEBUFFER, eyeLeftId);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, eyeLeftResolveFramebufferId);
-
-	glBlitFramebuffer(0, 0, 1000, 1000, 0, 0, 1000, 1000,
-		GL_COLOR_BUFFER_BIT,
-		GL_LINEAR);
-
-	glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-
-	glEnable(GL_MULTISAMPLE);
-
-	// Right Eye
-
-	glBindFramebuffer(GL_FRAMEBUFFER, eyeRightId);
-	glViewport(0, 0, 1000, 1000);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glm::mat4 projection3 = GetHMDMatrixProjectionEye(vr::Eye_Right) * inverse(m_mat4HMDPose);
-	glm::mat4 view3 = GetHMDMatrixPoseEye(vr::Eye_Right);
-
-	view3 = glm::rotate(view3, city->player.rotation[1], { 0, 1, 0 });
-	view3 = glm::translate(view3, city->player.position);
-
-	glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("viewMatrix"), 1, 0, glm::value_ptr(view3));
-	glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("projectionMatrix"), 1, 0, glm::value_ptr(projection3));
-
-	//city->skybox.draw();
-
-	for (int i = 0; i < city->worldModels.size(); i++)
-	{
-		glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].vector);													//of verplaats de camera gewoon naar achter
-		model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));											//roteer het object een beetje
-
-		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));										//roteer het object een beetje
-
-		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
-		glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
-
-		city->worldModels[i].objModel->draw();
-	}
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	glDisable(GL_MULTISAMPLE);
-
-	glBindFramebuffer(GL_READ_FRAMEBUFFER, eyeRightId);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, eyeRightResolveFramebufferId);
-
-	glBlitFramebuffer(0, 0, 1000, 1000, 0, 0, 1000, 1000,
-		GL_COLOR_BUFFER_BIT,
-		GL_LINEAR);
-
-	glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
 	glutSwapBuffers();
 
-	vr::VRCompositor()->WaitGetPoses(m_rTrackedDevicePose, vr::k_unMaxTrackedDeviceCount, NULL, 0);
-
-	UpdateHMDMatrixPose();
-
 	//Framerate
 	int newTime = glutGet(GLUT_ELAPSED_TIME);
-	std::cout << 1000 / (newTime - currentTime) << std::endl;
+	if(newTime - currentTime > 0) std::cout << 1000.0f / (newTime - currentTime) << std::endl;
 	currentTime = newTime;
 
-	return EyeTextures{eyeLeftResolveTextureId, eyeRightResolveTextureId};
+	return EyeTextures{ eyeLeftResolveTextureId, eyeRightResolveTextureId };
 }
 
 void Gamewindow::NextShader()
@@ -471,4 +477,9 @@ void Gamewindow::NextPostShader()
 void Gamewindow::PreviousPostShader()
 {
 	currentPostShader = (currentPostShader + postProcessingShaders.size() - 1) % postProcessingShaders.size();
+}
+
+void Gamewindow::setVRSystem(vr::IVRSystem * ivrSystem)
+{
+	m_pHMD = ivrSystem;
 }

@@ -159,6 +159,8 @@ void StartVR()
 	}
 
 	vr::VRCompositor()->ShowMirrorWindow();
+
+	gamewindow->setVRSystem(ivrSystem);
 }
 
 void KeyEventUp(unsigned char key, int x, int y)
@@ -208,8 +210,6 @@ void reshape(int newWidth, int newHeight)
 
 int main(int argc, char *argv[])
 {
-	StartVR();
-
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInit(&argc, argv);
 
