@@ -293,15 +293,12 @@ Gamewindow::EyeTextures Gamewindow::Display()
 	glUniform1f(shaders[currentshader]->getUniformLocation("ambient"), 0.2f);
 	glUniform1f(shaders[currentshader]->getUniformLocation("shininess"), 10);
 	glUniform1f(shaders[currentshader]->getUniformLocation("alpha"), 0.5f);
-	/*glRotatef(Space::Instance()->player.rotation[0], 1, 0, 0);
-	glRotatef(Space::Instance()->player.rotation[1], 0, 1, 0);
-	glRotatef(Space::Instance()->player.rotation[2], 0, 0, 1);
-	glTranslatef(Space::Instance()->player.position[0], Space::Instance()->player.position[1], Space::Instance()->player.position[2]);*/
 
 	for (int i = 0; i < city->worldModels.size(); i++)
 	{
-		glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].vector);													//of verplaats de camera gewoon naar achter
-		model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));											//roteer het object een beetje
+		glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].location);													//of verplaats de camera gewoon naar achter
+		model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));																			//roteer het object een beetje
+		model = glm::scale(model, glm::vec3( city->worldModels[i].scale.x, city->worldModels[i].scale.y, city->worldModels[i].scale.z));			//scale object
 
 		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));										//roteer het object een beetje
 
@@ -373,8 +370,9 @@ Gamewindow::EyeTextures Gamewindow::Display()
 
 		for (int i = 0; i < city->worldModels.size(); i++)
 		{
-			glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].vector);													//of verplaats de camera gewoon naar achter
-			model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));											//roteer het object een beetje
+			glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].location);													//of verplaats de camera gewoon naar achter
+			model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));										//roteer het object een beetje
+			model = glm::scale(model, glm::vec3(city->worldModels[i].scale.x, city->worldModels[i].scale.y, city->worldModels[i].scale.z));			//scale object
 
 			glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));										//roteer het object een beetje
 
@@ -419,8 +417,9 @@ Gamewindow::EyeTextures Gamewindow::Display()
 
 		for (int i = 0; i < city->worldModels.size(); i++)
 		{
-			glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].vector);													//of verplaats de camera gewoon naar achter
+			glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].location);													//of verplaats de camera gewoon naar achter
 			model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));											//roteer het object een beetje
+			model = glm::scale(model, glm::vec3(city->worldModels[i].scale.x, city->worldModels[i].scale.y, city->worldModels[i].scale.z));			//scale object
 
 			glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));										//roteer het object een beetje
 

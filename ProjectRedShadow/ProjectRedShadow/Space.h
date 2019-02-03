@@ -12,7 +12,8 @@ public:
 	{
 		ObjModel* objModel;
 		std::string name;
-		glm::vec3 vector;
+		glm::vec3 location;
+		glm::vec3 scale;
 	};
 	Space();
 	Player player = Player();

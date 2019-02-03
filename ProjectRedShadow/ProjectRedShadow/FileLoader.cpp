@@ -18,7 +18,7 @@ void FileLoader::loadMap(std::string mapLocation, Space* space)
 		{
 			std::vector<std::string> data = std::vector<std::string>();
 			std::stringstream sstream(element);
-			while (std::getline(sstream, element, '-'))
+			while (std::getline(sstream, element, '|'))
 			{
 				data.push_back(element);
 			}
@@ -30,7 +30,14 @@ void FileLoader::loadMap(std::string mapLocation, Space* space)
 			int i = 0;
 			while (std::getline(vstream, element, ','))
 			{
-				worldObject.vector[i] = stof(element);
+				worldObject.location[i] = stof(element);
+				i++;
+			}
+			std::stringstream vstream2(data[3]);
+			i = 0;
+			while (std::getline(vstream2, element, ','))
+			{
+				worldObject.scale[i] = stof(element);
 				i++;
 			}
 			space->worldModels.push_back(worldObject);

@@ -235,5 +235,6 @@
     <None Include="Shaders\scope.fs">
       <Filter>Shaders\Post</Filter>
     </None>
+    <None Include="maps\TowerCity.map" />
   </ItemGroup>
 </Project>
