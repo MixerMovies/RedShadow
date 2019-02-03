@@ -444,8 +444,6 @@ Gamewindow::EyeTextures Gamewindow::Display()
 		glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
-		vr::VRCompositor()->WaitGetPoses(m_rTrackedDevicePose, vr::k_unMaxTrackedDeviceCount, NULL, 0);
-
 		UpdateHMDMatrixPose();
 	}
 
@@ -453,7 +451,7 @@ Gamewindow::EyeTextures Gamewindow::Display()
 
 	//Framerate
 	int newTime = glutGet(GLUT_ELAPSED_TIME);
-	if(newTime - currentTime > 0) std::cout << 1000.0f / (newTime - currentTime) << std::endl;
+	if(newTime - currentTime > 0) std::cout << 1000.0f / float(newTime - currentTime) << std::endl;
 	currentTime = newTime;
 
 	return EyeTextures{ eyeLeftResolveTextureId, eyeRightResolveTextureId };
