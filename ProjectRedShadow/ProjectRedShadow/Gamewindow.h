@@ -28,6 +28,7 @@ public:
 	void NextPostShader();
 	void PreviousPostShader();
 	void setVRSystem(vr::IVRSystem*);
+	void RenderWorld(glm::mat4);
 	std::vector<Shader*> shaders;
 	std::vector<Shader*> postProcessingShaders;
 	int currentshader = 0;

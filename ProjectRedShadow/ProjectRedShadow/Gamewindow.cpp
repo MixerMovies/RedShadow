@@ -41,7 +41,7 @@ Gamewindow::Gamewindow(Space* space, vr::IVRSystem* vrSystem)
 	city->previewModels.push_back(dragon);
 	
 	city->music = test.LoadSound("Sound/OdeToJoy(Remix).wav");
-	city->music->Play();
+	//city->music->Play();
 
 	//basic shaders
 	Shader* shader = new Shader("Shaders/texture.vs", "Shaders/texture.fs", "Shaders/standard.gs");
@@ -79,8 +79,8 @@ Gamewindow::Gamewindow(Space* space, vr::IVRSystem* vrSystem)
 	postProcessingShaders.push_back(pShader6);
 	Shader* pShader7 = new Shader("Shaders/screenwarp.vs", "Shaders/screenwarp.fs", "Shaders/standardpost.gs");
 	postProcessingShaders.push_back(pShader7);
-	Shader* pShader8 = new Shader("Shaders/colourwarp.vs", "Shaders/colourwarp.fs", "Shaders/standardpost.gs");
-	postProcessingShaders.push_back(pShader8);
+	//Shader* pShader8 = new Shader("Shaders/colourwarp.vs", "Shaders/colourwarp.fs", "Shaders/standardpost.gs");
+	//postProcessingShaders.push_back(pShader8);
 	Shader* pShader9 = new Shader("Shaders/scope.vs", "Shaders/scope.fs", "Shaders/standardpost.gs");
 	postProcessingShaders.push_back(pShader9);
 
@@ -263,6 +263,23 @@ void UpdateHMDMatrixPose()
 	}
 }
 
+void Gamewindow::RenderWorld(glm::mat4 view)
+{
+	for (int i = 0; i < city->worldModels.size(); i++)
+	{
+		glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].location);													//of verplaats de camera gewoon naar achter
+		model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));																			//roteer het object een beetje
+		model = glm::scale(model, glm::vec3(city->worldModels[i].scale.x, city->worldModels[i].scale.y, city->worldModels[i].scale.z));			//scale object
+
+		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));										//roteer het object een beetje
+
+		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
+		glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
+
+		city->worldModels[i].objModel->draw();
+	}
+}
+
 Gamewindow::EyeTextures Gamewindow::Display()
 {
 	if (postProcessingEnabled)
@@ -294,19 +311,7 @@ Gamewindow::EyeTextures Gamewindow::Display()
 	glUniform1f(shaders[currentshader]->getUniformLocation("shininess"), 10);
 	glUniform1f(shaders[currentshader]->getUniformLocation("alpha"), 0.5f);
 
-	for (int i = 0; i < city->worldModels.size(); i++)
-	{
-		glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].location);													//of verplaats de camera gewoon naar achter
-		model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));																			//roteer het object een beetje
-		model = glm::scale(model, glm::vec3( city->worldModels[i].scale.x, city->worldModels[i].scale.y, city->worldModels[i].scale.z));			//scale object
-
-		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));										//roteer het object een beetje
-
-		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
-		glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
-
-		city->worldModels[i].objModel->draw();
-	}
+	RenderWorld(view);
 
 	glm::mat4 model = glm::translate(glm::mat4(), glm::vec3(0, 0, 0));													//of verplaats de camera gewoon naar achter										//roteer het object een beetje
 	model = glm::scale(model, glm::vec3(city->skybox.x, city->skybox.y, city->skybox.z));
@@ -368,19 +373,7 @@ Gamewindow::EyeTextures Gamewindow::Display()
 
 		//city->skybox.draw();
 
-		for (int i = 0; i < city->worldModels.size(); i++)
-		{
-			glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].location);													//of verplaats de camera gewoon naar achter
-			model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));										//roteer het object een beetje
-			model = glm::scale(model, glm::vec3(city->worldModels[i].scale.x, city->worldModels[i].scale.y, city->worldModels[i].scale.z));			//scale object
-
-			glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));										//roteer het object een beetje
-
-			glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
-			glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
-
-			city->worldModels[i].objModel->draw();
-		}
+		RenderWorld(view);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -415,19 +408,7 @@ Gamewindow::EyeTextures Gamewindow::Display()
 
 		//city->skybox.draw();
 
-		for (int i = 0; i < city->worldModels.size(); i++)
-		{
-			glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].location);													//of verplaats de camera gewoon naar achter
-			model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));											//roteer het object een beetje
-			model = glm::scale(model, glm::vec3(city->worldModels[i].scale.x, city->worldModels[i].scale.y, city->worldModels[i].scale.z));			//scale object
-
-			glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));										//roteer het object een beetje
-
-			glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
-			glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
-
-			city->worldModels[i].objModel->draw();
-		}
+		RenderWorld(view);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -449,9 +430,9 @@ Gamewindow::EyeTextures Gamewindow::Display()
 	glutSwapBuffers();
 
 	//Framerate
-	int newTime = glutGet(GLUT_ELAPSED_TIME);
-	if(newTime - currentTime > 0) std::cout << 1000.0f / float(newTime - currentTime) << std::endl;
-	currentTime = newTime;
+	//int newTime = glutGet(GLUT_ELAPSED_TIME);
+	//if(newTime - currentTime > 0) std::cout << 1000.0f / float(newTime - currentTime) << std::endl;
+	//currentTime = newTime;
 
 	return EyeTextures{ eyeLeftResolveTextureId, eyeRightResolveTextureId };
 }

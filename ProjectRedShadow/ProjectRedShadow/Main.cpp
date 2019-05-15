@@ -14,6 +14,24 @@ bool wireframeEnabled = false;
 
 vr::IVRSystem *ivrSystem;
 
+struct ControllerInfo_t
+{
+	vr::VRInputValueHandle_t m_source = vr::k_ulInvalidInputValueHandle;
+	vr::VRActionHandle_t m_actionShock = vr::k_ulInvalidActionHandle;
+	vr::VRActionHandle_t m_actionWireframe = vr::k_ulInvalidActionHandle;
+	glm::mat4 m_rmat4Pose;
+	ObjModel *m_pRenderModel = nullptr;
+	std::string m_sRenderModelName;
+	bool m_bShowController;
+};
+
+enum EHand
+{
+	Left = 0,
+	Right = 1,
+};
+ControllerInfo_t m_rHand[2];
+
 void Init();
 void Idle();
 void HandleVRInput();
@@ -21,6 +39,7 @@ void Display();
 void KeyEvent(unsigned char, int, int);
 void KeyEventUp(unsigned char, int, int);
 void SpecialKeyEvent(int, int, int);
+void ProcessVREvent(const vr::VREvent_t&);
 void StartVR();
 
 #ifdef WIN32
@@ -121,6 +140,10 @@ void KeyEvent(unsigned char key, int x, int y)
 	case ';':
 		gamewindow->NextPostShader();
 		break;
+	case '-':
+		vr::VRInput()->TriggerHapticVibrationAction(m_rHand[Left].m_actionShock, 0, 2, 4, 1, vr::k_ulInvalidInputValueHandle);
+		vr::VRInput()->TriggerHapticVibrationAction(m_rHand[Right].m_actionShock, 0, 2, 4, 1, vr::k_ulInvalidInputValueHandle);
+		break;
 	case 't':
 	case 'T':
 		if (wireframeEnabled)
@@ -158,6 +181,16 @@ void StartVR()
 		printf("Compositor initialization failed. See log file for details\n");
 	}
 
+	vr::VRInput()->SetActionManifestPath("C:\\vr_bindings.json");
+
+	vr::VRInput()->GetActionHandle("/actions/main/in/Wireframe", &m_rHand[Left].m_actionWireframe);
+	vr::VRInput()->GetInputSourceHandle("/user/hand/left", &m_rHand[Left].m_source);
+	vr::VRInput()->GetActionHandle("/actions/main/out/Shock", &m_rHand[Left].m_actionWireframe);
+
+	vr::VRInput()->GetActionHandle("/actions/main/in/Wireframe", &m_rHand[Right].m_actionWireframe);
+	vr::VRInput()->GetInputSourceHandle("/user/hand/right", &m_rHand[Right].m_source);
+	vr::VRInput()->GetActionHandle("/actions/main/out/Shock", &m_rHand[Right].m_actionWireframe);
+	
 	vr::VRCompositor()->ShowMirrorWindow();
 
 	gamewindow->setVRSystem(ivrSystem);
@@ -198,7 +231,15 @@ void SpecialKeyEvent(int key, int x, int y)
 
 void HandleVRInput()
 {
-	//vr::VRInput()->TriggerHapticVibrationAction(m_rHand[Left].m_actionHaptic, 0, 1, 4.f, 1.0f, vr::k_ulInvalidInputValueHandle);
+	// Process SteamVR events
+	vr::VREvent_t event;
+	while (ivrSystem->PollNextEvent(&event, sizeof(event)))
+	{
+		ProcessVREvent(event); 
+	}
+
+	vr::VRInput()->TriggerHapticVibrationAction(m_rHand[Left].m_actionShock, 0, 1, 4.f, 1.0f, vr::k_ulInvalidInputValueHandle);
+	vr::VRInput()->TriggerHapticVibrationAction(m_rHand[Right].m_actionShock, 0, 1, 4.f, 1.0f, vr::k_ulInvalidInputValueHandle);
 }
 
 void reshape(int newWidth, int newHeight)
@@ -206,6 +247,31 @@ void reshape(int newWidth, int newHeight)
 	gamewindow->screenSize.x = newWidth;
 	gamewindow->screenSize.y = newHeight;
 	glutPostRedisplay();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Processes a single VR event
+//-----------------------------------------------------------------------------
+void ProcessVREvent(const vr::VREvent_t & event)
+{
+	switch (event.eventType)
+	{
+	case vr::VREvent_TrackedDeviceDeactivated:
+	{
+		printf("Device %u detached.\n", event.trackedDeviceIndex);
+	}
+	break;
+	case vr::VREvent_TrackedDeviceUpdated:
+	{
+		printf("Device %u updated.\n", event.trackedDeviceIndex);
+	}
+	break;
+	case vr::VREvent_TrackedDeviceActivated:
+	{
+		printf("Device %u activated.\n", event.trackedDeviceIndex);
+	}
+	break;
+	}
 }
 
 int main(int argc, char *argv[])

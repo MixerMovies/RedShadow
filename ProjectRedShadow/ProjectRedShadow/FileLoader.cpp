@@ -16,6 +16,8 @@ void FileLoader::loadMap(std::string mapLocation, Space* space)
 		std::string element;
 		while (std::getline(stream, element))
 		{
+			if (element.size() < 1 || element.at(0) == '#')
+				continue;
 			std::vector<std::string> data = std::vector<std::string>();
 			std::stringstream sstream(element);
 			while (std::getline(sstream, element, '|'))
