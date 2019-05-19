@@ -17,13 +17,16 @@ vr::IVRSystem *ivrSystem;
 struct ControllerInfo_t
 {
 	vr::VRInputValueHandle_t m_source = vr::k_ulInvalidInputValueHandle;
-	vr::VRActionHandle_t m_actionShock = vr::k_ulInvalidActionHandle;
-	vr::VRActionHandle_t m_actionWireframe = vr::k_ulInvalidActionHandle;
 	glm::mat4 m_rmat4Pose;
 	ObjModel *m_pRenderModel = nullptr;
 	std::string m_sRenderModelName;
 	bool m_bShowController;
 };
+
+vr::VRActionHandle_t m_actionWireframe;
+vr::VRActionHandle_t m_actionShock;
+
+vr::VRActionSetHandle_t m_actionsetMain = vr::k_ulInvalidActionSetHandle;
 
 enum EHand
 {
@@ -141,8 +144,8 @@ void KeyEvent(unsigned char key, int x, int y)
 		gamewindow->NextPostShader();
 		break;
 	case '-':
-		vr::VRInput()->TriggerHapticVibrationAction(m_rHand[Left].m_actionShock, 0, 2, 4, 1, vr::k_ulInvalidInputValueHandle);
-		vr::VRInput()->TriggerHapticVibrationAction(m_rHand[Right].m_actionShock, 0, 2, 4, 1, vr::k_ulInvalidInputValueHandle);
+		if(ivrSystem)
+		vr::VRInput()->TriggerHapticVibrationAction(m_actionShock, 0, 2, 4, 1, vr::k_ulInvalidInputValueHandle);
 		break;
 	case 't':
 	case 'T':
@@ -181,16 +184,24 @@ void StartVR()
 		printf("Compositor initialization failed. See log file for details\n");
 	}
 
-	vr::VRInput()->SetActionManifestPath("C:\\vr_bindings.json");
+	vr::EVRInputError error = vr::VRInput()->SetActionManifestPath("C:\\Users\\Remco\\vr_bindings.json");
+	//std::cout << "Action manifest path error: " << error << std::endl;
 
-	vr::VRInput()->GetActionHandle("/actions/main/in/Wireframe", &m_rHand[Left].m_actionWireframe);
-	vr::VRInput()->GetInputSourceHandle("/user/hand/left", &m_rHand[Left].m_source);
-	vr::VRInput()->GetActionHandle("/actions/main/out/Shock", &m_rHand[Left].m_actionWireframe);
+	vr::EVRInputError error2 = vr::VRInput()->GetActionHandle("/actions/main/in/wireframe", &m_actionWireframe);
+	//std::cout << "Wireframe action error: " << error2 << std::endl;
 
-	vr::VRInput()->GetActionHandle("/actions/main/in/Wireframe", &m_rHand[Right].m_actionWireframe);
-	vr::VRInput()->GetInputSourceHandle("/user/hand/right", &m_rHand[Right].m_source);
-	vr::VRInput()->GetActionHandle("/actions/main/out/Shock", &m_rHand[Right].m_actionWireframe);
-	
+	vr::EVRInputError error3 = vr::VRInput()->GetActionHandle("/actions/main/out/shock", &m_actionShock);
+	//std::cout << "Shock action error: " << error3 << std::endl;
+
+	vr::EVRInputError error4 = vr::VRInput()->GetActionSetHandle("/actions/main", &m_actionsetMain);
+	//std::cout << "Action set error: " << error4 << std::endl;
+
+	vr::EVRInputError error5 = vr::VRInput()->GetInputSourceHandle("/user/hand/left", &m_rHand[Left].m_source);
+	//std::cout << "Left hand error: " << error5 << std::endl;
+	vr::EVRInputError error6 = vr::VRInput()->GetInputSourceHandle("/user/hand/right", &m_rHand[Right].m_source);
+	//std::cout << "Right hand error: " << error6 << std::endl;
+
+
 	vr::VRCompositor()->ShowMirrorWindow();
 
 	gamewindow->setVRSystem(ivrSystem);
@@ -229,6 +240,28 @@ void SpecialKeyEvent(int key, int x, int y)
 	}
 }
 
+//---------------------------------------------------------------------------------------------------------------------
+// Purpose: Returns true if the action is active and its state is true
+//---------------------------------------------------------------------------------------------------------------------
+bool GetDigitalActionState(vr::VRActionHandle_t action, vr::VRInputValueHandle_t *pDevicePath = nullptr)
+{
+	vr::InputDigitalActionData_t actionData;
+	vr::EVRInputError error = vr::VRInput()->GetDigitalActionData(action, &actionData, sizeof(actionData), vr::k_ulInvalidInputValueHandle);
+	if (pDevicePath)
+	{
+		*pDevicePath = vr::k_ulInvalidInputValueHandle;
+		if (actionData.bActive)
+		{
+			vr::InputOriginInfo_t originInfo;
+			if (vr::VRInputError_None == vr::VRInput()->GetOriginTrackedDeviceInfo(actionData.activeOrigin, &originInfo, sizeof(originInfo)))
+			{
+				*pDevicePath = originInfo.devicePath;
+			}
+		}
+	}
+	return actionData.bActive && actionData.bState;
+}
+
 void HandleVRInput()
 {
 	// Process SteamVR events
@@ -238,8 +271,22 @@ void HandleVRInput()
 		ProcessVREvent(event); 
 	}
 
-	vr::VRInput()->TriggerHapticVibrationAction(m_rHand[Left].m_actionShock, 0, 1, 4.f, 1.0f, vr::k_ulInvalidInputValueHandle);
-	vr::VRInput()->TriggerHapticVibrationAction(m_rHand[Right].m_actionShock, 0, 1, 4.f, 1.0f, vr::k_ulInvalidInputValueHandle);
+	vr::VRActiveActionSet_t actionSet = { 0 };
+	actionSet.ulActionSet = m_actionsetMain;
+	vr::EVRInputError error = vr::VRInput()->UpdateActionState(&actionSet, sizeof(actionSet), 1);
+	//std::cout << error << std::endl;
+
+	vr::VRInputValueHandle_t ulWireframe;
+	bool enableWireframe = GetDigitalActionState(m_actionWireframe, &ulWireframe);
+	std::cout << ulWireframe << std::endl;
+
+	for (EHand eHand = Left; eHand <= Right; ((int&)eHand)++)
+	{
+		vr::InputPoseActionData_t poseData;
+		m_rHand[eHand].m_rmat4Pose = Gamewindow::ConvertSteamVRMatrixToMatrix4(poseData.pose.mDeviceToAbsoluteTracking);
+
+
+	}
 }
 
 void reshape(int newWidth, int newHeight)

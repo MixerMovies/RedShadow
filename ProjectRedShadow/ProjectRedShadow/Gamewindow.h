@@ -29,6 +29,7 @@ public:
 	void PreviousPostShader();
 	void setVRSystem(vr::IVRSystem*);
 	void RenderWorld(glm::mat4);
+	static glm::mat4 ConvertSteamVRMatrixToMatrix4(const vr::HmdMatrix34_t &);
 	std::vector<Shader*> shaders;
 	std::vector<Shader*> postProcessingShaders;
 	int currentshader = 0;

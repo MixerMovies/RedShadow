@@ -212,7 +212,7 @@ glm::mat4 GetHMDMatrixPoseEye(vr::Hmd_Eye nEye)
 //-----------------------------------------------------------------------------
 // Purpose: Converts a SteamVR matrix to our local matrix class
 //-----------------------------------------------------------------------------
-glm::mat4 ConvertSteamVRMatrixToMatrix4(const vr::HmdMatrix34_t &matPose)
+glm::mat4 Gamewindow::ConvertSteamVRMatrixToMatrix4(const vr::HmdMatrix34_t &matPose)
 {
 	glm::mat4 matrixObj(
 		matPose.m[0][0], matPose.m[1][0], matPose.m[2][0], 0.0,
@@ -240,7 +240,7 @@ void UpdateHMDMatrixPose()
 		if (m_rTrackedDevicePose[nDevice].bPoseIsValid)
 		{
 			m_iValidPoseCount++;
-			m_rmat4DevicePose[nDevice] = ConvertSteamVRMatrixToMatrix4(m_rTrackedDevicePose[nDevice].mDeviceToAbsoluteTracking);
+			m_rmat4DevicePose[nDevice] = Gamewindow::ConvertSteamVRMatrixToMatrix4(m_rTrackedDevicePose[nDevice].mDeviceToAbsoluteTracking);
 			if (m_rDevClassChar[nDevice] == 0)
 			{
 				switch (m_pHMD->GetTrackedDeviceClass(nDevice))
