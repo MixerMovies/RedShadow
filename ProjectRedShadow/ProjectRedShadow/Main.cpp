@@ -184,7 +184,7 @@ void StartVR()
 		printf("Compositor initialization failed. See log file for details\n");
 	}
 
-	vr::EVRInputError error = vr::VRInput()->SetActionManifestPath("C:\\Users\\Remco\\vr_bindings.json");
+	vr::EVRInputError error = vr::VRInput()->SetActionManifestPath("D:\\Users\\Remco\\Documents\\Github\\RedShadow\\ProjectRedShadow\\ProjectRedShadow\\VRInput\\vr_bindings.json");
 	//std::cout << "Action manifest path error: " << error << std::endl;
 
 	vr::EVRInputError error2 = vr::VRInput()->GetActionHandle("/actions/main/in/wireframe", &m_actionWireframe);
@@ -277,8 +277,10 @@ void HandleVRInput()
 	//std::cout << error << std::endl;
 
 	vr::VRInputValueHandle_t ulWireframe;
-	bool enableWireframe = GetDigitalActionState(m_actionWireframe, &ulWireframe);
-	std::cout << ulWireframe << std::endl;
+	if (GetDigitalActionState(m_actionWireframe, &ulWireframe))
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	else
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	for (EHand eHand = Left; eHand <= Right; ((int&)eHand)++)
 	{

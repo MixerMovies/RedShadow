@@ -1,0 +1,37 @@
+{
+	"default_bindings": 
+	[
+		{
+			"controller_type": "vive_controller",
+			"binding_url": "vive_vr_controls.json"
+		}
+	],
+	"actions": 
+	[
+		{
+			"name": "/actions/main/in/wireframe",
+			"requirement": "suggested",
+			"type": "boolean"	
+		},
+		{
+			"name": "/actions/main/out/shock",
+			"requirement": "suggested",
+			"type": "vibration"
+		}
+	],
+	"action_sets": 
+	[
+		{
+			"name": "/actions/main",
+			"usage": "leftright"
+		}
+	],
+	"localization": 
+	[
+		{
+			"language_tag": "en",			
+			"/actions/main/in/wireframe": "Enable or Disable Wireframe",
+			"/actions/main/out/shock": "Use shock or vibration"
+		}
+	]
+}
