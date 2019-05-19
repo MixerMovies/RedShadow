@@ -14,6 +14,16 @@
 			"type": "boolean"	
 		},
 		{
+			"name": "/actions/main/in/previousShader",
+			"requirement": "suggested",
+			"type": "boolean"	
+		},
+		{
+			"name": "/actions/main/in/nextShader",
+			"requirement": "suggested",
+			"type": "boolean"	
+		},
+		{
 			"name": "/actions/main/out/shock",
 			"requirement": "suggested",
 			"type": "vibration"
@@ -29,7 +39,9 @@
 	"localization": 
 	[
 		{
-			"language_tag": "en",			
+			"language_tag": "en",
+			"/actions/main/in/previousShader": "Use previous shader",
+			"/actions/main/in/nextShader": "Use next shader",
 			"/actions/main/in/wireframe": "Enable or Disable Wireframe",
 			"/actions/main/out/shock": "Use shock or vibration"
 		}

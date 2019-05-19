@@ -25,6 +25,8 @@ struct ControllerInfo_t
 
 vr::VRActionHandle_t m_actionWireframe;
 vr::VRActionHandle_t m_actionShock;
+vr::VRActionHandle_t m_actionPreviousShader;
+vr::VRActionHandle_t m_actionNextShader;
 
 vr::VRActionSetHandle_t m_actionsetMain = vr::k_ulInvalidActionSetHandle;
 
@@ -34,6 +36,9 @@ enum EHand
 	Right = 1,
 };
 ControllerInfo_t m_rHand[2];
+
+bool goToPreviousShader = false;
+bool goToNextShader = false;
 
 void Init();
 void Idle();
@@ -185,22 +190,16 @@ void StartVR()
 	}
 
 	vr::EVRInputError error = vr::VRInput()->SetActionManifestPath("D:\\Users\\Remco\\Documents\\Github\\RedShadow\\ProjectRedShadow\\ProjectRedShadow\\VRInput\\vr_bindings.json");
-	//std::cout << "Action manifest path error: " << error << std::endl;
 
 	vr::EVRInputError error2 = vr::VRInput()->GetActionHandle("/actions/main/in/wireframe", &m_actionWireframe);
-	//std::cout << "Wireframe action error: " << error2 << std::endl;
-
 	vr::EVRInputError error3 = vr::VRInput()->GetActionHandle("/actions/main/out/shock", &m_actionShock);
-	//std::cout << "Shock action error: " << error3 << std::endl;
+	vr::VRInput()->GetActionHandle("/actions/main/in/previousShader", &m_actionPreviousShader);
+	vr::VRInput()->GetActionHandle("/actions/main/in/nextShader", &m_actionNextShader);
 
 	vr::EVRInputError error4 = vr::VRInput()->GetActionSetHandle("/actions/main", &m_actionsetMain);
-	//std::cout << "Action set error: " << error4 << std::endl;
 
 	vr::EVRInputError error5 = vr::VRInput()->GetInputSourceHandle("/user/hand/left", &m_rHand[Left].m_source);
-	//std::cout << "Left hand error: " << error5 << std::endl;
 	vr::EVRInputError error6 = vr::VRInput()->GetInputSourceHandle("/user/hand/right", &m_rHand[Right].m_source);
-	//std::cout << "Right hand error: " << error6 << std::endl;
-
 
 	vr::VRCompositor()->ShowMirrorWindow();
 
@@ -281,6 +280,26 @@ void HandleVRInput()
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	if (GetDigitalActionState(m_actionPreviousShader) && !goToPreviousShader)
+	{
+		gamewindow->PreviousShader();
+		goToPreviousShader = true;
+	}
+	else if (!GetDigitalActionState(m_actionPreviousShader) && goToPreviousShader)
+	{
+		goToPreviousShader = false;
+	}
+	
+	if (GetDigitalActionState(m_actionNextShader) && !goToNextShader)
+	{
+		gamewindow->NextShader();
+		goToNextShader = true;
+	}
+	else if (!GetDigitalActionState(m_actionNextShader) && goToNextShader)
+	{
+		goToNextShader = false;
+	}
 
 	for (EHand eHand = Left; eHand <= Right; ((int&)eHand)++)
 	{
