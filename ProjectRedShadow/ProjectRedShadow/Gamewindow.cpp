@@ -260,6 +260,7 @@ void UpdateHMDMatrixPose()
 	if (m_rTrackedDevicePose[vr::k_unTrackedDeviceIndex_Hmd].bPoseIsValid)
 	{
 		m_mat4HMDPose = m_rmat4DevicePose[vr::k_unTrackedDeviceIndex_Hmd];
+		m_mat4HMDPose = inverse(m_mat4HMDPose);
 	}
 }
 
@@ -362,11 +363,13 @@ Gamewindow::EyeTextures Gamewindow::Display()
 		glViewport(0, 0, 1000, 1000);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glm::mat4 projection2 = GetHMDMatrixProjectionEye(vr::Eye_Left);
-		glm::mat4 view2 = GetHMDMatrixPoseEye(vr::Eye_Left) * inverse(m_mat4HMDPose);
+		glm::mat4 projection2 = GetHMDMatrixProjectionEye(vr::Eye_Left) * m_mat4HMDPose;
+		glm::mat4 view2 = GetHMDMatrixPoseEye(vr::Eye_Left);
+
+		view2 = glm::scale(view2, glm::vec3(city->VRScale, city->VRScale, city->VRScale));
 
 		view2 = glm::rotate(view2, city->player.rotation[1], { 0, 1, 0 });
-		view2 = glm::translate(view2, city->player.position);
+		view2 = glm::translate(view2, glm::vec3(city->player.position.x, 0, city->player.position.z));
 
 		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("viewMatrix"), 1, 0, glm::value_ptr(view2));
 		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("projectionMatrix"), 1, 0, glm::value_ptr(projection2));
@@ -397,11 +400,13 @@ Gamewindow::EyeTextures Gamewindow::Display()
 		glViewport(0, 0, 1000, 1000);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glm::mat4 projection3 = GetHMDMatrixProjectionEye(vr::Eye_Right) * inverse(m_mat4HMDPose);
+		glm::mat4 projection3 = GetHMDMatrixProjectionEye(vr::Eye_Right) * m_mat4HMDPose;
 		glm::mat4 view3 = GetHMDMatrixPoseEye(vr::Eye_Right);
 
+		view3 = glm::scale(view3, glm::vec3(city->VRScale, city->VRScale, city->VRScale));
+
 		view3 = glm::rotate(view3, city->player.rotation[1], { 0, 1, 0 });
-		view3 = glm::translate(view3, city->player.position);
+		view3 = glm::translate(view3, glm::vec3(city->player.position.x, 0, city->player.position.z));
 
 		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("viewMatrix"), 1, 0, glm::value_ptr(view3));
 		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("projectionMatrix"), 1, 0, glm::value_ptr(projection3));

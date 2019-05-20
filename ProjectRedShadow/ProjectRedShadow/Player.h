@@ -7,7 +7,7 @@ class Player
 {
 public:
 	Player();
-	int speed = 1;
+	float speed = 0.01f;
 	glm::vec3 position = { 0, -2, 50 };
 	glm::vec3 rotation = { 0, 0, 0 };
 	void goForward();

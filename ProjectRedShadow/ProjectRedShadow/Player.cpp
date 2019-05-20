@@ -45,7 +45,7 @@ void Player::move(int elapsedTime)
 		rotMat = glm::rotate(rotMat, rotation.x, glm::vec3(1, 0, 0));
 		rotMat = glm::rotate(rotMat, -rotation.y, glm::vec3(0, 1, 0));
 		rotMat = glm::rotate(rotMat, rotation.z, glm::vec3(0, 0, 1));
-		rotMat = glm::translate(rotMat, glm::vec3(0, 0, -0.1 * elapsedTime));
+		rotMat = glm::translate(rotMat, glm::vec3(0, 0, -speed * elapsedTime));
 		
 		glm::vec4 pos = rotMat * glm::vec4(0, 0, 0, 1);
 		position = glm::vec3(pos.x, pos.y, pos.z);
@@ -56,7 +56,7 @@ void Player::move(int elapsedTime)
 		rotMat = glm::rotate(rotMat, rotation.x, glm::vec3(1, 0, 0));
 		rotMat = glm::rotate(rotMat, -rotation.y, glm::vec3(0, 1, 0));
 		rotMat = glm::rotate(rotMat, rotation.z, glm::vec3(0, 0, 1));
-		rotMat = glm::translate(rotMat, glm::vec3(0, 0, 0.1 * elapsedTime));
+		rotMat = glm::translate(rotMat, glm::vec3(0, 0, speed * elapsedTime));
 
 		glm::vec4 pos = rotMat * glm::vec4(0, 0, 0, 1);
 		position = glm::vec3(pos.x, pos.y, pos.z);

@@ -21,6 +21,7 @@ public:
 	std::vector<WorldObject> worldModels;
 	Skybox skybox = Skybox(500, 500, 500, new ObjModel("models/Skyboxes/std-skybox.obj"));;
 	std::vector<ObjModel*> previewModels;
+	float VRScale = 0.2f;
 	void NextModel();
 	void PreviousModel();
 	ObjModel* getCurrentModel();

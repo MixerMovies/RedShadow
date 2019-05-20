@@ -42,7 +42,7 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/main/in/wireframe"
+                     "output" : "/actions/main/in/nextshader"
                   }
                },
                "mode" : "trigger",
@@ -51,7 +51,7 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/main/in/wireframe"
+                     "output" : "/actions/main/in/nextshader"
                   }
                },
                "mode" : "trigger",
@@ -60,14 +60,21 @@
             {
                "inputs" : {
                   "east" : {
-                     "output" : "/actions/main/in/nextshader"
+                     "output" : "/actions/main/in/turnright"
+                  },
+                  "north" : {
+                     "output" : "/actions/main/in/goforward"
+                  },
+                  "south" : {
+                     "output" : "/actions/main/in/gobackward"
                   },
                   "west" : {
-                     "output" : "/actions/main/in/previousshader"
+                     "output" : "/actions/main/in/turnleft"
                   }
                },
                "mode" : "dpad",
                "parameters" : {
+                  "overlap_pct" : "30",
                   "sub_mode" : "click"
                },
                "path" : "/user/hand/left/input/trackpad"
@@ -75,17 +82,42 @@
             {
                "inputs" : {
                   "east" : {
-                     "output" : "/actions/main/in/nextshader"
+                     "output" : "/actions/main/in/turnright"
+                  },
+                  "north" : {
+                     "output" : "/actions/main/in/goforward"
+                  },
+                  "south" : {
+                     "output" : "/actions/main/in/gobackward"
                   },
                   "west" : {
-                     "output" : "/actions/main/in/previousshader"
+                     "output" : "/actions/main/in/turnleft"
                   }
                },
                "mode" : "dpad",
                "parameters" : {
+                  "overlap_pct" : "30",
                   "sub_mode" : "click"
                },
                "path" : "/user/hand/right/input/trackpad"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/main/in/wireframe"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/grip"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/main/in/wireframe"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/grip"
             }
          ]
       }

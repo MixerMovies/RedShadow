@@ -24,6 +24,26 @@
 			"type": "boolean"	
 		},
 		{
+			"name": "/actions/main/in/goForward",
+			"requirement": "suggested",
+			"type": "boolean"	
+		},
+		{
+			"name": "/actions/main/in/goBackward",
+			"requirement": "suggested",
+			"type": "boolean"	
+		},
+		{
+			"name": "/actions/main/in/turnLeft",
+			"requirement": "suggested",
+			"type": "boolean"	
+		},
+		{
+			"name": "/actions/main/in/turnRight",
+			"requirement": "suggested",
+			"type": "boolean"
+		},
+		{
 			"name": "/actions/main/out/shock",
 			"requirement": "suggested",
 			"type": "vibration"
@@ -40,6 +60,10 @@
 	[
 		{
 			"language_tag": "en",
+			"/actions/main/in/goForward": "Go Forward",
+			"/actions/main/in/goBackward": "Go Backward",
+			"/actions/main/in/turnLeft": "Turn Left",
+			"/actions/main/in/turnRight": "Turn Right",
 			"/actions/main/in/previousShader": "Use previous shader",
 			"/actions/main/in/nextShader": "Use next shader",
 			"/actions/main/in/wireframe": "Enable or Disable Wireframe",

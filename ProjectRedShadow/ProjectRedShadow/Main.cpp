@@ -23,12 +23,16 @@ struct ControllerInfo_t
 	bool m_bShowController;
 };
 
-vr::VRActionHandle_t m_actionWireframe;
-vr::VRActionHandle_t m_actionShock;
-vr::VRActionHandle_t m_actionPreviousShader;
-vr::VRActionHandle_t m_actionNextShader;
+vr::VRActionHandle_t _actionWireframe;
+vr::VRActionHandle_t _actionShock;
+vr::VRActionHandle_t _actionPreviousShader;
+vr::VRActionHandle_t _actionNextShader;
+vr::VRActionHandle_t _actionGoForward;
+vr::VRActionHandle_t _actionGoBackward;
+vr::VRActionHandle_t _actionTurnLeft;
+vr::VRActionHandle_t _actionTurnRight;
 
-vr::VRActionSetHandle_t m_actionsetMain = vr::k_ulInvalidActionSetHandle;
+vr::VRActionSetHandle_t _actionsetMain = vr::k_ulInvalidActionSetHandle;
 
 enum EHand
 {
@@ -150,7 +154,7 @@ void KeyEvent(unsigned char key, int x, int y)
 		break;
 	case '-':
 		if(ivrSystem)
-		vr::VRInput()->TriggerHapticVibrationAction(m_actionShock, 0, 2, 4, 1, vr::k_ulInvalidInputValueHandle);
+		vr::VRInput()->TriggerHapticVibrationAction(_actionShock, 0, 2, 4, 1, vr::k_ulInvalidInputValueHandle);
 		break;
 	case 't':
 	case 'T':
@@ -191,12 +195,16 @@ void StartVR()
 
 	vr::EVRInputError error = vr::VRInput()->SetActionManifestPath("D:\\Users\\Remco\\Documents\\Github\\RedShadow\\ProjectRedShadow\\ProjectRedShadow\\VRInput\\vr_bindings.json");
 
-	vr::EVRInputError error2 = vr::VRInput()->GetActionHandle("/actions/main/in/wireframe", &m_actionWireframe);
-	vr::EVRInputError error3 = vr::VRInput()->GetActionHandle("/actions/main/out/shock", &m_actionShock);
-	vr::VRInput()->GetActionHandle("/actions/main/in/previousShader", &m_actionPreviousShader);
-	vr::VRInput()->GetActionHandle("/actions/main/in/nextShader", &m_actionNextShader);
+	vr::EVRInputError error2 = vr::VRInput()->GetActionHandle("/actions/main/in/wireframe", &_actionWireframe);
+	vr::EVRInputError error3 = vr::VRInput()->GetActionHandle("/actions/main/out/shock", &_actionShock);
+	vr::VRInput()->GetActionHandle("/actions/main/in/previousShader", &_actionPreviousShader);
+	vr::VRInput()->GetActionHandle("/actions/main/in/nextShader", &_actionNextShader);
+	vr::VRInput()->GetActionHandle("/actions/main/in/goForward", &_actionGoForward);
+	vr::VRInput()->GetActionHandle("/actions/main/in/goBackward", &_actionGoBackward);
+	vr::VRInput()->GetActionHandle("/actions/main/in/turnLeft", &_actionTurnLeft);
+	vr::VRInput()->GetActionHandle("/actions/main/in/turnRight", &_actionTurnRight);
 
-	vr::EVRInputError error4 = vr::VRInput()->GetActionSetHandle("/actions/main", &m_actionsetMain);
+	vr::EVRInputError error4 = vr::VRInput()->GetActionSetHandle("/actions/main", &_actionsetMain);
 
 	vr::EVRInputError error5 = vr::VRInput()->GetInputSourceHandle("/user/hand/left", &m_rHand[Left].m_source);
 	vr::EVRInputError error6 = vr::VRInput()->GetInputSourceHandle("/user/hand/right", &m_rHand[Right].m_source);
@@ -271,36 +279,52 @@ void HandleVRInput()
 	}
 
 	vr::VRActiveActionSet_t actionSet = { 0 };
-	actionSet.ulActionSet = m_actionsetMain;
+	actionSet.ulActionSet = _actionsetMain;
 	vr::EVRInputError error = vr::VRInput()->UpdateActionState(&actionSet, sizeof(actionSet), 1);
 	//std::cout << error << std::endl;
 
 	vr::VRInputValueHandle_t ulWireframe;
-	if (GetDigitalActionState(m_actionWireframe, &ulWireframe))
+	if (GetDigitalActionState(_actionWireframe, &ulWireframe))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	if (GetDigitalActionState(m_actionPreviousShader) && !goToPreviousShader)
+	if (GetDigitalActionState(_actionPreviousShader) && !goToPreviousShader)
 	{
 		gamewindow->PreviousShader();
 		goToPreviousShader = true;
 	}
-	else if (!GetDigitalActionState(m_actionPreviousShader) && goToPreviousShader)
+	else if (!GetDigitalActionState(_actionPreviousShader) && goToPreviousShader)
 	{
 		goToPreviousShader = false;
 	}
 	
-	if (GetDigitalActionState(m_actionNextShader) && !goToNextShader)
+	if (GetDigitalActionState(_actionNextShader) && !goToNextShader)
 	{
 		gamewindow->NextShader();
 		goToNextShader = true;
 	}
-	else if (!GetDigitalActionState(m_actionNextShader) && goToNextShader)
+	else if (!GetDigitalActionState(_actionNextShader) && goToNextShader)
 	{
 		goToNextShader = false;
 	}
 
+	if (GetDigitalActionState(_actionGoForward))
+		space->player.goForward();
+	else if (GetDigitalActionState(_actionGoBackward))
+		space->player.goBackward();
+	else
+		space->player.stop();
+
+	if (GetDigitalActionState(_actionTurnLeft))
+		space->player.turnLeft(true);
+	else if (GetDigitalActionState(_actionTurnRight))
+		space->player.turnRight(true);
+	else
+	{
+		space->player.turnLeft(false);
+		space->player.turnRight(false);
+	}
 	for (EHand eHand = Left; eHand <= Right; ((int&)eHand)++)
 	{
 		vr::InputPoseActionData_t poseData;
