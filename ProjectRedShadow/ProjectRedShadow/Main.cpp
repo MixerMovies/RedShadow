@@ -31,6 +31,8 @@ vr::VRActionHandle_t _actionGoForward;
 vr::VRActionHandle_t _actionGoBackward;
 vr::VRActionHandle_t _actionTurnLeft;
 vr::VRActionHandle_t _actionTurnRight;
+vr::VRActionHandle_t _actionGrow;
+vr::VRActionHandle_t _actionShrink;
 
 vr::VRActionSetHandle_t _actionsetMain = vr::k_ulInvalidActionSetHandle;
 
@@ -203,6 +205,8 @@ void StartVR()
 	vr::VRInput()->GetActionHandle("/actions/main/in/goBackward", &_actionGoBackward);
 	vr::VRInput()->GetActionHandle("/actions/main/in/turnLeft", &_actionTurnLeft);
 	vr::VRInput()->GetActionHandle("/actions/main/in/turnRight", &_actionTurnRight);
+	vr::VRInput()->GetActionHandle("/actions/main/in/grow", &_actionGrow);
+	vr::VRInput()->GetActionHandle("/actions/main/in/shrink", &_actionShrink);
 
 	vr::EVRInputError error4 = vr::VRInput()->GetActionSetHandle("/actions/main", &_actionsetMain);
 
@@ -281,7 +285,6 @@ void HandleVRInput()
 	vr::VRActiveActionSet_t actionSet = { 0 };
 	actionSet.ulActionSet = _actionsetMain;
 	vr::EVRInputError error = vr::VRInput()->UpdateActionState(&actionSet, sizeof(actionSet), 1);
-	//std::cout << error << std::endl;
 
 	vr::VRInputValueHandle_t ulWireframe;
 	if (GetDigitalActionState(_actionWireframe, &ulWireframe))
@@ -325,6 +328,12 @@ void HandleVRInput()
 		space->player.turnLeft(false);
 		space->player.turnRight(false);
 	}
+
+	if (GetDigitalActionState(_actionGrow))
+		space->Grow();
+	else if (GetDigitalActionState(_actionShrink))
+		space->Shrink();
+
 	for (EHand eHand = Left; eHand <= Right; ((int&)eHand)++)
 	{
 		vr::InputPoseActionData_t poseData;

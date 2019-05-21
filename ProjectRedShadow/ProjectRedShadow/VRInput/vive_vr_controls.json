@@ -63,10 +63,10 @@
                      "output" : "/actions/main/in/turnright"
                   },
                   "north" : {
-                     "output" : "/actions/main/in/goforward"
+                     "output" : "/actions/main/in/grow"
                   },
                   "south" : {
-                     "output" : "/actions/main/in/gobackward"
+                     "output" : "/actions/main/in/shrink"
                   },
                   "west" : {
                      "output" : "/actions/main/in/turnleft"
@@ -85,10 +85,10 @@
                      "output" : "/actions/main/in/turnright"
                   },
                   "north" : {
-                     "output" : "/actions/main/in/goforward"
+                     "output" : "/actions/main/in/grow"
                   },
                   "south" : {
-                     "output" : "/actions/main/in/gobackward"
+                     "output" : "/actions/main/in/shrink"
                   },
                   "west" : {
                      "output" : "/actions/main/in/turnleft"

@@ -44,6 +44,16 @@
 			"type": "boolean"
 		},
 		{
+			"name": "/actions/main/in/grow",
+			"requirement": "suggested",
+			"type": "boolean"	
+		},
+		{
+			"name": "/actions/main/in/shrink",
+			"requirement": "suggested",
+			"type": "boolean"
+		},
+		{
 			"name": "/actions/main/out/shock",
 			"requirement": "suggested",
 			"type": "vibration"
@@ -64,6 +74,8 @@
 			"/actions/main/in/goBackward": "Go Backward",
 			"/actions/main/in/turnLeft": "Turn Left",
 			"/actions/main/in/turnRight": "Turn Right",
+			"/actions/main/in/grow": "Grow bigger",
+			"/actions/main/in/shrink": "Become smaller",
 			"/actions/main/in/previousShader": "Use previous shader",
 			"/actions/main/in/nextShader": "Use next shader",
 			"/actions/main/in/wireframe": "Enable or Disable Wireframe",

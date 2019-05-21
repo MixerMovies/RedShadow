@@ -364,9 +364,8 @@ Gamewindow::EyeTextures Gamewindow::Display()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glm::mat4 projection2 = GetHMDMatrixProjectionEye(vr::Eye_Left) * m_mat4HMDPose;
-		glm::mat4 view2 = GetHMDMatrixPoseEye(vr::Eye_Left);
-
-		view2 = glm::scale(view2, glm::vec3(city->VRScale, city->VRScale, city->VRScale));
+		glm::mat4 view2 = glm::scale(glm::mat4x4(), glm::vec3(city->VRScale, city->VRScale, city->VRScale));
+		view2 = view2 * GetHMDMatrixPoseEye(vr::Eye_Left);
 
 		view2 = glm::rotate(view2, city->player.rotation[1], { 0, 1, 0 });
 		view2 = glm::translate(view2, glm::vec3(city->player.position.x, 0, city->player.position.z));
@@ -401,9 +400,8 @@ Gamewindow::EyeTextures Gamewindow::Display()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glm::mat4 projection3 = GetHMDMatrixProjectionEye(vr::Eye_Right) * m_mat4HMDPose;
-		glm::mat4 view3 = GetHMDMatrixPoseEye(vr::Eye_Right);
-
-		view3 = glm::scale(view3, glm::vec3(city->VRScale, city->VRScale, city->VRScale));
+		glm::mat4 view3 = glm::scale(glm::mat4x4(), glm::vec3(city->VRScale, city->VRScale, city->VRScale));
+		view3 = view3 * GetHMDMatrixPoseEye(vr::Eye_Right);
 
 		view3 = glm::rotate(view3, city->player.rotation[1], { 0, 1, 0 });
 		view3 = glm::translate(view3, glm::vec3(city->player.position.x, 0, city->player.position.z));
