@@ -57,6 +57,14 @@
 			"name": "/actions/main/out/shock",
 			"requirement": "suggested",
 			"type": "vibration"
+		},
+		{
+			"name": "/actions/main/in/handLeft",
+			"type": "pose"
+		},
+		{
+			"name": "/actions/main/in/handRight",
+			"type": "pose"
 		}
 	],
 	"action_sets": 
@@ -79,7 +87,9 @@
 			"/actions/main/in/previousShader": "Use previous shader",
 			"/actions/main/in/nextShader": "Use next shader",
 			"/actions/main/in/wireframe": "Enable or Disable Wireframe",
-			"/actions/main/out/shock": "Use shock or vibration"
+			"/actions/main/out/shock": "Use shock or vibration",
+			"/actions/main/in/handLeft": "Pose of the left hand",
+			"/actions/main/in/handRight": "Post of the right hand"
 		}
 	]
 }

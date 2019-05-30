@@ -58,8 +58,8 @@ Gamewindow::Gamewindow(Space* space, vr::IVRSystem* vrSystem)
 	shaders.push_back(shader6);
 	Shader* shader7 = new Shader("Shaders/toon.vs", "Shaders/toon.fs", "Shaders/standard.gs");
 	shaders.push_back(shader7);
-	//Shader* shader8 = new Shader("Shaders/rainbow.vs", "Shaders/rainbow.fs", "Shaders/standard.gs");
-	//shaders.push_back(shader8);
+	Shader* shader8 = new Shader("Shaders/rainbow.vs", "Shaders/rainbow.fs", "Shaders/standard.gs");
+	shaders.push_back(shader8);
 	Shader* shader9 = new Shader("Shaders/texture.vs", "Shaders/texture.fs", "Shaders/explosion.gs");
 	shaders.push_back(shader9);
 	Shader* shader10 = new Shader("Shaders/texture.vs", "Shaders/texture.fs", "Shaders/implosion.gs");
@@ -79,8 +79,8 @@ Gamewindow::Gamewindow(Space* space, vr::IVRSystem* vrSystem)
 	postProcessingShaders.push_back(pShader6);
 	Shader* pShader7 = new Shader("Shaders/screenwarp.vs", "Shaders/screenwarp.fs", "Shaders/standardpost.gs");
 	postProcessingShaders.push_back(pShader7);
-	//Shader* pShader8 = new Shader("Shaders/colourwarp.vs", "Shaders/colourwarp.fs", "Shaders/standardpost.gs");
-	//postProcessingShaders.push_back(pShader8);
+	Shader* pShader8 = new Shader("Shaders/colourwarp.vs", "Shaders/colourwarp.fs", "Shaders/standardpost.gs");
+	postProcessingShaders.push_back(pShader8);
 	Shader* pShader9 = new Shader("Shaders/scope.vs", "Shaders/scope.fs", "Shaders/standardpost.gs");
 	postProcessingShaders.push_back(pShader9);
 
@@ -226,7 +226,7 @@ glm::mat4 Gamewindow::ConvertSteamVRMatrixToMatrix4(const vr::HmdMatrix34_t &mat
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void UpdateHMDMatrixPose()
+void Gamewindow::UpdateHMDMatrixPose()
 {
 	if (!m_pHMD)
 		return;
@@ -262,22 +262,61 @@ void UpdateHMDMatrixPose()
 		m_mat4HMDPose = m_rmat4DevicePose[vr::k_unTrackedDeviceIndex_Hmd];
 		m_mat4HMDPose = inverse(m_mat4HMDPose);
 	}
+
+	for (Gamewindow::EHand eHand = Gamewindow::Left; eHand <= Gamewindow::Right; ((int&)eHand)++)
+	{
+		vr::InputPoseActionData_t poseData;
+		vr::EVRInputError error = vr::VRInput()->GetPoseActionData(m_rHand[eHand].m_actionPose, vr::TrackingUniverseStanding, 0, &poseData, sizeof(poseData), vr::k_ulInvalidInputValueHandle);
+		if ( error != vr::VRInputError_None
+			|| !poseData.bActive || !poseData.pose.bPoseIsValid)
+		{
+			m_rHand[eHand].m_bShowController = false;
+		}
+		else
+		{
+			m_rHand[eHand].m_rmat4Pose = Gamewindow::ConvertSteamVRMatrixToMatrix4(poseData.pose.mDeviceToAbsoluteTracking);
+
+			vr::InputOriginInfo_t originInfo;
+			if (vr::VRInput()->GetOriginTrackedDeviceInfo(poseData.activeOrigin, &originInfo, sizeof(originInfo)) == vr::VRInputError_None
+				&& originInfo.trackedDeviceIndex != vr::k_unTrackedDeviceIndexInvalid)
+			{
+
+			}
+		}
+		
+	}
 }
 
 void Gamewindow::RenderWorld(glm::mat4 view)
 {
 	for (int i = 0; i < city->worldModels.size(); i++)
 	{
-		glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].location);													//of verplaats de camera gewoon naar achter
-		model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));																			//roteer het object een beetje
+		glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].location);													
+		model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));																			
 		model = glm::scale(model, glm::vec3(city->worldModels[i].scale.x, city->worldModels[i].scale.y, city->worldModels[i].scale.z));			//scale object
 
-		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));										//roteer het object een beetje
+		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));										
 
 		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
 		glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
 
 		city->worldModels[i].objModel->draw();
+	}
+}
+
+void Gamewindow::RenderControllers(glm::mat4 view)
+{
+	for (Gamewindow::EHand eHand = Gamewindow::Left; eHand <= Gamewindow::Right; ((int&)eHand)++)
+	{
+		glm::mat4 model = m_rHand[eHand].m_rmat4Pose;
+		model = glm::scale(model, glm::vec3(0.005f, 0.005f, 0.005f));
+
+		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));
+
+		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
+		glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
+
+		city->prototypeController->draw();
 	}
 }
 
@@ -291,8 +330,8 @@ Gamewindow::EyeTextures Gamewindow::Display()
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glm::mat4 projection = glm::perspective(70.0f, screenSize.x / (float)screenSize.y, 0.01f, 2000.0f);		//begin met een perspective matrix
-	glm::mat4 view = glm::lookAt({ 0,0,0 }, { 0, 0, 1 }, glm::vec3(0, 1, 0));					//vermenigvuldig met een lookat
+	glm::mat4 projection = glm::perspective(70.0f, screenSize.x / (float)screenSize.y, 0.01f, 2000.0f);		
+	glm::mat4 view = glm::lookAt({ 0,0,0 }, { 0, 0, 1 }, glm::vec3(0, 1, 0));					
 	
 	view = glm::rotate(view, city->player.rotation[1], { 0, 1, 0 });
 	view = glm::translate(view, city->player.position);
@@ -314,11 +353,10 @@ Gamewindow::EyeTextures Gamewindow::Display()
 
 	RenderWorld(view);
 
-	glm::mat4 model = glm::translate(glm::mat4(), glm::vec3(0, 0, 0));													//of verplaats de camera gewoon naar achter										//roteer het object een beetje
+	glm::mat4 model = glm::translate(glm::mat4(), glm::vec3(0, 0, 0));													
 	model = glm::scale(model, glm::vec3(city->skybox.x, city->skybox.y, city->skybox.z));
 
-	glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));										//roteer het object een beetje
-
+	glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));										
 	glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
 	glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
 
@@ -364,6 +402,11 @@ Gamewindow::EyeTextures Gamewindow::Display()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glm::mat4 projection2 = GetHMDMatrixProjectionEye(vr::Eye_Left) * m_mat4HMDPose;
+
+		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("viewMatrix"), 1, 0, glm::value_ptr(glm::mat4()));
+		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("projectionMatrix"), 1, 0, glm::value_ptr(projection2));
+		RenderControllers(view);
+
 		glm::mat4 view2 = glm::scale(glm::mat4x4(), glm::vec3(city->VRScale, city->VRScale, city->VRScale));
 		view2 = view2 * GetHMDMatrixPoseEye(vr::Eye_Left);
 
@@ -400,6 +443,11 @@ Gamewindow::EyeTextures Gamewindow::Display()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glm::mat4 projection3 = GetHMDMatrixProjectionEye(vr::Eye_Right) * m_mat4HMDPose;
+
+		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("viewMatrix"), 1, 0, glm::value_ptr(glm::mat4()));
+		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("projectionMatrix"), 1, 0, glm::value_ptr(projection3));
+		RenderControllers(view);
+
 		glm::mat4 view3 = glm::scale(glm::mat4x4(), glm::vec3(city->VRScale, city->VRScale, city->VRScale));
 		view3 = view3 * GetHMDMatrixPoseEye(vr::Eye_Right);
 

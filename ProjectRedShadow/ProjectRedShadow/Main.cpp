@@ -14,15 +14,6 @@ bool wireframeEnabled = false;
 
 vr::IVRSystem *ivrSystem;
 
-struct ControllerInfo_t
-{
-	vr::VRInputValueHandle_t m_source = vr::k_ulInvalidInputValueHandle;
-	glm::mat4 m_rmat4Pose;
-	ObjModel *m_pRenderModel = nullptr;
-	std::string m_sRenderModelName;
-	bool m_bShowController;
-};
-
 vr::VRActionHandle_t _actionWireframe;
 vr::VRActionHandle_t _actionShock;
 vr::VRActionHandle_t _actionPreviousShader;
@@ -35,13 +26,6 @@ vr::VRActionHandle_t _actionGrow;
 vr::VRActionHandle_t _actionShrink;
 
 vr::VRActionSetHandle_t _actionsetMain = vr::k_ulInvalidActionSetHandle;
-
-enum EHand
-{
-	Left = 0,
-	Right = 1,
-};
-ControllerInfo_t m_rHand[2];
 
 bool goToPreviousShader = false;
 bool goToNextShader = false;
@@ -210,8 +194,12 @@ void StartVR()
 
 	vr::EVRInputError error4 = vr::VRInput()->GetActionSetHandle("/actions/main", &_actionsetMain);
 
-	vr::EVRInputError error5 = vr::VRInput()->GetInputSourceHandle("/user/hand/left", &m_rHand[Left].m_source);
-	vr::EVRInputError error6 = vr::VRInput()->GetInputSourceHandle("/user/hand/right", &m_rHand[Right].m_source);
+	vr::EVRInputError error5 = vr::VRInput()->GetInputSourceHandle("/user/hand/left", &gamewindow->m_rHand[Gamewindow::EHand::Left].m_source);
+	vr::EVRInputError error6 = vr::VRInput()->GetInputSourceHandle("/user/hand/right", &gamewindow->m_rHand[Gamewindow::EHand::Right].m_source);
+	vr::EVRInputError error7 = vr::VRInput()->GetActionHandle("/actions/main/in/handRight", &gamewindow->m_rHand[Gamewindow::EHand::Right].m_actionPose);
+	vr::EVRInputError error8 = vr::VRInput()->GetActionHandle("/actions/main/in/handLeft", &gamewindow->m_rHand[Gamewindow::EHand::Left].m_actionPose);
+	std::cout << error7 << std::endl;
+	std::cout << error8 << std::endl;
 
 	vr::VRCompositor()->ShowMirrorWindow();
 
@@ -333,14 +321,6 @@ void HandleVRInput()
 		space->Grow();
 	else if (GetDigitalActionState(_actionShrink))
 		space->Shrink();
-
-	for (EHand eHand = Left; eHand <= Right; ((int&)eHand)++)
-	{
-		vr::InputPoseActionData_t poseData;
-		m_rHand[eHand].m_rmat4Pose = Gamewindow::ConvertSteamVRMatrixToMatrix4(poseData.pose.mDeviceToAbsoluteTracking);
-
-
-	}
 }
 
 void reshape(int newWidth, int newHeight)

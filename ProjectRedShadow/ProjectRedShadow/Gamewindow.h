@@ -19,6 +19,23 @@ public:
 		GLuint rightEye;
 	};
 
+	struct ControllerInfo_t
+	{
+		vr::VRInputValueHandle_t m_source = vr::k_ulInvalidInputValueHandle;
+		vr::VRActionHandle_t m_actionPose = vr::k_ulInvalidActionHandle;
+		glm::mat4 m_rmat4Pose;
+		ObjModel *m_pRenderModel = nullptr;
+		std::string m_sRenderModelName;
+		bool m_bShowController;
+	};
+
+	enum EHand
+	{
+		Left = 0,
+		Right = 1,
+	};
+	ControllerInfo_t m_rHand[2];
+
 	Gamewindow(Space* space, vr::IVRSystem* vrSystem);
 	~Gamewindow();
 	void initVRShaders();
@@ -28,7 +45,6 @@ public:
 	void NextPostShader();
 	void PreviousPostShader();
 	void setVRSystem(vr::IVRSystem*);
-	void RenderWorld(glm::mat4);
 	static glm::mat4 ConvertSteamVRMatrixToMatrix4(const vr::HmdMatrix34_t &);
 	std::vector<Shader*> shaders;
 	std::vector<Shader*> postProcessingShaders;
@@ -37,4 +53,8 @@ public:
 	glm::ivec2 screenSize;
 	float rotation = 0;
 	bool postProcessingEnabled = false;
+private:
+	void RenderWorld(glm::mat4);
+	void RenderControllers(glm::mat4);
+	void UpdateHMDMatrixPose();
 };

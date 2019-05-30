@@ -18,7 +18,7 @@ void Space::PreviousModel()
 
 void Space::Grow()
 {
-		VRScale *= 0.99f;
+	VRScale *= 0.99f;
 }
 
 void Space::Shrink()

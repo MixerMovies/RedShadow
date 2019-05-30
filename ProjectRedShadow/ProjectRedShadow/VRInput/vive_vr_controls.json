@@ -27,7 +27,7 @@
          "sources" : []
       },
       "/actions/main" : {
-         "chords" : [ {} ],
+         "chords" : [],
          "haptics" : [
             {
                "output" : "/actions/main/out/shock",
@@ -36,6 +36,16 @@
             {
                "output" : "/actions/main/out/shock",
                "path" : "/user/hand/right/output/haptic"
+            }
+         ],
+         "poses" : [
+            {
+               "output" : "/actions/main/in/handleft",
+               "path" : "/user/hand/left/pose/raw"
+            },
+            {
+               "output" : "/actions/main/in/handright",
+               "path" : "/user/hand/right/pose/raw"
             }
          ],
          "sources" : [
@@ -122,6 +132,7 @@
          ]
       }
    },
+   "category" : "steamvr_input",
    "controller_type" : "vive_controller",
    "description" : "",
    "name" : "Default bindings for legacy applications for Vive Controllers",
