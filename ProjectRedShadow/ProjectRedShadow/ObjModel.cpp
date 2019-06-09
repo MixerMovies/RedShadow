@@ -1,6 +1,5 @@
 #include <gl/glew.h>
 #include "ObjModel.h"
-#include "Texture.h"
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -148,7 +147,6 @@ glm::vec4 calcTangentVector(
 
 	return glm::vec4(t[0], t[1], t[2], handedness);
 }
-
 
 
 
@@ -351,13 +349,66 @@ ObjModel::ObjModel(std::string fileName)
 
 }
 
+ObjModel::ObjModel(std::vector<float> vertices, std::vector<float> normals, std::vector<float> textureCoordinats, std::vector<uint16_t> indices, Texture* texture)
+{
+	std::vector<float> finalVertices = std::vector<float>();
+
+	for (int i = 0; i < vertices.size() / 3; i++)
+	{
+		finalVertices.push_back(vertices[i * 3]);
+		finalVertices.push_back(vertices[i * 3 + 1]);
+		finalVertices.push_back(vertices[i * 3 + 2]);
+		finalVertices.push_back(normals[i * 3]);
+		finalVertices.push_back(normals[i * 3 + 1]);
+		finalVertices.push_back(normals[i * 3 + 2]);
+		finalVertices.push_back(textureCoordinats[i * 2]);
+		finalVertices.push_back(textureCoordinats[i * 2 + 1]);
+	}
+
+	ObjGroup* currentGroup = new ObjGroup();
+	currentGroup->end = -1;
+	currentGroup->start = 0;
+	currentGroup->materialIndex = -1;
+	currentGroup->end = finalVertices.size() / 8;
+	currentGroup->materialIndex = 0;
+	groups.push_back(currentGroup);
+
+	MaterialInfo* material = new MaterialInfo();
+	
+	material->texture = texture;
+	material->hasTexture = true;
+	materials.push_back(material);
+
+	glGenVertexArrays(1, &_vertexArray);
+	glBindVertexArray(_vertexArray);
+
+	GLuint _vertexBuffer;
+	glGenBuffers(1, &_vertexBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, finalVertices.size() * sizeof(float), &finalVertices[0], GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 32, BUFFER_OFFSET(0));
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 32, BUFFER_OFFSET(12));
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 32, BUFFER_OFFSET(24));
+	//glEnableVertexAttribArray(3);
+	//glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 48, BUFFER_OFFSET(32));
+
+	// Create and populate the index buffer
+	//GLuint _indexBuffer;
+	//glGenBuffers(1, &_indexBuffer);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint16_t) * indices.size(), &indices[0], GL_STATIC_DRAW);
+
+	glBindVertexArray(0);
+
+}
 
 ObjModel::~ObjModel(void)
 {
 }
-
-
-
 
 void ObjModel::draw()
 {

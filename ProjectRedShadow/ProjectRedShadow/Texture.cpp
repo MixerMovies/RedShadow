@@ -24,6 +24,18 @@ Texture::Texture(std::string filename)
 	stbi_image_free(data);
 }
 
+Texture::Texture(int textureID, uint16_t height, uint16_t width, const uint8_t* data)
+{
+	textureId = textureID;
+	//generate an OpenGL texture ID for this texture
+	glGenTextures(1, &textureId);
+	//bind to the new texture ID
+	glBindTexture(GL_TEXTURE_2D, textureId);
+	//store the texture data for OpenGL use
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+}
 
 Texture::~Texture(void)
 {

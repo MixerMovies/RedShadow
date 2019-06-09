@@ -7,6 +7,7 @@
 #include "gtc/type_ptr.hpp"
 #include <vector>
 #include "Space.h"
+#include "ObjModel.h"
 #pragma comment(lib, "glew32.lib")
 #include <openvr.h>
 

@@ -6,6 +6,8 @@
 #include <windows.h>
 #include <gl/GL.h>
 
+#include "Texture.h"
+
 class Texture;
 
 class ObjModel
@@ -39,6 +41,7 @@ private:
 	void loadMaterialFile(std::string fileName, std::string dirName);
 public:
 	ObjModel(std::string filename);
+	ObjModel(std::vector<float> vertices, std::vector<float> normals, std::vector<float> textureCoordinats, std::vector<uint16_t> indices, Texture* texture);
 	~ObjModel(void);
 
 	void draw();

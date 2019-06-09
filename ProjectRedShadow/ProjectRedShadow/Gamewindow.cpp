@@ -1,5 +1,4 @@
 #include "Gamewindow.h"
-#include "ObjModel.h"
 #include "SoundTest.h"
 #include "FileLoader.h"
 
@@ -224,6 +223,23 @@ glm::mat4 Gamewindow::ConvertSteamVRMatrixToMatrix4(const vr::HmdMatrix34_t &mat
 }
 
 //-----------------------------------------------------------------------------
+// Purpose: Helper to get a string from a tracked device property and turn it
+//			into a std::string
+//-----------------------------------------------------------------------------
+std::string GetTrackedDeviceString(vr::TrackedDeviceIndex_t unDevice, vr::TrackedDeviceProperty prop, vr::TrackedPropertyError *peError = NULL)
+{
+	uint32_t unRequiredBufferLen = vr::VRSystem()->GetStringTrackedDeviceProperty(unDevice, prop, NULL, 0, peError);
+	if (unRequiredBufferLen == 0)
+		return "";
+
+	char *pchBuffer = new char[unRequiredBufferLen];
+	unRequiredBufferLen = vr::VRSystem()->GetStringTrackedDeviceProperty(unDevice, prop, pchBuffer, unRequiredBufferLen, peError);
+	std::string sResult = pchBuffer;
+	delete[] pchBuffer;
+	return sResult;
+}
+
+//-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void Gamewindow::UpdateHMDMatrixPose()
@@ -278,9 +294,79 @@ void Gamewindow::UpdateHMDMatrixPose()
 
 			vr::InputOriginInfo_t originInfo;
 			if (vr::VRInput()->GetOriginTrackedDeviceInfo(poseData.activeOrigin, &originInfo, sizeof(originInfo)) == vr::VRInputError_None
-				&& originInfo.trackedDeviceIndex != vr::k_unTrackedDeviceIndexInvalid)
+				&& originInfo.trackedDeviceIndex != vr::k_unTrackedDeviceIndexInvalid && m_rHand[eHand].m_pRenderModel == nullptr)
 			{
+				std::string sRenderModelName = GetTrackedDeviceString(originInfo.trackedDeviceIndex, vr::Prop_RenderModelName_String);
 
+				vr::RenderModel_t *controllerModel;
+				vr::EVRRenderModelError error;
+				while (1)
+				{
+					error = vr::VRRenderModels()->LoadRenderModel_Async(sRenderModelName.c_str(), &controllerModel);
+
+					if (error != vr::VRRenderModelError_Loading)
+						break;
+
+					Sleep(1);
+				}
+
+				if (error != vr::VRRenderModelError_None)
+				{
+					printf("Unable to load render model %s - %s\n", sRenderModelName, vr::VRRenderModels()->GetRenderModelErrorNameFromEnum(error));
+				}
+
+				vr::RenderModel_TextureMap_t *pTexture;
+				while (1)
+				{
+					error = vr::VRRenderModels()->LoadTexture_Async(controllerModel->diffuseTextureId, &pTexture);
+					if (error != vr::VRRenderModelError_Loading)
+						break;
+
+					Sleep(1);
+				}
+
+				if (error != vr::VRRenderModelError_None)
+				{
+					printf("Unable to load render texture id:%d for render model %s\n", controllerModel->diffuseTextureId, sRenderModelName);
+					vr::VRRenderModels()->FreeRenderModel(controllerModel);
+				}
+
+				std::vector<float> vertices;
+				std::vector<float> normals;
+				std::vector<float> texcoords;
+				std::vector<uint16_t> indices;
+
+				for (int i = 0; i < controllerModel->unVertexCount; i++)
+				{
+					vertices.push_back(controllerModel->rVertexData[i].vPosition.v[0]);
+					vertices.push_back(controllerModel->rVertexData[i].vPosition.v[1]);
+					vertices.push_back(controllerModel->rVertexData[i].vPosition.v[2]);
+				}
+
+				for (int i = 0; i < controllerModel->unVertexCount; i++)
+				{
+					normals.push_back(controllerModel->rVertexData[i].vNormal.v[0]);
+					normals.push_back(controllerModel->rVertexData[i].vNormal.v[1]);
+					normals.push_back(controllerModel->rVertexData[i].vNormal.v[2]);
+				}
+
+				for (int i = 0; i < controllerModel->unVertexCount; i++)
+				{
+					texcoords.push_back(controllerModel->rVertexData[i].rfTextureCoord[0]);
+					texcoords.push_back(controllerModel->rVertexData[i].rfTextureCoord[1]);
+				}
+
+				for (int i = 0; i < controllerModel->unTriangleCount * 3; i++)
+				{
+					indices.push_back(controllerModel->rIndexData[i]);
+				}
+
+				Texture* texture = new Texture(controllerModel->diffuseTextureId, pTexture->unHeight, pTexture->unWidth, pTexture->rubTextureMapData);
+				ObjModel* model = new ObjModel( vertices, normals, texcoords, indices, texture);
+				m_rHand[eHand].m_pRenderModel = model;
+
+				vr::VRRenderModels()->FreeRenderModel(controllerModel);
+				vr::VRRenderModels()->FreeTexture(pTexture);
 			}
 		}
 		
@@ -309,14 +395,15 @@ void Gamewindow::RenderControllers(glm::mat4 view)
 	for (Gamewindow::EHand eHand = Gamewindow::Left; eHand <= Gamewindow::Right; ((int&)eHand)++)
 	{
 		glm::mat4 model = m_rHand[eHand].m_rmat4Pose;
-		model = glm::scale(model, glm::vec3(0.005f, 0.005f, 0.005f));
+		//model = glm::scale(model, glm::vec3(0.005f, 0.005f, 0.005f));
 
 		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));
 
 		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
 		glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
 
-		city->prototypeController->draw();
+		if(m_rHand[eHand].m_pRenderModel != nullptr)
+			m_rHand[eHand].m_pRenderModel->draw();
 	}
 }
 
