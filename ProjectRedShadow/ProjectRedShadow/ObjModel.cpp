@@ -345,8 +345,6 @@ ObjModel::ObjModel(std::string fileName)
 	glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 48, BUFFER_OFFSET(32));
         
     glBindVertexArray(0);        
-
-
 }
 
 ObjModel::ObjModel(std::vector<float> vertices, std::vector<float> normals, std::vector<float> textureCoordinats, std::vector<uint16_t> indices, Texture* texture)
@@ -397,13 +395,14 @@ ObjModel::ObjModel(std::vector<float> vertices, std::vector<float> normals, std:
 	//glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 48, BUFFER_OFFSET(32));
 
 	// Create and populate the index buffer
-	//GLuint _indexBuffer;
-	//glGenBuffers(1, &_indexBuffer);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint16_t) * indices.size(), &indices[0], GL_STATIC_DRAW);
+	GLuint _indexBuffer;
+	glGenBuffers(1, &_indexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint16_t) * indices.size(), &indices[0], GL_STATIC_DRAW);
 
 	glBindVertexArray(0);
 
+	size = finalVertices.size();
 }
 
 ObjModel::~ObjModel(void)
@@ -428,7 +427,10 @@ void ObjModel::draw()
 		//	glBindTexture(GL_TEXTURE_2D, material->bumpMap->textureId);
 		//}
 		
-		glDrawArrays(GL_TRIANGLES, group->start, group->end - group->start);
+		if (size > 0)
+			glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_SHORT, 0);
+		else
+			glDrawArrays(GL_TRIANGLES, group->start, group->end - group->start);
 	}
 }
 

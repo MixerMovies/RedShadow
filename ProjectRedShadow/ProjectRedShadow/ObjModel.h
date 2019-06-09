@@ -37,6 +37,7 @@ private:
 	std::vector<ObjGroup*> groups;
 	std::vector<MaterialInfo*> materials;
 	GLuint _vertexArray;
+	GLsizei size = 0;
 
 	void loadMaterialFile(std::string fileName, std::string dirName);
 public:
