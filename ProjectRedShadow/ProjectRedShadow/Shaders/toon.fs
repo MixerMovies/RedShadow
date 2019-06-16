@@ -1,8 +1,10 @@
 #version 330 core
 
 uniform sampler2D s_texture;
+uniform sampler2D bump_map;
 uniform float shininess;
 uniform float ambient;
+uniform float intensity;
 uniform vec3 viewPosition;
 uniform vec3 lightPosition;
 varying vec3 normal;
@@ -13,14 +15,18 @@ void main()
 {
     vec3 normalized = normalize(normal);
 
+    vec4 bumpmap = texture2D(bump_map, texCoord);
+	vec3 bump = vec3(2*bumpmap.x-1, 2*bumpmap.y-1, 2*bumpmap.z-1);
+	vec3 normalNew = normalize(normalized+bump);
+
 	vec3 lightDirection = normalize(lightPosition - fragPos);
 	vec3 viewDirection = normalize(viewPosition - fragPos);
 
-	float diffuse = 0.8 * dot(normalized, lightDirection);
+	float diffuse = 0.8 * dot(normalNew, lightDirection);
 
 	vec3 r = reflect(-lightDirection, normalized);
 
-	float specular = pow(max(0.0, dot(r, viewDirection)), shininess);
+	float specular = pow(max(0.0, dot(r, viewDirection)), shininess) * intensity;
 
 	float factor = ambient + diffuse + specular;
 	

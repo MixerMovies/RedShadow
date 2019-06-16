@@ -17,5 +17,5 @@ Skybox::~Skybox()
 
 void Skybox::draw()
 {
-	model->draw();
+	//model->draw();
 }

@@ -21,14 +21,10 @@ public:
 	Sound *music = nullptr;
 	std::vector<WorldObject> worldModels;
 	Skybox skybox = Skybox(500, 500, 500, new ObjModel("models/Skyboxes/std-skybox.obj"));
-	ObjModel* prototypeController = new ObjModel("models/ship/ShipA_OBJ.obj");
-	std::vector<ObjModel*> previewModels;
+	glm::vec4 lightPosition = glm::vec4(1, 1, 0, 1);
 	float VRScale = MaxScale;
-	void NextModel();
-	void PreviousModel();
 	void Grow();
 	void Shrink();
-	ObjModel* getCurrentModel();
 	~Space();
 private:
 	int currentModel = 0;

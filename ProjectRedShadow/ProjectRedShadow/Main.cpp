@@ -121,12 +121,6 @@ void KeyEvent(unsigned char key, int x, int y)
 	case ']':
 		gamewindow->NextShader();
 		break;
-	case '.':
-		space->PreviousModel();
-		break;
-	case '/':
-		space->NextModel();
-		break;
 	case 'p':
 	case 'P':
 		gamewindow->postProcessingEnabled = !gamewindow->postProcessingEnabled;

@@ -7,6 +7,7 @@
 #include <gl/GL.h>
 
 #include "Texture.h"
+#include "Shader.h"
 
 class Texture;
 
@@ -22,6 +23,7 @@ private:
 		Texture* bumpMap;
 		float ambient[3] = {0, 0, 0};
 		float shininess = 10;
+		float alpha = 1.0f;
 		bool hasTexture;
 	};
 
@@ -45,6 +47,6 @@ public:
 	ObjModel(std::vector<float> vertices, std::vector<float> normals, std::vector<float> textureCoordinats, std::vector<uint16_t> indices, Texture* texture);
 	~ObjModel(void);
 
-	void draw();
+	void draw(Shader* shader);
 };
 

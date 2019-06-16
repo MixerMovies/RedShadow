@@ -409,23 +409,34 @@ ObjModel::~ObjModel(void)
 {
 }
 
-void ObjModel::draw()
+void ObjModel::draw(Shader* shader)
 {
     glBindVertexArray(_vertexArray);
+
 	for(size_t i = 0; i < groups.size(); i++)
 	{
 		ObjGroup* group = groups[i];
 		MaterialInfo* material = materials[group->materialIndex];
 		if(material->hasTexture)
 		{
+			glUniform1f(shader->getUniformLocation("ambient"), 0.0f);
+			glUniform1f(shader->getUniformLocation("shininess"), material->shininess);
+			glUniform1f(shader->getUniformLocation("intensity"), 1);
+			glUniform1f(shader->getUniformLocation("alpha"), material->alpha);
+
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, material->texture->textureId);
 		}
-		//if(material->bumpMap != NULL)
-		//{
-		//	glActiveTexture(GL_TEXTURE1);
-		//	glBindTexture(GL_TEXTURE_2D, material->bumpMap->textureId);
-		//}
+		if(material->bumpMap != NULL)
+		{
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, material->bumpMap->textureId);
+		}
+		else
+		{
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, -1);
+		}
 		
 		if (size > 0)
 			glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_SHORT, 0);
@@ -497,6 +508,10 @@ void ObjModel::loadMaterialFile( std::string fileName, std::string dirName )
 		else if (params[0] == "ns")
 		{
 			currentMaterial->shininess = std::stof(params[1]);
+		}
+		else if (params[0] == "d")
+		{
+			currentMaterial->alpha = std::stof(params[1]);
 		}
 		else
 			std::cout<<"Didn't parse "<<params[0]<<" in material file"<<std::endl;

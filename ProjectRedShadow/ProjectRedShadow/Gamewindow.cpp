@@ -34,10 +34,6 @@ Gamewindow::Gamewindow(Space* space, vr::IVRSystem* vrSystem)
 
 	city = space;
 	FileLoader::loadMap("TowerCity", space);
-	ObjModel* Spaceship = new ObjModel("models/ship/shipA_OBJ.obj");
-	ObjModel* dragon = new ObjModel("models/dragon/Blue-Eyes White Dragon.obj");
-	city->previewModels.push_back(Spaceship);
-	city->previewModels.push_back(dragon);
 	
 	city->music = test.LoadSound("Sound/OdeToJoy(Remix).wav");
 	//city->music->Play();
@@ -386,7 +382,7 @@ void Gamewindow::RenderWorld(glm::mat4 view)
 		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
 		glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
 
-		city->worldModels[i].objModel->draw();
+		city->worldModels[i].objModel->draw(shaders[currentshader]);
 	}
 }
 
@@ -395,7 +391,6 @@ void Gamewindow::RenderControllers(glm::mat4 view)
 	for (Gamewindow::EHand eHand = Gamewindow::Left; eHand <= Gamewindow::Right; ((int&)eHand)++)
 	{
 		glm::mat4 model = m_rHand[eHand].m_rmat4Pose;
-		//model = glm::scale(model, glm::vec3(0.005f, 0.005f, 0.005f));
 
 		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));
 
@@ -403,7 +398,7 @@ void Gamewindow::RenderControllers(glm::mat4 view)
 		glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
 
 		if(m_rHand[eHand].m_pRenderModel != nullptr)
-			m_rHand[eHand].m_pRenderModel->draw();
+			m_rHand[eHand].m_pRenderModel->draw(shaders[currentshader]);
 	}
 }
 
@@ -423,8 +418,6 @@ Gamewindow::EyeTextures Gamewindow::Display()
 	view = glm::rotate(view, city->player.rotation[1], { 0, 1, 0 });
 	view = glm::translate(view, city->player.position);
 
-	glm::vec4 lightPosition = glm::vec4(100, 20, 0, 1);
-
 	shaders[currentshader]->use();
 
 	glEnableVertexAttribArray(1);
@@ -436,11 +429,9 @@ Gamewindow::EyeTextures Gamewindow::Display()
 
 	glUniform1f(shaders[currentshader]->getUniformLocation("time"), glutGet(GLUT_ELAPSED_TIME) / 1000.0f);
 	glUniform1i(shaders[currentshader]->getUniformLocation("s_texture"), 0);
-	glUniform1f(shaders[currentshader]->getUniformLocation("ambient"), 0.2f);
-	glUniform1f(shaders[currentshader]->getUniformLocation("shininess"), 10);
-	glUniform1f(shaders[currentshader]->getUniformLocation("alpha"), 1.0f);
+	glUniform1i(shaders[currentshader]->getUniformLocation("bump_map"), 1);
 	glUniform3f(shaders[currentshader]->getUniformLocation("viewPosition"), city->player.position[0], city->player.position[1], city->player.position[2]);
-	glUniform3f(shaders[currentshader]->getUniformLocation("lightPosition"), lightPosition.x, lightPosition.y, lightPosition.z);
+	glUniform3f(shaders[currentshader]->getUniformLocation("lightPosition"), city->lightPosition.x, city->lightPosition.y, city->lightPosition.z);
 
 	RenderWorld(view);
 
