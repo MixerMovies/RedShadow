@@ -53,8 +53,8 @@ Gamewindow::Gamewindow(Space* space, vr::IVRSystem* vrSystem)
 	shaders.push_back(shader6);
 	Shader* shader7 = new Shader("Shaders/toon.vs", "Shaders/toon.fs", "Shaders/standard.gs");
 	shaders.push_back(shader7);
-	Shader* shader8 = new Shader("Shaders/rainbow.vs", "Shaders/rainbow.fs", "Shaders/standard.gs");
-	shaders.push_back(shader8);
+	//Shader* shader8 = new Shader("Shaders/rainbow.vs", "Shaders/rainbow.fs", "Shaders/standard.gs");
+	//shaders.push_back(shader8);
 	Shader* shader9 = new Shader("Shaders/texture.vs", "Shaders/texture.fs", "Shaders/explosion.gs");
 	shaders.push_back(shader9);
 	Shader* shader10 = new Shader("Shaders/texture.vs", "Shaders/texture.fs", "Shaders/implosion.gs");
@@ -432,6 +432,7 @@ Gamewindow::EyeTextures Gamewindow::Display()
 	glUniform1i(shaders[currentshader]->getUniformLocation("bump_map"), 1);
 	glUniform3f(shaders[currentshader]->getUniformLocation("viewPosition"), city->player.position[0], city->player.position[1], city->player.position[2]);
 	glUniform3f(shaders[currentshader]->getUniformLocation("lightPosition"), city->lightPosition.x, city->lightPosition.y, city->lightPosition.z);
+	glUniform4f(shaders[currentshader]->getUniformLocation("lightColor"), city->lightColor.x, city->lightColor.y, city->lightColor.z, 1);
 
 	RenderWorld(view);
 

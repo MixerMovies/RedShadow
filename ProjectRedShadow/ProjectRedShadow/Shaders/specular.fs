@@ -8,6 +8,7 @@ uniform float alpha;
 uniform float intensity;
 uniform vec3 viewPosition;
 uniform vec3 lightPosition;
+uniform vec4 lightColor;
 varying vec3 normal;
 varying vec2 texCoord;
 varying vec3 fragPos;
@@ -30,5 +31,5 @@ void main()
 	float specular = pow(max(0.0, dot(r, viewDirection)), shininess) * intensity;
 
 	float factor = ambient + diffuse + specular;
-	gl_FragColor = vec4(factor,factor,factor,alpha) * texture2D(s_texture, texCoord);
+	gl_FragColor = vec4(factor,factor,factor,alpha) * texture2D(s_texture, texCoord) * lightColor;
 }

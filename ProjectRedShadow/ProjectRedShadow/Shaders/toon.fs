@@ -7,6 +7,7 @@ uniform float ambient;
 uniform float intensity;
 uniform vec3 viewPosition;
 uniform vec3 lightPosition;
+uniform vec4 lightColor;
 varying vec3 normal;
 varying vec2 texCoord;
 varying vec3 fragPos;
@@ -31,5 +32,5 @@ void main()
 	float factor = ambient + diffuse + specular;
 	
 	vec4 normalColor = vec4(factor,factor,factor,1.0) * texture2D(s_texture, texCoord);
-	gl_FragColor = vec4(round(normalColor[0] * 5) / 5, round(normalColor[1] * 5) / 5, round(normalColor[2] * 5) / 5, 1.0);
+	gl_FragColor = vec4(round(normalColor[0] * 5) / 5, round(normalColor[1] * 5) / 5, round(normalColor[2] * 5) / 5, 1.0) * lightColor;
 }

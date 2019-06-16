@@ -21,7 +21,8 @@ public:
 	Sound *music = nullptr;
 	std::vector<WorldObject> worldModels;
 	Skybox skybox = Skybox(500, 500, 500, new ObjModel("models/Skyboxes/std-skybox.obj"));
-	glm::vec4 lightPosition = glm::vec4(1, 1, 0, 1);
+	glm::vec3 lightPosition = glm::vec3(1, 1, 0);
+	glm::vec3 lightColor = glm::vec3(1, 1, 1);
 	float VRScale = MaxScale;
 	void Grow();
 	void Shrink();

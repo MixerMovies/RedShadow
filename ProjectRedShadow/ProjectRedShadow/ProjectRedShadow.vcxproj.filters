@@ -43,6 +43,9 @@
     <Filter Include="Source Files\IO">
       <UniqueIdentifier>{12d9fbf3-5768-4c05-b35d-784a92f2490e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Maps">
+      <UniqueIdentifier>{dc32d9fb-e37d-4e3d-97fb-13ed481e955a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -235,6 +238,11 @@
     <None Include="Shaders\scope.fs">
       <Filter>Shaders\Post</Filter>
     </None>
-    <None Include="maps\TowerCity.map" />
+    <None Include="maps\Room.map">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="maps\TowerCity.map">
+      <Filter>Maps</Filter>
+    </None>
   </ItemGroup>
 </Project>
