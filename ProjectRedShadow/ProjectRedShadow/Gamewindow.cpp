@@ -381,7 +381,7 @@ void Gamewindow::RenderWorld(glm::mat4 view)
 		model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));																			
 		model = glm::scale(model, glm::vec3(city->worldModels[i].scale.x, city->worldModels[i].scale.y, city->worldModels[i].scale.z));			//scale object
 
-		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));										
+		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(model)));										
 
 		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
 		glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
@@ -418,10 +418,12 @@ Gamewindow::EyeTextures Gamewindow::Display()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glm::mat4 projection = glm::perspective(70.0f, screenSize.x / (float)screenSize.y, 0.01f, 2000.0f);		
-	glm::mat4 view = glm::lookAt({ 0,0,0 }, { 0, 0, 1 }, glm::vec3(0, 1, 0));					
+	glm::mat4 view = glm::lookAt({ 0,0,0 }, { 0, 0, 1 }, glm::vec3(0, 1, 0));
 	
 	view = glm::rotate(view, city->player.rotation[1], { 0, 1, 0 });
 	view = glm::translate(view, city->player.position);
+
+	glm::vec4 lightPosition = glm::vec4(100, 20, 0, 1);
 
 	shaders[currentshader]->use();
 
@@ -437,6 +439,8 @@ Gamewindow::EyeTextures Gamewindow::Display()
 	glUniform1f(shaders[currentshader]->getUniformLocation("ambient"), 0.2f);
 	glUniform1f(shaders[currentshader]->getUniformLocation("shininess"), 10);
 	glUniform1f(shaders[currentshader]->getUniformLocation("alpha"), 1.0f);
+	glUniform3f(shaders[currentshader]->getUniformLocation("viewPosition"), city->player.position[0], city->player.position[1], city->player.position[2]);
+	glUniform3f(shaders[currentshader]->getUniformLocation("lightPosition"), lightPosition.x, lightPosition.y, lightPosition.z);
 
 	RenderWorld(view);
 
@@ -495,8 +499,8 @@ Gamewindow::EyeTextures Gamewindow::Display()
 		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("projectionMatrix"), 1, 0, glm::value_ptr(projection2));
 		RenderControllers(view2);
 
-		view2 = glm::scale(glm::mat4x4(), glm::vec3(city->VRScale, city->VRScale, city->VRScale));
-		view2 = view2 * GetHMDMatrixPoseEye(vr::Eye_Left) * m_mat4HMDPose;
+		view2 = GetHMDMatrixPoseEye(vr::Eye_Left) * m_mat4HMDPose;
+		view2 = glm::scale(view2, glm::vec3(city->VRScale, city->VRScale, city->VRScale));
 
 		view2 = glm::rotate(view2, city->player.rotation[1], { 0, 1, 0 });
 		view2 = glm::translate(view2, glm::vec3(city->player.position.x, 0, city->player.position.z));
@@ -537,8 +541,8 @@ Gamewindow::EyeTextures Gamewindow::Display()
 		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("projectionMatrix"), 1, 0, glm::value_ptr(projection3));
 		RenderControllers(view3);
 
-		view3 = glm::scale(glm::mat4x4(), glm::vec3(city->VRScale, city->VRScale, city->VRScale));
-		view3 = view3 * GetHMDMatrixPoseEye(vr::Eye_Right) * m_mat4HMDPose;
+		view3 = GetHMDMatrixPoseEye(vr::Eye_Right) * m_mat4HMDPose;
+		view3 = glm::scale(view3, glm::vec3(city->VRScale, city->VRScale, city->VRScale));
 
 		view3 = glm::rotate(view3, city->player.rotation[1], { 0, 1, 0 });
 		view3 = glm::translate(view3, glm::vec3(city->player.position.x, 0, city->player.position.z));

@@ -1,19 +1,24 @@
 #version 330 core
 
 uniform sampler2D s_texture;
+uniform float shininess;
+uniform float ambient;
+uniform vec3 viewPosition;
+uniform vec3 lightPosition;
 varying vec3 normal;
 varying vec2 texCoord;
+varying vec3 fragPos;
 
 void main()
 {
-	vec3 lightDirection = normalize(vec3(1,1,1));
-	vec3 viewDirection = vec3(0,0,1);
-	float shininess = 10.0;
+    vec3 normalized = normalize(normal);
 
-	float ambient = 0.2;
-	float diffuse = 0.8 * dot(normal, lightDirection);
+	vec3 lightDirection = normalize(lightPosition - fragPos);
+	vec3 viewDirection = normalize(viewPosition - fragPos);
 
-	vec3 r = reflect(-lightDirection, normal);
+	float diffuse = 0.8 * dot(normalized, lightDirection);
+
+	vec3 r = reflect(-lightDirection, normalized);
 
 	float specular = pow(max(0.0, dot(r, viewDirection)), shininess);
 
