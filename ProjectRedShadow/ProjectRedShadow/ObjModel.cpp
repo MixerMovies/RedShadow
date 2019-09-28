@@ -232,9 +232,15 @@ ObjModel::ObjModel(std::string fileName)
 			glm::vec3 p1(vertices[(atoi(indices1[0].c_str())-1)*3+0],vertices[(atoi(indices1[0].c_str())-1)*3+1],vertices[(atoi(indices1[0].c_str())-1)*3+2]);
 			glm::vec3 p2(vertices[(atoi(indices2[0].c_str())-1)*3+0],vertices[(atoi(indices2[0].c_str())-1)*3+1],vertices[(atoi(indices2[0].c_str())-1)*3+2]);
 			glm::vec3 p3(vertices[(atoi(indices3[0].c_str())-1)*3+0],vertices[(atoi(indices3[0].c_str())-1)*3+1],vertices[(atoi(indices3[0].c_str())-1)*3+2]);
-			glm::vec2 t1(texcoords[(atoi(indices1[1].c_str())-1)*2+0],texcoords[(atoi(indices1[1].c_str())-1)*2+1]);
-			glm::vec2 t2(texcoords[(atoi(indices2[1].c_str())-1)*2+0],texcoords[(atoi(indices2[1].c_str())-1)*2+1]);
-			glm::vec2 t3(texcoords[(atoi(indices3[1].c_str())-1)*2+0],texcoords[(atoi(indices3[1].c_str())-1)*2+1]);
+			glm::vec2 t1(0, 0);
+			glm::vec2 t2(0, 0);
+			glm::vec2 t3(0, 0);
+			if (texcoords.size() > 0)
+			{
+				glm::vec2 t1 = glm::vec2(texcoords[(atoi(indices1[1].c_str()) - 1) * 2 + 0], texcoords[(atoi(indices1[1].c_str()) - 1) * 2 + 1]);
+				glm::vec2 t2 = glm::vec2(texcoords[(atoi(indices2[1].c_str()) - 1) * 2 + 0], texcoords[(atoi(indices2[1].c_str()) - 1) * 2 + 1]);
+				glm::vec2 t3 = glm::vec2(texcoords[(atoi(indices3[1].c_str()) - 1) * 2 + 0], texcoords[(atoi(indices3[1].c_str()) - 1) * 2 + 1]);
+			}
 
 			glm::vec3 n(normals[(atoi(indices1[2].c_str())-1)*3+0],normals[(atoi(indices1[2].c_str())-1)*3+1],normals[(atoi(indices1[2].c_str())-1)*3+2]);
 
