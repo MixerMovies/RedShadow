@@ -21,7 +21,8 @@ private:
 		std::string name;
 		Texture* texture;
 		Texture* bumpMap;
-		float ambient[3] = {0, 0, 0};
+		float ambient[3] = { 0, 0, 0 };
+		float diffuse[3] = { 0, 0, 0 };
 		float shininess = 10;
 		float alpha = 1.0f;
 		bool hasTexture;

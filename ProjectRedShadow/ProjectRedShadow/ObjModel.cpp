@@ -423,15 +423,21 @@ void ObjModel::draw(Shader* shader)
 	{
 		ObjGroup* group = groups[i];
 		MaterialInfo* material = materials[group->materialIndex];
+
+		glUniform1f(shader->getUniformLocation("shininess"), material->shininess);
+
 		if(material->hasTexture)
 		{
 			glUniform1f(shader->getUniformLocation("ambient"), 0.0f);
-			glUniform1f(shader->getUniformLocation("shininess"), material->shininess);
 			glUniform1f(shader->getUniformLocation("intensity"), 1);
 			glUniform1f(shader->getUniformLocation("alpha"), material->alpha);
 
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, material->texture->textureId);
+		}
+		else
+		{
+			glUniform3f(shader->getUniformLocation("diffuse"), material->diffuse[0], material->diffuse[1], material->diffuse[2]);
 		}
 		if(material->bumpMap != NULL)
 		{
@@ -510,6 +516,12 @@ void ObjModel::loadMaterialFile( std::string fileName, std::string dirName )
 			currentMaterial->ambient[0] = std::stof(params[1]);
 			currentMaterial->ambient[1] = std::stof(params[2]);
 			currentMaterial->ambient[2] = std::stof(params[3]);
+		}
+		else if (params[0] == "kd")
+		{
+			currentMaterial->diffuse[0] = std::stof(params[1]);
+			currentMaterial->diffuse[1] = std::stof(params[2]);
+			currentMaterial->diffuse[2] = std::stof(params[3]);
 		}
 		else if (params[0] == "ns")
 		{
