@@ -24,6 +24,7 @@ vr::VRActionHandle_t _actionTurnLeft;
 vr::VRActionHandle_t _actionTurnRight;
 vr::VRActionHandle_t _actionGrow;
 vr::VRActionHandle_t _actionShrink;
+vr::VRActionHandle_t _actionTeleport;
 
 vr::VRActionSetHandle_t _actionsetMain = vr::k_ulInvalidActionSetHandle;
 
@@ -185,6 +186,7 @@ void StartVR()
 	vr::VRInput()->GetActionHandle("/actions/main/in/turnRight", &_actionTurnRight);
 	vr::VRInput()->GetActionHandle("/actions/main/in/grow", &_actionGrow);
 	vr::VRInput()->GetActionHandle("/actions/main/in/shrink", &_actionShrink);
+	vr::VRInput()->GetActionHandle("/actions/main/in/teleport", &_actionTeleport);
 
 	vr::EVRInputError error4 = vr::VRInput()->GetActionSetHandle("/actions/main", &_actionsetMain);
 
@@ -192,8 +194,6 @@ void StartVR()
 	vr::EVRInputError error6 = vr::VRInput()->GetInputSourceHandle("/user/hand/right", &gamewindow->m_rHand[Gamewindow::EHand::Right].m_source);
 	vr::EVRInputError error7 = vr::VRInput()->GetActionHandle("/actions/main/in/handRight", &gamewindow->m_rHand[Gamewindow::EHand::Right].m_actionPose);
 	vr::EVRInputError error8 = vr::VRInput()->GetActionHandle("/actions/main/in/handLeft", &gamewindow->m_rHand[Gamewindow::EHand::Left].m_actionPose);
-	std::cout << error7 << std::endl;
-	std::cout << error8 << std::endl;
 
 	vr::VRCompositor()->ShowMirrorWindow();
 

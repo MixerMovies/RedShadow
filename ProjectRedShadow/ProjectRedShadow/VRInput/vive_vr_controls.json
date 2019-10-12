@@ -1,7 +1,7 @@
 {
    "action_manifest_version" : 0,
    "alias_info" : {},
-   "app_key" : "system.generated.projectredshadow.exe",
+   "app_key" : "steam.app.2147483650",
    "bindings" : {
       "/actions/legacy" : {
          "haptics" : [
@@ -49,24 +49,6 @@
             }
          ],
          "sources" : [
-            {
-               "inputs" : {
-                  "click" : {
-                     "output" : "/actions/main/in/nextshader"
-                  }
-               },
-               "mode" : "trigger",
-               "path" : "/user/hand/right/input/trigger"
-            },
-            {
-               "inputs" : {
-                  "click" : {
-                     "output" : "/actions/main/in/nextshader"
-                  }
-               },
-               "mode" : "trigger",
-               "path" : "/user/hand/left/input/trigger"
-            },
             {
                "inputs" : {
                   "east" : {
@@ -128,6 +110,42 @@
                },
                "mode" : "button",
                "path" : "/user/hand/left/input/grip"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/main/in/nextshader"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/application_menu"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/main/in/nextshader"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/application_menu"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/main/in/teleport"
+                  }
+               },
+               "mode" : "toggle_button",
+               "path" : "/user/hand/left/input/trigger"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/main/in/teleport"
+                  }
+               },
+               "mode" : "toggle_button",
+               "path" : "/user/hand/right/input/trigger"
             }
          ]
       }
@@ -135,7 +153,7 @@
    "category" : "steamvr_input",
    "controller_type" : "vive_controller",
    "description" : "",
-   "name" : "Default bindings for legacy applications for Vive Controllers",
+   "name" : "My ProjectRedShadow configuration for Vive Controller",
    "options" : {
       "mirror_actions" : false,
       "simulated_controller_type" : "none"

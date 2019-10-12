@@ -16,7 +16,7 @@ public:
 		glm::vec3 scale;
 	};
 	Space();
-	float MaxScale = 0.2f;
+	float MaxScale = 1.0f;
 	Player player = Player();
 	Sound *music = nullptr;
 	std::vector<WorldObject> worldModels;

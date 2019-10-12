@@ -54,6 +54,11 @@
 			"type": "boolean"
 		},
 		{
+			"name": "/actions/main/in/teleport",
+			"requirement": "suggested",
+			"type": "boolean"
+		},
+		{
 			"name": "/actions/main/out/shock",
 			"requirement": "suggested",
 			"type": "vibration"
@@ -87,6 +92,7 @@
 			"/actions/main/in/previousShader": "Use previous shader",
 			"/actions/main/in/nextShader": "Use next shader",
 			"/actions/main/in/wireframe": "Enable or Disable Wireframe",
+			"/actions/main/in/teleport": "Start or stop teleporting",
 			"/actions/main/out/shock": "Use shock or vibration",
 			"/actions/main/in/handLeft": "Pose of the left hand",
 			"/actions/main/in/handRight": "Post of the right hand"
