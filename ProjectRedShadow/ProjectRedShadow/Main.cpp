@@ -63,6 +63,7 @@ void Init()
 		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB);
 		glEnable(GL_DEBUG_OUTPUT);
 	}
+
 }
 
 void Idle()
@@ -315,6 +316,12 @@ void HandleVRInput()
 		space->Grow();
 	else if (GetDigitalActionState(_actionShrink))
 		space->Shrink();
+
+	if (GetDigitalActionState(_actionTeleport))
+	{
+		space->teleporter.setCurrentRotation(space->player.rotation); //needs to use position and rotation of controller instead of current position of player in world.
+		space->teleporter.setCurrentLocation(space->player.position);
+	}
 }
 
 void reshape(int newWidth, int newHeight)

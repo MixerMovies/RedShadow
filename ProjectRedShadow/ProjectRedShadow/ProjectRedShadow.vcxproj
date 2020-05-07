@@ -136,11 +136,13 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ObjModel.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SoundTest.cpp" />
     <ClCompile Include="Space.cpp" />
+    <ClCompile Include="Teleporter.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -148,12 +150,14 @@
     <ClInclude Include="Gamewindow.h" />
     <ClInclude Include="ObjModel.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Ray.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundTest.h" />
     <ClInclude Include="Space.h" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="Teleporter.h" />
     <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>

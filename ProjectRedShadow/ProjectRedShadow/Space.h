@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Sound.h"
 #include "ObjModel.h"
+#include "Teleporter.h"
 
 class Space
 {
@@ -20,6 +21,7 @@ public:
 	Player player = Player();
 	Sound *music = nullptr;
 	std::vector<WorldObject> worldModels;
+	Teleporter teleporter = Teleporter();
 	Skybox skybox = Skybox(500, 500, 500, new ObjModel("models/Skyboxes/std-skybox.obj"));
 	glm::vec3 lightPosition = glm::vec3(1, 1, 0);
 	glm::vec3 lightColor = glm::vec3(1, 1, 1);
