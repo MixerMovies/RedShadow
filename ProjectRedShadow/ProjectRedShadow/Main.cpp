@@ -6,6 +6,8 @@
 
 #include <openvr.h>
 
+#define STARTVRMODE
+
 GLint gameWindowInt;
 Gamewindow* gamewindow;
 Space* space;
@@ -24,7 +26,6 @@ vr::VRActionHandle_t _actionTurnLeft;
 vr::VRActionHandle_t _actionTurnRight;
 vr::VRActionHandle_t _actionGrow;
 vr::VRActionHandle_t _actionShrink;
-vr::VRActionHandle_t _actionTeleport;
 
 vr::VRActionSetHandle_t _actionsetMain = vr::k_ulInvalidActionSetHandle;
 
@@ -187,14 +188,15 @@ void StartVR()
 	vr::VRInput()->GetActionHandle("/actions/main/in/turnRight", &_actionTurnRight);
 	vr::VRInput()->GetActionHandle("/actions/main/in/grow", &_actionGrow);
 	vr::VRInput()->GetActionHandle("/actions/main/in/shrink", &_actionShrink);
-	vr::VRInput()->GetActionHandle("/actions/main/in/teleport", &_actionTeleport);
 
 	vr::EVRInputError error4 = vr::VRInput()->GetActionSetHandle("/actions/main", &_actionsetMain);
 
-	vr::EVRInputError error5 = vr::VRInput()->GetInputSourceHandle("/user/hand/left", &gamewindow->m_rHand[Gamewindow::EHand::Left].m_source);
-	vr::EVRInputError error6 = vr::VRInput()->GetInputSourceHandle("/user/hand/right", &gamewindow->m_rHand[Gamewindow::EHand::Right].m_source);
-	vr::EVRInputError error7 = vr::VRInput()->GetActionHandle("/actions/main/in/handRight", &gamewindow->m_rHand[Gamewindow::EHand::Right].m_actionPose);
-	vr::EVRInputError error8 = vr::VRInput()->GetActionHandle("/actions/main/in/handLeft", &gamewindow->m_rHand[Gamewindow::EHand::Left].m_actionPose);
+	vr::VRInput()->GetInputSourceHandle("/user/hand/left", &gamewindow->m_rHand[Gamewindow::EHand::Left].m_source);
+	vr::VRInput()->GetInputSourceHandle("/user/hand/right", &gamewindow->m_rHand[Gamewindow::EHand::Right].m_source);
+	vr::VRInput()->GetActionHandle("/actions/main/in/handRight", &gamewindow->m_rHand[Gamewindow::EHand::Right].m_actionPose);
+	vr::VRInput()->GetActionHandle("/actions/main/in/handLeft", &gamewindow->m_rHand[Gamewindow::EHand::Left].m_actionPose);
+	vr::VRInput()->GetActionHandle("/actions/main/in/teleportLeft", &gamewindow->m_rHand[Gamewindow::EHand::Left].m_actionTeleport);
+	vr::VRInput()->GetActionHandle("/actions/main/in/teleportRight", &gamewindow->m_rHand[Gamewindow::EHand::Right].m_actionTeleport);
 
 	vr::VRCompositor()->ShowMirrorWindow();
 
@@ -317,10 +319,19 @@ void HandleVRInput()
 	else if (GetDigitalActionState(_actionShrink))
 		space->Shrink();
 
-	if (GetDigitalActionState(_actionTeleport))
+	//Hand specific interaction
+	for (int i = Gamewindow::EHand::Left; i <= Gamewindow::EHand::Right; i++)
 	{
-		//space->teleporters[0].setCurrentRotation(); //needs to use position and rotation of controller instead of current position of player in world.
-		space->player.position = space->teleporters[0].getTeleportLocation();
+		if (GetDigitalActionState(gamewindow->m_rHand[i].m_actionTeleport))
+		{
+			space->teleporters[i].startTeleporting = true;
+		}
+		else if (space->teleporters[i].startTeleporting)
+		{
+			//space->teleporters[0].setCurrentRotation(); //needs to use position and rotation of controller instead of current position of player in world.
+			space->player.position -= space->teleporters[i].getTeleportLocation();
+			space->teleporters[i].startTeleporting = false;
+		}
 	}
 }
 
@@ -373,6 +384,10 @@ int main(int argc, char *argv[])
 
 	space = new Space();
 	gamewindow = new Gamewindow(space, ivrSystem);
+
+#ifdef STARTVRMODE
+	StartVR();
+#endif
 
 	glutMainLoop();
 }

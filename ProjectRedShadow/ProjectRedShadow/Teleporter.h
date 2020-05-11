@@ -7,6 +7,7 @@
 class Teleporter
 {
 public:
+	bool startTeleporting = false;
 	Teleporter();
 	~Teleporter();
 	ObjModel* getModel();

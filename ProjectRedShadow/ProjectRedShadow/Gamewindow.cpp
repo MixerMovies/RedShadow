@@ -409,15 +409,18 @@ void Gamewindow::RenderControllers(glm::mat4 view)
 		if(m_rHand[eHand].m_pRenderModel != nullptr)
 			m_rHand[eHand].m_pRenderModel->draw(shaders[currentshader]);
 
-		model = glm::translate(glm::mat4(), city->teleporters[eHand].getTeleportLocation());
+		if (city->teleporters[eHand].startTeleporting)
+		{
+			model = glm::translate(glm::mat4(), city->teleporters[eHand].getTeleportLocation());
 
-		normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));
+			normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));
 
-		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
-		glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
+			glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
+			glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
 
-		if (city->teleporters[eHand].getModel() != nullptr)
-			city->teleporters[eHand].getModel()->draw(shaders[currentshader]);
+			if (city->teleporters[eHand].getModel() != nullptr)
+				city->teleporters[eHand].getModel()->draw(shaders[currentshader]);
+		}
 	}
 }
 

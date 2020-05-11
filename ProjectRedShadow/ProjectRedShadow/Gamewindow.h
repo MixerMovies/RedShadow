@@ -24,6 +24,7 @@ public:
 	{
 		vr::VRInputValueHandle_t m_source = vr::k_ulInvalidInputValueHandle;
 		vr::VRActionHandle_t m_actionPose = vr::k_ulInvalidActionHandle;
+		vr::VRActionHandle_t m_actionTeleport = vr::k_ulInvalidActionHandle;
 		glm::mat4 m_rmat4Pose;
 		ObjModel *m_pRenderModel = nullptr;
 		std::string m_sRenderModelName;
