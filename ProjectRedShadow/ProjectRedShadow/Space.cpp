@@ -4,6 +4,9 @@
 Space::Space()
 {
 	worldModels = std::vector<WorldObject>();
+
+	teleporters[0] = Teleporter();
+	teleporters[1] = Teleporter();
 }
 
 void Space::Grow()

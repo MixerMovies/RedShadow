@@ -287,6 +287,11 @@ void Gamewindow::UpdateHMDMatrixPose()
 		else
 		{
 			m_rHand[eHand].m_rmat4Pose = Gamewindow::ConvertSteamVRMatrixToMatrix4(poseData.pose.mDeviceToAbsoluteTracking);
+			/*glm::vec3 position = glm::vec3(m_rHand[eHand].m_rmat4Pose[3][0], m_rHand[eHand].m_rmat4Pose[3][1], m_rHand[eHand].m_rmat4Pose[3][2]);
+			city->teleporters[eHand].setCurrentLocation(position);
+			glm::mat4 inverted = glm::inverse(m_rHand[eHand].m_rmat4Pose);
+			glm::vec3 forward = normalize(glm::vec3(inverted[2]));
+			std::cout << forward[0] << "," << forward[1] << "," << forward[2] << std::endl;*/
 
 			vr::InputOriginInfo_t originInfo;
 			if (vr::VRInput()->GetOriginTrackedDeviceInfo(poseData.activeOrigin, &originInfo, sizeof(originInfo)) == vr::VRInputError_None
@@ -399,6 +404,16 @@ void Gamewindow::RenderControllers(glm::mat4 view)
 
 		if(m_rHand[eHand].m_pRenderModel != nullptr)
 			m_rHand[eHand].m_pRenderModel->draw(shaders[currentshader]);
+
+		/*model = glm::translate(glm::mat4(), city->teleporters[eHand].getTeleportLocation());
+
+		normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));
+
+		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
+		glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
+
+		if (city->teleporters[eHand].getModel() != nullptr)
+			city->teleporters[eHand].getModel()->draw(shaders[currentshader]);*/
 	}
 }
 

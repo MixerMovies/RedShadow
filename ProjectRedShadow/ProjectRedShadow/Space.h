@@ -21,7 +21,7 @@ public:
 	Player player = Player();
 	Sound *music = nullptr;
 	std::vector<WorldObject> worldModels;
-	Teleporter teleporter = Teleporter();
+	Teleporter teleporters[2];
 	Skybox skybox = Skybox(500, 500, 500, new ObjModel("models/Skyboxes/std-skybox.obj"));
 	glm::vec3 lightPosition = glm::vec3(1, 1, 0);
 	glm::vec3 lightColor = glm::vec3(1, 1, 1);

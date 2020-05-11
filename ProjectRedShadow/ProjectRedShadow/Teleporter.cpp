@@ -12,10 +12,10 @@ Teleporter::~Teleporter()
 {
 }
 
-/*ObjModel Teleporter::getModel()
+ObjModel* Teleporter::getModel()
 {
-	return ObjModel("jr");
-}*/
+	return _teleporterModel;
+}
 
 void Teleporter::setCurrentLocation(glm::vec3 location)
 {
