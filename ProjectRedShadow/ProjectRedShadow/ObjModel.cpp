@@ -229,13 +229,14 @@ ObjModel::ObjModel(std::string fileName)
 			std::vector<std::string> indices1 = split(params[1], "/");
 			std::vector<std::string> indices2 = split(params[2], "/");
 			std::vector<std::string> indices3 = split(params[3], "/");
+			
 			glm::vec3 p1(vertices[(atoi(indices1[0].c_str())-1)*3+0],vertices[(atoi(indices1[0].c_str())-1)*3+1],vertices[(atoi(indices1[0].c_str())-1)*3+2]);
 			glm::vec3 p2(vertices[(atoi(indices2[0].c_str())-1)*3+0],vertices[(atoi(indices2[0].c_str())-1)*3+1],vertices[(atoi(indices2[0].c_str())-1)*3+2]);
 			glm::vec3 p3(vertices[(atoi(indices3[0].c_str())-1)*3+0],vertices[(atoi(indices3[0].c_str())-1)*3+1],vertices[(atoi(indices3[0].c_str())-1)*3+2]);
 			glm::vec2 t1(0, 0);
 			glm::vec2 t2(0, 0);
 			glm::vec2 t3(0, 0);
-			if (texcoords.size() > 0)
+			if (texcoords.size() > 0 && indices1[1] != "")
 			{
 				glm::vec2 t1 = glm::vec2(texcoords[(atoi(indices1[1].c_str()) - 1) * 2 + 0], texcoords[(atoi(indices1[1].c_str()) - 1) * 2 + 1]);
 				glm::vec2 t2 = glm::vec2(texcoords[(atoi(indices2[1].c_str()) - 1) * 2 + 0], texcoords[(atoi(indices2[1].c_str()) - 1) * 2 + 1]);
@@ -389,7 +390,7 @@ ObjModel::ObjModel(std::vector<float> vertices, std::vector<float> normals, std:
 	GLuint _vertexBuffer;
 	glGenBuffers(1, &_vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, finalVertices.size() * sizeof(float), &finalVertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, finalVertices.size() * sizeof(GLfloat), &finalVertices[0], GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 32, BUFFER_OFFSET(0));
