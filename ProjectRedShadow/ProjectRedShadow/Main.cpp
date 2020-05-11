@@ -320,7 +320,7 @@ void HandleVRInput()
 	if (GetDigitalActionState(_actionTeleport))
 	{
 		//space->teleporters[0].setCurrentRotation(); //needs to use position and rotation of controller instead of current position of player in world.
-		space->teleporters[0].setCurrentLocation(space->teleporters[0].getTeleportLocation());
+		space->player.position = space->teleporters[0].getTeleportLocation();
 	}
 }
 
