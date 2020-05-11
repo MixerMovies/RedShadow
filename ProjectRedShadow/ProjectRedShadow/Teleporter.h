@@ -11,6 +11,8 @@ public:
 	~Teleporter();
 	ObjModel* getModel();
 	void setCurrentLocation(glm::vec3 location);
+	glm::vec3 getCurrentLocation();
+	glm::vec3 getCurrentRotation();
 	void setCurrentRotation(glm::vec3 rotation);
 	glm::vec3 getTeleportLocation();
 private:

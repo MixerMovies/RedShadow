@@ -22,6 +22,16 @@ void Teleporter::setCurrentLocation(glm::vec3 location)
 	_currentLocation = location;
 }
 
+glm::vec3 Teleporter::getCurrentLocation()
+{
+	return _currentLocation;
+}
+
+glm::vec3 Teleporter::getCurrentRotation()
+{
+	return _currentRotation;
+}
+
 void Teleporter::setCurrentRotation(glm::vec3 rotation)
 {
 	_currentRotation = rotation;
@@ -31,6 +41,6 @@ glm::vec3 Teleporter::getTeleportLocation()
 {
 	Ray ray = Ray(_currentLocation, glm::normalize(_currentRotation));
 	glm::vec3 location = glm::vec3();
-	std::cout << ray.GetYIntersection(0, location) << std::endl;
+	ray.GetYIntersection(0, location);
 	return location;
 }
