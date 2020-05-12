@@ -2,7 +2,9 @@
 #include "GL\freeglut.h"
 #include "Gamewindow.h"
 #include "Space.h"
+
 #include <iostream>
+#include <experimental/filesystem>
 
 #include <openvr.h>
 
@@ -176,7 +178,8 @@ void StartVR()
 		printf("Compositor initialization failed. See log file for details\n");
 	}
 
-	vr::EVRInputError error = vr::VRInput()->SetActionManifestPath("D:\\Users\\Remco\\Documents\\Github\\RedShadow\\ProjectRedShadow\\ProjectRedShadow\\VRInput\\vr_bindings.json");
+	std::string path = std::experimental::filesystem::current_path().string() + "\\VRInput\\vr_bindings.json";
+	vr::EVRInputError error = vr::VRInput()->SetActionManifestPath(path.c_str());
 
 	vr::EVRInputError error2 = vr::VRInput()->GetActionHandle("/actions/main/in/wireframe", &_actionWireframe);
 	vr::EVRInputError error3 = vr::VRInput()->GetActionHandle("/actions/main/out/shock", &_actionShock);

@@ -282,7 +282,7 @@ void Gamewindow::UpdateHMDMatrixPose()
 	for (Gamewindow::EHand eHand = Gamewindow::Left; eHand <= Gamewindow::Right; ((int&)eHand)++)
 	{
 		vr::InputPoseActionData_t poseData;
-		vr::EVRInputError error = vr::VRInput()->GetPoseActionData(m_rHand[eHand].m_actionPose, vr::TrackingUniverseStanding, 0, &poseData, sizeof(poseData), vr::k_ulInvalidInputValueHandle);
+		vr::EVRInputError error = vr::VRInput()->GetPoseActionDataRelativeToNow(m_rHand[eHand].m_actionPose, vr::TrackingUniverseStanding, 0, &poseData, sizeof(poseData), vr::k_ulInvalidInputValueHandle);
 		if ( error != vr::VRInputError_None
 			|| !poseData.bActive || !poseData.pose.bPoseIsValid)
 		{
