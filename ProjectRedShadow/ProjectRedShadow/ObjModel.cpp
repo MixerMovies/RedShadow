@@ -5,6 +5,7 @@
 #include <vector>
 #include <algorithm>
 #include <glm.hpp>
+#include "FileLoader.h"
 
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
@@ -432,13 +433,10 @@ void ObjModel::draw(Shader* shader)
 			glUniform1f(shader->getUniformLocation("ambient"), 0.0f);
 			glUniform1f(shader->getUniformLocation("intensity"), 1);
 			glUniform1f(shader->getUniformLocation("alpha"), material->alpha);
+			glUniform3f(shader->getUniformLocation("diffuse"), material->diffuse[0], material->diffuse[1], material->diffuse[2]);
 
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, material->texture->textureId);
-		}
-		else
-		{
-			glUniform3f(shader->getUniformLocation("diffuse"), material->diffuse[0], material->diffuse[1], material->diffuse[2]);
 		}
 		if(material->bumpMap != NULL)
 		{
@@ -505,8 +503,8 @@ void ObjModel::loadMaterialFile( std::string fileName, std::string dirName )
 		}
 		else if(params[0] == "map_kd")
 		{
-			currentMaterial->hasTexture = true;
 			currentMaterial->texture = new Texture(dirName + "/" + params[1]);
+			currentMaterial->hasTexture = true;
 		}
 		else if(params[0] == "map_bump")
 		{
@@ -535,6 +533,12 @@ void ObjModel::loadMaterialFile( std::string fileName, std::string dirName )
 		else
 			std::cout<<"Didn't parse "<<params[0]<<" in material file"<<std::endl;
 	}
+	if (currentMaterial->texture == NULL)
+	{
+		currentMaterial->texture = new Texture(FileLoader::getMainPath() + "\\Textures\\White.png");
+		currentMaterial->hasTexture = true;
+	}
+	
 	if(currentMaterial != NULL)
 		materials.push_back(currentMaterial);
 

@@ -2,9 +2,9 @@
 #include "GL\freeglut.h"
 #include "Gamewindow.h"
 #include "Space.h"
+#include "FileLoader.h"
 
 #include <iostream>
-#include <experimental/filesystem>
 
 #include <openvr.h>
 
@@ -178,7 +178,7 @@ void StartVR()
 		printf("Compositor initialization failed. See log file for details\n");
 	}
 
-	std::string path = std::experimental::filesystem::current_path().string() + "\\VRInput\\vr_bindings.json";
+	std::string path = FileLoader::getMainPath() + "\\VRInput\\vr_bindings.json";
 	vr::EVRInputError error = vr::VRInput()->SetActionManifestPath(path.c_str());
 
 	vr::EVRInputError error2 = vr::VRInput()->GetActionHandle("/actions/main/in/wireframe", &_actionWireframe);
@@ -332,7 +332,7 @@ void HandleVRInput()
 		else if (space->teleporters[i].startTeleporting)
 		{
 			//space->teleporters[0].setCurrentRotation(); //needs to use position and rotation of controller instead of current position of player in world.
-			space->player.position -= space->teleporters[i].getTeleportLocation();
+			space->player.position -= space->teleporters[i].getTeleportLocation() / space->VRScale;
 			space->teleporters[i].startTeleporting = false;
 		}
 	}

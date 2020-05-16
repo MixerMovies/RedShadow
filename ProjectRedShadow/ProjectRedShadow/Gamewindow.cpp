@@ -412,6 +412,7 @@ void Gamewindow::RenderControllers(glm::mat4 view)
 		if (city->teleporters[eHand].startTeleporting)
 		{
 			model = glm::translate(glm::mat4(), city->teleporters[eHand].getTeleportLocation());
+			model = glm::scale(model, glm::vec3(0.01, 0.01, 0.01));
 
 			normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));
 
