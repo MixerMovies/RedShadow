@@ -8,7 +8,7 @@
 
 #include <openvr.h>
 
-#define STARTVRMODE
+//#define STARTVRMODE
 
 GLint gameWindowInt;
 Gamewindow* gamewindow;

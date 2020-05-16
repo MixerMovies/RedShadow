@@ -430,7 +430,7 @@ void ObjModel::draw(Shader* shader)
 
 		if(material->hasTexture)
 		{
-			glUniform1f(shader->getUniformLocation("ambient"), 0.0f);
+			glUniform1f(shader->getUniformLocation("ambient"), material->ambient[0]);
 			glUniform1f(shader->getUniformLocation("intensity"), 1);
 			glUniform1f(shader->getUniformLocation("alpha"), material->alpha);
 			glUniform3f(shader->getUniformLocation("diffuse"), material->diffuse[0], material->diffuse[1], material->diffuse[2]);
@@ -530,13 +530,13 @@ void ObjModel::loadMaterialFile( std::string fileName, std::string dirName )
 		{
 			currentMaterial->alpha = std::stof(params[1]);
 		}
+		else if (currentMaterial->texture == NULL)
+		{
+			currentMaterial->texture = new Texture(FileLoader::getMainPath() + "\\Textures\\White.png");
+			currentMaterial->hasTexture = true;
+		}
 		else
 			std::cout<<"Didn't parse "<<params[0]<<" in material file"<<std::endl;
-	}
-	if (currentMaterial->texture == NULL)
-	{
-		currentMaterial->texture = new Texture(FileLoader::getMainPath() + "\\Textures\\White.png");
-		currentMaterial->hasTexture = true;
 	}
 	
 	if(currentMaterial != NULL)
