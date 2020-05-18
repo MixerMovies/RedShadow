@@ -18,12 +18,16 @@ void main()
 {
     vec3 normalized = normalize(normal);
 
+    vec4 bumpmap = texture2D(bump_map, texCoord);
+	vec3 bump = vec3(2*bumpmap.x-1, 2*bumpmap.y-1, 2*bumpmap.z-1);
+	vec3 normalNew = normalize(normalized+bump);
+
 	vec3 lightDirection = normalize(lightPosition - fragPos);
 	vec3 viewDirection = normalize(viewPosition - fragPos);
 
-	float diffuseRes = dot(normalized, lightDirection);
+	float diffuseRes = dot(normalNew, lightDirection);
 
-	vec3 r = reflect(-lightDirection, normalized);
+	vec3 r = reflect(-lightDirection, normalNew);
 
 	float specular = pow(max(0.0, dot(r, viewDirection)), shininess) * intensity;
 
