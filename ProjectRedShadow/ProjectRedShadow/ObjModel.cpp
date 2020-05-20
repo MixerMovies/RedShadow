@@ -427,6 +427,7 @@ void ObjModel::draw(Shader* shader)
 		MaterialInfo* material = materials[group->materialIndex];
 
 		glUniform1f(shader->getUniformLocation("shininess"), material->shininess);
+		glUniform1i(shader->getUniformLocation("has_bump_map"), 0);
 
 		if(material->hasTexture)
 		{
@@ -441,6 +442,7 @@ void ObjModel::draw(Shader* shader)
 		if(material->bumpMap != NULL)
 		{
 			glActiveTexture(GL_TEXTURE1);
+			glUniform1i(shader->getUniformLocation("has_bump_map"), 1);
 			glBindTexture(GL_TEXTURE_2D, material->bumpMap->textureId);
 		}
 		else

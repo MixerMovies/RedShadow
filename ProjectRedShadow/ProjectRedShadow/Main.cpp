@@ -236,6 +236,9 @@ void SpecialKeyEvent(int key, int x, int y)
 	case GLUT_KEY_F11:
 		glutFullScreenToggle();
 		break;
+	case GLUT_KEY_SHIFT_L:
+		space->player.isSprinting = !space->player.isSprinting;
+		break;
 	}
 }
 
