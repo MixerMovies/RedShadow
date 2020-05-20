@@ -459,14 +459,14 @@ Gamewindow::EyeTextures Gamewindow::Display()
 
 	RenderWorld(view);
 
-	glm::mat4 model = glm::translate(glm::mat4(), glm::vec3(0, 0, 0));													
+	/*glm::mat4 model = glm::translate(glm::mat4(), glm::vec3(0, 0, 0));													
 	model = glm::scale(model, glm::vec3(city->skybox.x, city->skybox.y, city->skybox.z));
 
 	glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));										
 	glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
-	glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
+	glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));*/
 
-	city->skybox.draw();
+	//city->skybox.draw();
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

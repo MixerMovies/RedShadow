@@ -496,6 +496,11 @@ void ObjModel::loadMaterialFile( std::string fileName, std::string dirName )
 		{
 			if(currentMaterial != NULL)
 			{
+				if (currentMaterial->texture == NULL)
+				{
+					currentMaterial->texture = new Texture(FileLoader::getMainPath() + "\\Textures\\White.png");
+					currentMaterial->hasTexture = true;
+				}
 				materials.push_back(currentMaterial);
 			}
 			currentMaterial = new MaterialInfo();
@@ -530,18 +535,19 @@ void ObjModel::loadMaterialFile( std::string fileName, std::string dirName )
 		{
 			currentMaterial->alpha = std::stof(params[1]);
 		}
-		else if (currentMaterial->texture == NULL)
+		else
+			std::cout<<"Didn't parse "<<params[0]<<" in material file "<<currentMaterial->name << " from model " << fileName<<std::endl;
+	}
+	
+	if (currentMaterial != NULL)
+	{
+		if (currentMaterial->texture == NULL)
 		{
 			currentMaterial->texture = new Texture(FileLoader::getMainPath() + "\\Textures\\White.png");
 			currentMaterial->hasTexture = true;
 		}
-		else
-			std::cout<<"Didn't parse "<<params[0]<<" in material file"<<std::endl;
-	}
-	
-	if(currentMaterial != NULL)
 		materials.push_back(currentMaterial);
-
+	}
 }
 
 ObjModel::MaterialInfo::MaterialInfo()

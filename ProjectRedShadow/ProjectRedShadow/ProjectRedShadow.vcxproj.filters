@@ -250,9 +250,6 @@
     <None Include="Shaders\scope.fs">
       <Filter>Shaders\Post</Filter>
     </None>
-    <None Include="maps\Room.map">
-      <Filter>Maps</Filter>
-    </None>
     <None Include="maps\TowerCity.map">
       <Filter>Maps</Filter>
     </None>
