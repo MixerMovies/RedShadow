@@ -90,7 +90,7 @@ void Display()
 {
 	Gamewindow::EyeTextures eyeTextures = gamewindow->Display();
 
-	if (ivrSystem)
+	if (ivrSystem != nullptr)
 	{
 		vr::Texture_t leftEyeTexture = { (void*)(uintptr_t)eyeTextures.leftEye, vr::TextureType_OpenGL, vr::ColorSpace::ColorSpace_Linear };
 		vr::Texture_t rightEyeTexture = { (void*)(uintptr_t)eyeTextures.rightEye, vr::TextureType_OpenGL, vr::ColorSpace::ColorSpace_Gamma };

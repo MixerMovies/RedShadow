@@ -10,10 +10,10 @@ public:
 	Shader(std::string vsfile, std::string fsfile, std::string gsfile);
 	void link(void);
 	void use(void);
-	int getUniformLocation(const std::string & name);
+	int getUniformLocation(GLchar* name);
 	void bindAttribute(GLuint index, const GLchar * value);
 	GLuint programId;
 private:
 	void checkShaderErrors(GLuint shaderId);
-	std::map<std::string, GLuint> uniforms;
+	std::map<GLchar*, GLuint> uniforms;
 };

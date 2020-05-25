@@ -153,6 +153,7 @@ glm::vec4 calcTangentVector(
 
 ObjModel::ObjModel(std::string fileName)
 {
+	emptyTexture = new Texture(FileLoader::getMainPath() + "\\Textures\\White.png");
 
 	std::string dirName = fileName;
 	if(dirName.rfind("/") != std::string::npos)
@@ -421,9 +422,8 @@ void ObjModel::draw(Shader* shader)
 {
     glBindVertexArray(_vertexArray);
 
-	for(size_t i = 0; i < groups.size(); i++)
+	for (ObjGroup* group : groups)
 	{
-		ObjGroup* group = groups[i];
 		MaterialInfo* material = materials[group->materialIndex];
 
 		glUniform1f(shader->getUniformLocation("shininess"), material->shininess);
@@ -434,7 +434,7 @@ void ObjModel::draw(Shader* shader)
 			glUniform1f(shader->getUniformLocation("ambient"), material->ambient[0]);
 			glUniform1f(shader->getUniformLocation("intensity"), 1);
 			glUniform1f(shader->getUniformLocation("alpha"), material->alpha);
-			glUniform3f(shader->getUniformLocation("diffuse"), material->diffuse[0], material->diffuse[1], material->diffuse[2]);
+			glUniform3fv(shader->getUniformLocation("diffuse"), 1, material->diffuse);
 
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, material->texture->textureId);
@@ -500,7 +500,7 @@ void ObjModel::loadMaterialFile( std::string fileName, std::string dirName )
 			{
 				if (currentMaterial->texture == NULL)
 				{
-					currentMaterial->texture = new Texture(FileLoader::getMainPath() + "\\Textures\\White.png");
+					currentMaterial->texture = emptyTexture;
 					currentMaterial->hasTexture = true;
 				}
 				materials.push_back(currentMaterial);
@@ -545,7 +545,7 @@ void ObjModel::loadMaterialFile( std::string fileName, std::string dirName )
 	{
 		if (currentMaterial->texture == NULL)
 		{
-			currentMaterial->texture = new Texture(FileLoader::getMainPath() + "\\Textures\\White.png");
+			currentMaterial->texture = emptyTexture;
 			currentMaterial->hasTexture = true;
 		}
 		materials.push_back(currentMaterial);

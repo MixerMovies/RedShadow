@@ -74,12 +74,12 @@ void Shader::use()
 	glUseProgram(programId);								// Zet dit als actieve programma
 }
 
-int Shader::getUniformLocation(const std::string &name)
+int Shader::getUniformLocation(GLchar* name)
 {
 	auto it = uniforms.find(name);
 	if (it != uniforms.end())
 		return it->second;
-	GLuint location = glGetUniformLocation(programId, name.c_str());
+	GLuint location = glGetUniformLocation(programId, name);
 	uniforms[name] = location;
 	return location;
 }

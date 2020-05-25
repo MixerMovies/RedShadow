@@ -23,7 +23,7 @@ private:
 		Texture* bumpMap;
 		float ambient[3] = { 0, 0, 0 };
 		float diffuse[3] = { 0, 0, 0 };
-		float shininess = 10;
+		float shininess = 10.0f;
 		float alpha = 1.0f;
 		bool hasTexture;
 	};
@@ -41,6 +41,7 @@ private:
 	std::vector<MaterialInfo*> materials;
 	GLuint _vertexArray;
 	GLsizei size = 0;
+	Texture* emptyTexture;
 
 	void loadMaterialFile(std::string fileName, std::string dirName);
 public:

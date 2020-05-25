@@ -28,7 +28,7 @@ char m_rDevClassChar[vr::k_unMaxTrackedDeviceCount];   // for each device, a cha
 
 glm::mat4 m_mat4HMDPose;
 
-int currentTime = 0;
+float currentTime = 0;
 
 Space* city;
 
@@ -589,9 +589,9 @@ Gamewindow::EyeTextures Gamewindow::Display()
 	glutSwapBuffers();
 
 	//Framerate
-	//int newTime = glutGet(GLUT_ELAPSED_TIME);
-	//if(newTime - currentTime > 0) std::cout << 1000.0f / float(newTime - currentTime) << std::endl;
-	//currentTime = newTime;
+	float newTime = glutGet(GLUT_ELAPSED_TIME);
+	if(newTime - currentTime > 0) std::cout << (int) (1000.0f / (newTime - currentTime)) << std::endl;
+	currentTime = newTime;
 
 	return EyeTextures{ eyeLeftResolveTextureId, eyeRightResolveTextureId };
 }
