@@ -334,7 +334,8 @@ ObjModel::ObjModel(std::string fileName)
 	}
 
 	groups.push_back(currentGroup);
-
+	size = finalVertices.size();
+	std::cout << size << " " << fileName << std::endl;
 
     glGenVertexArrays(1, &_vertexArray);
     glBindVertexArray(_vertexArray);
@@ -422,6 +423,38 @@ void ObjModel::draw(Shader* shader)
 {
     glBindVertexArray(_vertexArray);
 
+	/*MaterialInfo* material = materials[groups[0]->materialIndex];
+
+	glUniform1f(shader->getUniformLocation("shininess"), material->shininess);
+	glUniform1i(shader->getUniformLocation("has_bump_map"), 0);
+
+	if (material->hasTexture)
+	{
+		glUniform1f(shader->getUniformLocation("ambient"), material->ambient[0]);
+		glUniform1f(shader->getUniformLocation("intensity"), 1);
+		glUniform1f(shader->getUniformLocation("alpha"), material->alpha);
+		glUniform3fv(shader->getUniformLocation("diffuse"), 1, material->diffuse);
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, material->texture->textureId);
+	}
+	if (material->bumpMap != NULL)
+	{
+		glActiveTexture(GL_TEXTURE1);
+		glUniform1i(shader->getUniformLocation("has_bump_map"), 1);
+		glBindTexture(GL_TEXTURE_2D, material->bumpMap->textureId);
+	}
+	else
+	{
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, -1);
+	}
+
+	//if (size > 0)
+		//glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_SHORT, 0);
+	//else
+		glDrawArrays(GL_TRIANGLES, 0, size);*/	
+
 	for (ObjGroup* group : groups)
 	{
 		MaterialInfo* material = materials[group->materialIndex];
@@ -451,9 +484,9 @@ void ObjModel::draw(Shader* shader)
 			glBindTexture(GL_TEXTURE_2D, -1);
 		}
 		
-		if (size > 0)
-			glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_SHORT, 0);
-		else
+		//if (size > 0)
+		//	glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_SHORT, 0);
+		//else
 			glDrawArrays(GL_TRIANGLES, group->start, group->end - group->start);
 	}
 }

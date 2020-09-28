@@ -17,6 +17,7 @@ float lastTime;
 bool wireframeEnabled = false;
 
 vr::IVRSystem *ivrSystem;
+bool _vrEnabled = false;
 
 vr::VRActionHandle_t _actionWireframe;
 vr::VRActionHandle_t _actionShock;
@@ -90,11 +91,11 @@ void Display()
 {
 	Gamewindow::EyeTextures eyeTextures = gamewindow->Display();
 
-	if (ivrSystem != nullptr)
+	if (_vrEnabled)
 	{
-		vr::Texture_t leftEyeTexture = { (void*)(uintptr_t)eyeTextures.leftEye, vr::TextureType_OpenGL, vr::ColorSpace::ColorSpace_Linear };
-		vr::Texture_t rightEyeTexture = { (void*)(uintptr_t)eyeTextures.rightEye, vr::TextureType_OpenGL, vr::ColorSpace::ColorSpace_Gamma };
+		vr::Texture_t leftEyeTexture = { (void*)(uintptr_t)eyeTextures.leftEye, vr::TextureType_OpenGL, vr::ColorSpace::ColorSpace_Gamma };
 		vr::VRCompositor()->Submit(vr::Eye_Left, &leftEyeTexture);
+		vr::Texture_t rightEyeTexture = { (void*)(uintptr_t)eyeTextures.rightEye, vr::TextureType_OpenGL, vr::ColorSpace::ColorSpace_Gamma };
 		vr::VRCompositor()->Submit(vr::Eye_Right, &rightEyeTexture);
 		
 	}
@@ -204,6 +205,7 @@ void StartVR()
 	vr::VRCompositor()->ShowMirrorWindow();
 
 	gamewindow->setVRSystem(ivrSystem);
+	_vrEnabled = true;
 }
 
 void KeyEventUp(unsigned char key, int x, int y)
