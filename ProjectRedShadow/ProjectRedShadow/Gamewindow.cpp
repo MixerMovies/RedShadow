@@ -427,28 +427,7 @@ void Gamewindow::RenderControllers(glm::mat4 view)
 
 Gamewindow::EyeTextures Gamewindow::Display()
 {
-	if (postProcessingEnabled)
-	{
-		glBindFramebuffer(GL_FRAMEBUFFER, fboId);
-		glViewport(0, 0, 2048, 2048);
-	}
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glm::mat4 projection = glm::perspective(70.0f, screenSize.x / (float)screenSize.y, 0.01f, 2000.0f);		
-	glm::mat4 view = glm::lookAt({ 0,0,0 }, { 0, 0, 1 }, glm::vec3(0, 1, 0));
-	
-	view = glm::rotate(view, city->player.rotation[1], { 0, 1, 0 });
-	view = glm::translate(view, city->player.position);
-
 	shaders[currentshader]->use();
-
-	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
-	glEnableVertexAttribArray(3);
-	
-	glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("viewMatrix"), 1, 0, glm::value_ptr(view));
-	glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("projectionMatrix"), 1, 0, glm::value_ptr(projection));
 
 	glUniform1f(shaders[currentshader]->getUniformLocation("time"), glutGet(GLUT_ELAPSED_TIME) / 1000.0f);
 	glUniform1i(shaders[currentshader]->getUniformLocation("s_texture"), 0);
@@ -457,47 +436,70 @@ Gamewindow::EyeTextures Gamewindow::Display()
 	glUniform3f(shaders[currentshader]->getUniformLocation("lightPosition"), city->lightPosition.x, city->lightPosition.y, city->lightPosition.z);
 	glUniform4f(shaders[currentshader]->getUniformLocation("lightColor"), city->lightColor.x, city->lightColor.y, city->lightColor.z, 1);
 
-	RenderWorld(view);
-
-	/*glm::mat4 model = glm::translate(glm::mat4(), glm::vec3(0, 0, 0));													
-	model = glm::scale(model, glm::vec3(city->skybox.x, city->skybox.y, city->skybox.z));
-
-	glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));										
-	glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
-	glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));*/
-
-	//city->skybox.draw();
-
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	if (postProcessingEnabled)
+	if (!m_pHMD)
 	{
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glViewport(0, 0, 1000, 1000);
+		if (postProcessingEnabled)
+		{
+			glBindFramebuffer(GL_FRAMEBUFFER, fboId);
+			glViewport(0, 0, 2048, 2048);
+		}
+
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		std::vector<glm::vec2> verts;
-		verts.push_back(glm::vec2(-1, -1));
-		verts.push_back(glm::vec2(-1, 1));
-		verts.push_back(glm::vec2(1, 1));
-		verts.push_back(glm::vec2(-1, -1));
-		verts.push_back(glm::vec2(1, 1));
-		verts.push_back(glm::vec2(1, -1));
+		glm::mat4 projection = glm::perspective(70.0f, screenSize.x / (float)screenSize.y, 0.01f, 2000.0f);
+		glm::mat4 view = glm::lookAt({ 0,0,0 }, { 0, 0, 1 }, glm::vec3(0, 1, 0));
 
-		postProcessingShaders[currentPostShader]->use();
-		glUniform1i(postProcessingShaders[currentPostShader]->getUniformLocation("s_texture"), 0);
-		glUniform1f(postProcessingShaders[currentPostShader]->getUniformLocation("time"), glutGet(GLUT_ELAPSED_TIME) / 1000.0f);
+		view = glm::rotate(view, city->player.rotation[1], { 0, 1, 0 });
+		view = glm::translate(view, city->player.position);
 
-		glBindTexture(GL_TEXTURE_2D, fboTextureId);
-		glDisableVertexAttribArray(1);
-		glDisableVertexAttribArray(2);
-		glDisableVertexAttribArray(3);
-		glVertexAttribPointer(0, 2, GL_FLOAT, false, 2 * 4, &verts[0]);
-		glDrawArrays(GL_TRIANGLES, 0, verts.size());
+		glEnableVertexAttribArray(1);
+		glEnableVertexAttribArray(2);
+		glEnableVertexAttribArray(3);
+
+		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("viewMatrix"), 1, 0, glm::value_ptr(view));
+		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("projectionMatrix"), 1, 0, glm::value_ptr(projection));
+
+		RenderWorld(view);
+
+		/*glm::mat4 model = glm::translate(glm::mat4(), glm::vec3(0, 0, 0));
+		model = glm::scale(model, glm::vec3(city->skybox.x, city->skybox.y, city->skybox.z));
+
+		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));
+		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
+		glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));*/
+
+		//city->skybox.draw();
+
+		glBindVertexArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		if (postProcessingEnabled)
+		{
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+			glViewport(0, 0, 1000, 1000);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+			std::vector<glm::vec2> verts;
+			verts.push_back(glm::vec2(-1, -1));
+			verts.push_back(glm::vec2(-1, 1));
+			verts.push_back(glm::vec2(1, 1));
+			verts.push_back(glm::vec2(-1, -1));
+			verts.push_back(glm::vec2(1, 1));
+			verts.push_back(glm::vec2(1, -1));
+
+			postProcessingShaders[currentPostShader]->use();
+			glUniform1i(postProcessingShaders[currentPostShader]->getUniformLocation("s_texture"), 0);
+			glUniform1f(postProcessingShaders[currentPostShader]->getUniformLocation("time"), glutGet(GLUT_ELAPSED_TIME) / 1000.0f);
+
+			glBindTexture(GL_TEXTURE_2D, fboTextureId);
+			glDisableVertexAttribArray(1);
+			glDisableVertexAttribArray(2);
+			glDisableVertexAttribArray(3);
+			glVertexAttribPointer(0, 2, GL_FLOAT, false, 2 * 4, &verts[0]);
+			glDrawArrays(GL_TRIANGLES, 0, verts.size());
+		}
 	}
-
-	if (m_pHMD)
+	else
 	{
 		// Left Eye
 
