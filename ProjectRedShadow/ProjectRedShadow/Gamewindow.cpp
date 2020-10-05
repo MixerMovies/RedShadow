@@ -393,6 +393,20 @@ void Gamewindow::RenderWorld(glm::mat4 view)
 
 		city->worldModels[i].objModel->draw(shaders[currentshader]);
 	}
+
+	for (int i = 0; i < city->lights.size(); i++)
+	{
+		glm::mat4 model = glm::translate(glm::mat4(), city->lights[i].position);
+		model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));			//scale object
+
+		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(model)));
+
+		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
+		glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
+
+		city->lights[i].model->draw(shaders[currentshader]);
+	}
 }
 
 void Gamewindow::RenderControllers(glm::mat4 view)
@@ -433,8 +447,8 @@ Gamewindow::EyeTextures Gamewindow::Display()
 	glUniform1i(shaders[currentshader]->getUniformLocation("s_texture"), 0);
 	glUniform1i(shaders[currentshader]->getUniformLocation("bump_map"), 1);
 	glUniform3f(shaders[currentshader]->getUniformLocation("viewPosition"), city->player.position[0], city->player.position[1], city->player.position[2]);
-	glUniform3f(shaders[currentshader]->getUniformLocation("lightPosition"), city->lightPosition.x, city->lightPosition.y, city->lightPosition.z);
-	glUniform4f(shaders[currentshader]->getUniformLocation("lightColor"), city->lightColor.x, city->lightColor.y, city->lightColor.z, 1);
+	glUniform3f(shaders[currentshader]->getUniformLocation("lightPosition"), city->lights[0].position.x, city->lights[0].position.y, city->lights[0].position.z);
+	glUniform4f(shaders[currentshader]->getUniformLocation("lightColor"), city->lights[0].color.x, city->lights[0].color.y, city->lights[0].color.z, 1);
 
 	if (!m_pHMD)
 	{
@@ -592,7 +606,7 @@ Gamewindow::EyeTextures Gamewindow::Display()
 
 	//Framerate
 	float newTime = glutGet(GLUT_ELAPSED_TIME);
-	if(newTime - currentTime > 0) std::cout << (int) (1000.0f / (newTime - currentTime)) << std::endl;
+	//if(newTime - currentTime > 0) std::cout << (int) (1000.0f / (newTime - currentTime)) << std::endl;
 	currentTime = newTime;
 
 	return EyeTextures{ eyeLeftResolveTextureId, eyeRightResolveTextureId };

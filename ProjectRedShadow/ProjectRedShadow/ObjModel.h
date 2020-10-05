@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <windows.h>
+#include <gl/glew.h>
 #include <gl/GL.h>
 
 #include "Texture.h"

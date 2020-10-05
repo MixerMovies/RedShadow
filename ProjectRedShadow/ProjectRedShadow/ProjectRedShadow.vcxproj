@@ -139,6 +139,7 @@
   <ItemGroup>
     <ClCompile Include="FileLoader.cpp" />
     <ClCompile Include="Gamewindow.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ObjModel.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -154,6 +155,7 @@
   <ItemGroup>
     <ClInclude Include="FileLoader.h" />
     <ClInclude Include="Gamewindow.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="ObjModel.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Ray.h" />

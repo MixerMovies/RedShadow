@@ -4,6 +4,7 @@
 Space::Space()
 {
 	worldModels = std::vector<WorldObject>();
+	lights = std::vector<Light>();
 
 	teleporters[0] = Teleporter();
 	teleporters[1] = Teleporter();
