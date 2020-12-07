@@ -1,6 +1,6 @@
 #pragma once
 
-#include <experimental/filesystem>
+#include <filesystem>
 #include <string>
 #include "Space.h"
 
@@ -11,11 +11,10 @@ private:
 	static Category category;
 public:
 	FileLoader();
-	static std::string getMainPath() { return std::experimental::filesystem::current_path().string(); }
+	static std::string getMainPath() { return std::filesystem::current_path().string(); }
 	static void loadMap(std::string, Space*);
 	~FileLoader();
 private:
 	static void loadModel(Space*, std::string);
 	static void loadLight(Space*, std::string);
 };
-
