@@ -11,11 +11,13 @@ in vec3 a_normal;
 out vec2 texCoordIn;
 out vec3 colorIn;
 out vec3 normalIn;
+out vec3 fragPosIn;
 
 void main()
 {
 	colorIn = a_color;
 	normalIn = a_normal;
 	texCoordIn = a_texcoord;
+	fragPosIn = vec3(modelMatrix * vec4(a_position, 1));
 	gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(a_position,1);
 }
