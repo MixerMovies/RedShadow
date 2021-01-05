@@ -95,12 +95,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>libs/glew/include;libs/freeglut/include;libs/OpenAL/include;libs/glm/glm;libs/openvr/headers</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>libs/bullet/src;libs/glew/include;libs/freeglut/include;libs/OpenAL/include;libs/glm/glm;libs/openvr/headers</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>freeglut.lib;OpenAL32.lib;glew32.lib;openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>libs/openvr/lib/win64;libs/freeglut/lib/x64; libs/OpenAL/libs/Win64; libs/glew/lib/Release/x64;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>BulletDynamics_vs2010_x64_debug.lib;BulletCollision_vs2010_x64_debug.lib;LinearMath_vs2010_x64_debug.lib;freeglut.lib;OpenAL32.lib;glew32.lib;openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>libs/bullet/bin;libs/openvr/lib/win64;libs/freeglut/lib/x64; libs/OpenAL/libs/Win64; libs/glew/lib/Release/x64;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

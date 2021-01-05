@@ -8,8 +8,6 @@
 
 #include <openvr.h>
 
-#include "btBulletDynamicsCommon.h"
-
 //#define STARTVRMODE
 
 GLint gameWindowInt;
@@ -69,8 +67,6 @@ void Init()
 		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB);
 		glEnable(GL_DEBUG_OUTPUT);
 	}
-
-	btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
 }
 
 void Idle()
