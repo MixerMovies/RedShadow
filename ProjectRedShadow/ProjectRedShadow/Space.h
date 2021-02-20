@@ -7,13 +7,9 @@
 #include "Teleporter.h"
 #include "Light.h"
 
-#include "btBulletDynamicsCommon.h"
-
 class Space
 {
 public:
-	//btDiscreteDynamicsWorld* dynamicsWorld;
-
 	struct WorldObject
 	{
 		ObjModel* objModel;
