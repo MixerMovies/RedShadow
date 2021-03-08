@@ -335,8 +335,14 @@ void HandleVRInput()
 		}
 		else if (space->teleporters[i].startTeleporting)
 		{
-			//space->teleporters[0].setCurrentRotation(); //needs to use position and rotation of controller instead of current position of player in world.
-			space->player.position -= space->teleporters[i].getTeleportLocation() / space->VRScale;
+			glm::mat4 transformation = glm::rotate(glm::mat4(), space->player.rotation.x, glm::vec3(1, 0, 0));
+			transformation = glm::rotate(transformation, -space->player.rotation.y, glm::vec3(0, 1, 0));
+			transformation = glm::rotate(transformation, space->player.rotation.z, glm::vec3(0, 0, 1));
+			transformation = glm::translate(transformation, space->teleporters[i].getTeleportLocation() / space->VRScale);
+			
+			glm::vec4 pos = transformation * glm::vec4(0, 0, 0, 1);
+			space->player.position -= glm::vec3(pos.x, pos.y, pos.z);
+
 			space->teleporters[i].startTeleporting = false;
 		}
 	}
