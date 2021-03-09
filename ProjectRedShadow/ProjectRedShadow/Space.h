@@ -6,13 +6,14 @@
 #include "ObjModel.h"
 #include "Teleporter.h"
 #include "Light.h"
+#include "Floor.h"
 
 class Space
 {
 public:
 	struct WorldObject
 	{
-		ObjModel* objModel;
+		ObjModel* objModel = nullptr;
 		std::string name;
 		glm::vec3 location;
 		glm::vec3 scale;
@@ -24,6 +25,7 @@ public:
 	std::vector<WorldObject> worldModels;
 	std::vector<Light> lights;
 	Teleporter teleporters[2];
+	Floor floor = Floor(500);
 	//Skybox skybox = Skybox(500, 500, 500, new ObjModel("models/Skyboxes/std-skybox.obj"));
 	float VRScale = MaxScale;
 	void Grow();
