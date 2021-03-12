@@ -2,13 +2,14 @@
 
 #include "ObjModel.h"
 
-class Floor
+class WorldFloor
 {
 private:
 	int _size = 0;
 	ObjModel* _objModel;
 	void GenerateFloor();
 public:
-	Floor(int size);
-	int GetSize() { return _size; }
+	WorldFloor(int size);
+	int GetSize() { return _size; };
+	ObjModel* GetObjModel() { return _objModel; };
 };

@@ -5,13 +5,13 @@
 
 #include <math.h>
 
-Floor::Floor(int size)
+WorldFloor::WorldFloor(int size)
 {
 	_size = size;
 	GenerateFloor();
 };
 
-void Floor::GenerateFloor()
+void WorldFloor::GenerateFloor()
 {
 	std::vector<float> vertices = std::vector<float>();
 	for (int i = 0; i < 4; i++)
@@ -22,9 +22,12 @@ void Floor::GenerateFloor()
 	}
 
 	std::vector<float> normals = std::vector<float>();
-	normals.push_back(0);
-	normals.push_back(1);
-	normals.push_back(0);
+	for (int i = 0; i < 4; i++)
+	{
+		normals.push_back(0);
+		normals.push_back(1);
+		normals.push_back(0);
+	}
 
 	std::vector<float> textureCoordinates = std::vector<float>();
 	for (int i = 0; i < 4; i++)
@@ -33,5 +36,30 @@ void Floor::GenerateFloor()
 		textureCoordinates.push_back(glm::sin(M_PI_2 * i + M_PI_4));
 	}
 
-	_objModel = new ObjModel(vertices, normals, textureCoordinates, , new Texture(FileLoader::getMainPath() + "\\Textures\\White.png") );
+	std::vector<uint16_t> indices = std::vector<uint16_t>();
+	indices.push_back(4);
+	indices.push_back(4);
+	indices.push_back(1);
+
+	indices.push_back(1);
+	indices.push_back(1);
+	indices.push_back(1);
+
+	indices.push_back(2);
+	indices.push_back(2);
+	indices.push_back(1);
+
+	indices.push_back(4);
+	indices.push_back(4);
+	indices.push_back(1);
+
+	indices.push_back(3);
+	indices.push_back(3);
+	indices.push_back(1);
+
+	indices.push_back(1);
+	indices.push_back(1);
+	indices.push_back(1);
+
+	_objModel = new ObjModel(vertices, normals, textureCoordinates, indices, new Texture(FileLoader::getMainPath() + "\\Textures\\White.png") );
 }

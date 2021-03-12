@@ -25,7 +25,7 @@ public:
 	std::vector<WorldObject> worldModels;
 	std::vector<Light> lights;
 	Teleporter teleporters[2];
-	Floor floor = Floor(500);
+	WorldFloor worldFloor = WorldFloor(500000);
 	//Skybox skybox = Skybox(500, 500, 500, new ObjModel("models/Skyboxes/std-skybox.obj"));
 	float VRScale = MaxScale;
 	void Grow();
