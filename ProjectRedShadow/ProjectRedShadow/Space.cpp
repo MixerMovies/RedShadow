@@ -7,8 +7,8 @@ Space::Space()
 
 	WorldObject floorObject = WorldObject();
 	floorObject.objModel = worldFloor.GetObjModel();
-	floorObject.location = glm::vec3(0,-1,0);
-	floorObject.scale = glm::vec3(1, 1, 1);
+	floorObject.location = glm::vec3(0,0,0);
+	floorObject.scale = glm::vec3(100, 100, 100);
 	floorObject.name = "Floor";
 
 	worldModels.push_back(floorObject);

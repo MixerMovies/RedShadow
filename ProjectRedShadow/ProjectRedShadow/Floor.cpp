@@ -49,17 +49,18 @@ void WorldFloor::GenerateFloor()
 	indices.push_back(2);
 	indices.push_back(1);
 
-	indices.push_back(4);
-	indices.push_back(4);
+	indices.push_back(2);
+	indices.push_back(2);
 	indices.push_back(1);
 
 	indices.push_back(3);
 	indices.push_back(3);
 	indices.push_back(1);
 
-	indices.push_back(1);
-	indices.push_back(1);
+	indices.push_back(4);
+	indices.push_back(4);
 	indices.push_back(1);
 
-	_objModel = new ObjModel(vertices, normals, textureCoordinates, indices, new Texture(FileLoader::getMainPath() + "\\Textures\\White.png") );
+	_generatedModel = new ObjModel(vertices, normals, textureCoordinates, indices, new Texture(FileLoader::getMainPath() + "\\Textures\\White.png") );
+	_objModel = new ObjModel("models/floor/floor.obj");
 }

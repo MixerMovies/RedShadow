@@ -7,6 +7,7 @@ class WorldFloor
 private:
 	int _size = 0;
 	ObjModel* _objModel;
+	ObjModel* _generatedModel;
 	void GenerateFloor();
 public:
 	WorldFloor(int size);
