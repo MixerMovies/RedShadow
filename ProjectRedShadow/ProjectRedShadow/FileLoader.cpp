@@ -1,4 +1,8 @@
+#define _USE_MATH_DEFINES
+
 #include "FileLoader.h"
+
+#include <math.h>
 #include <fstream>
 #include <vector>
 #include <sstream>
@@ -55,6 +59,13 @@ void FileLoader::loadModel(Space* space, std::string element)
 	std::stringstream vstream2(data[3]);
 	i = 0;
 	while (std::getline(vstream2, element, ',') && i < 3)
+	{
+		worldObject.rotation[i] = stof(element) / 180.0f * M_PI;
+		i++;
+	}
+	std::stringstream vstream3(data[4]);
+	i = 0;
+	while (std::getline(vstream3, element, ',') && i < 3)
 	{
 		worldObject.scale[i] = stof(element);
 		i++;

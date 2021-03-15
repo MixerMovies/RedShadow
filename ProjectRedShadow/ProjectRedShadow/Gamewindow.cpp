@@ -382,8 +382,10 @@ void Gamewindow::RenderWorld(glm::mat4 view)
 {
 	for (int i = 0; i < city->worldModels.size(); i++)
 	{
-		glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].location);													
-		model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));																			
+		glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].location);
+		model = glm::rotate(model, city->worldModels[i].rotation[0], glm::vec3(1, 0, 0));
+		model = glm::rotate(model, city->worldModels[i].rotation[1], glm::vec3(0, 1, 0));
+		model = glm::rotate(model, city->worldModels[i].rotation[2], glm::vec3(0, 0, 1));
 		model = glm::scale(model, glm::vec3(city->worldModels[i].scale.x, city->worldModels[i].scale.y, city->worldModels[i].scale.z));			//scale object
 
 		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(model)));										
@@ -397,7 +399,6 @@ void Gamewindow::RenderWorld(glm::mat4 view)
 	for (int i = 0; i < city->lights.size(); i++)
 	{
 		glm::mat4 model = glm::translate(glm::mat4(), city->lights[i].position);
-		model = glm::rotate(model, 0.0f, glm::vec3(0, 1, 0));
 		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));			//scale object
 
 		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(model)));
