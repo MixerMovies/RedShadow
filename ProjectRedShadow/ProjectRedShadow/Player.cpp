@@ -6,40 +6,51 @@
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
 
+#include <iostream>
+
 Player::Player()
 {
 }
 
 
-void Player::goForward()
+void Player::GoForward()
 {
-	movingForward = true;
+	_movingForward = true;
 }
 
-void Player::goBackward()
+void Player::GoBackward()
 {
-	movingBackward = true;
+	_movingBackward = true;
 }
 
-void Player::turnLeft(bool turnLeft)
+void Player::TurnLeft(bool turnLeft)
 {
-	turningLeft = turnLeft;
+	_turningLeft = turnLeft;
 }
 
-void Player::turnRight(bool turnRight)
+void Player::TurnRight(bool turnRight)
 {
-	turningRight = turnRight;
+	_turningRight = turnRight;
 }
 
-void Player::stop()
+void Player::MouseEnabled(bool mouseActivated)
 {
-	movingBackward = false;
-	movingForward = false;
+	_mouseActivated = mouseActivated;
 }
 
-void Player::move(int elapsedTime)
+void Player::Stop()
 {
-	if (movingForward)
+	_movingBackward = false;
+	_movingForward = false;
+}
+
+void Player::Move(int elapsedTime)
+{
+	/*if (_mouseActivated)
+	{
+		
+	}*/
+	if (_movingForward)
 	{
 		glm::mat4 rotMat = glm::translate(glm::mat4(), position);
 		rotMat = glm::rotate(rotMat, rotation.x, glm::vec3(1, 0, 0));
@@ -53,7 +64,7 @@ void Player::move(int elapsedTime)
 		glm::vec4 pos = rotMat * glm::vec4(0, 0, 0, 1);
 		position = glm::vec3(pos.x, pos.y, pos.z);
 	}
-	else if (movingBackward)
+	else if (_movingBackward)
 	{
 		glm::mat4 rotMat = glm::translate(glm::mat4(), position);
 		rotMat = glm::rotate(rotMat, rotation.x, glm::vec3(1, 0, 0));
@@ -67,11 +78,11 @@ void Player::move(int elapsedTime)
 		glm::vec4 pos = rotMat * glm::vec4(0, 0, 0, 1);
 		position = glm::vec3(pos.x, pos.y, pos.z);
 	}
-	if (turningLeft)
+	if (_turningLeft)
 	{
 		rotation[1] -= (float) 0.005 * elapsedTime;
 	}
-	if (turningRight)
+	if (_turningRight)
 	{
 		rotation[1] += (float) 0.005 * elapsedTime;
 	}

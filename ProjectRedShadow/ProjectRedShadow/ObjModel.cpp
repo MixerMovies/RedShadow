@@ -301,9 +301,6 @@ ObjModel::ObjModel(std::string fileName)
 				}
 			}
 		}
-		else if(params[0] == "s")
-		{
-		}
         else if(params[0] == "mtllib")
         {
             loadMaterialFile(dirName + "/" + params[1], dirName);

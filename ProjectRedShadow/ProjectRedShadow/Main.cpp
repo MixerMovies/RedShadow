@@ -42,6 +42,7 @@ void Display();
 void KeyEvent(unsigned char, int, int);
 void KeyEventUp(unsigned char, int, int);
 void SpecialKeyEvent(int, int, int);
+void MouseEvent(int, int, int, int);
 void ProcessVREvent(const vr::VREvent_t&);
 void StartVR();
 
@@ -81,7 +82,7 @@ void Idle()
 
 	gamewindow->rotation += elapsed / 1000.0f;
 
-	space->player.move(elapsed);
+	space->player.Move(elapsed);
 	glutPostRedisplay();
 	lastTime = time;
 }
@@ -106,19 +107,19 @@ void KeyEvent(unsigned char key, int x, int y)
 	{
 	case 'a':
 	case 'A':
-		space->player.turnLeft(true);
+		space->player.TurnLeft(true);
 		break;
 	case 'd':
 	case 'D':
-		space->player.turnRight(true);
+		space->player.TurnRight(true);
 		break;
 	case 'w':
 	case 'W':
-		space->player.goForward();
+		space->player.GoForward();
 		break;
 	case 's':
 	case 'S':
-		space->player.goBackward();
+		space->player.GoBackward();
 		break;
 	case '[':
 		gamewindow->PreviousShader();
@@ -213,20 +214,32 @@ void KeyEventUp(unsigned char key, int x, int y)
 	{
 	case 'a':
 	case 'A':
-		space->player.turnLeft(false);
+		space->player.TurnLeft(false);
 		break;
 	case 'd':
 	case 'D':
-		space->player.turnRight(false);
+		space->player.TurnRight(false);
 		break;
 	case 'w':
 	case 'W':
-		space->player.stop();
+		space->player.Stop();
 		break;
 	case 's':
 	case 'S':
-		space->player.stop();
+		space->player.Stop();
 		break;
+	}
+}
+
+void MouseEvent(int button, int state, int x, int y)
+{
+	if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
+	{
+		space->player.MouseEnabled(true);
+	}
+	else if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
+	{
+		space->player.MouseEnabled(false);
 	}
 }
 
@@ -305,20 +318,20 @@ void HandleVRInput()
 	}
 
 	if (GetDigitalActionState(_actionGoForward))
-		space->player.goForward();
+		space->player.GoForward();
 	else if (GetDigitalActionState(_actionGoBackward))
-		space->player.goBackward();
+		space->player.GoBackward();
 	else
-		space->player.stop();
+		space->player.Stop();
 
 	if (GetDigitalActionState(_actionTurnLeft))
-		space->player.turnLeft(true);
+		space->player.TurnLeft(true);
 	else if (GetDigitalActionState(_actionTurnRight))
-		space->player.turnRight(true);
+		space->player.TurnRight(true);
 	else
 	{
-		space->player.turnLeft(false);
-		space->player.turnRight(false);
+		space->player.TurnLeft(false);
+		space->player.TurnRight(false);
 	}
 
 	if (GetDigitalActionState(_actionGrow))
@@ -392,6 +405,7 @@ int main(int argc, char *argv[])
 	glutKeyboardFunc(KeyEvent);
 	glutKeyboardUpFunc(KeyEventUp);
 	glutSpecialFunc(SpecialKeyEvent);
+	glutMouseFunc(MouseEvent);
 	glutReshapeFunc(reshape);
 	Init();
 
