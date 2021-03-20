@@ -24,6 +24,7 @@ private:
 		Texture* bumpMap;
 		float ambient[3] = { 0, 0, 0 };
 		float diffuse[3] = { 0, 0, 0 };
+		float specular[3] = { 0, 0, 0 };
 		float shininess = 10.0f;
 		float alpha = 1.0f;
 		bool hasTexture;

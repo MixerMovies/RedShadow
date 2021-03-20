@@ -3,10 +3,10 @@
 uniform sampler2D s_texture;
 uniform sampler2D bump_map;
 uniform int has_bump_map;
-uniform float ambient;
 uniform float shininess;
 uniform float alpha;
-uniform float intensity;
+uniform vec3 ambient;
+uniform vec3 specular;
 uniform vec3 diffuse;
 uniform vec3 viewPosition;
 uniform vec3 lightPosition;
@@ -29,12 +29,13 @@ void main()
 	vec3 lightDirection = normalize(lightPosition - fragPos);
 	vec3 viewDirection = normalize(viewPosition - fragPos);
 
-	float diffuseRes = dot(normalized, lightDirection);
+	float diffuseRes = max(0.0, dot(normalized, lightDirection));
+	vec3 finalDif = diffuse * diffuseRes;
 
 	vec3 r = reflect(-lightDirection, normalized);
+	float specularRes = pow(max(0.0, dot(r, viewDirection)), shininess);
+	vec3 finalSpec = specular * specularRes;
 
-	float specular = pow(max(0.0, dot(r, viewDirection)), shininess) * intensity;
-
-	float factor = ambient + diffuseRes + specular;
-	gl_FragColor = vec4(factor,factor,factor,alpha) * texture2D(s_texture, texCoord) * lightColor * vec4(diffuse, 1);
+	vec3 factor = ambient + finalDif + finalSpec;
+	gl_FragColor = vec4(factor,alpha) * texture2D(s_texture, texCoord) * lightColor;
 }
