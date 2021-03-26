@@ -464,7 +464,9 @@ Gamewindow::EyeTextures Gamewindow::Display()
 		glm::mat4 projection = glm::perspective(70.0f, screenSize.x / (float)screenSize.y, 0.01f, 2000.0f);
 		glm::mat4 view = glm::lookAt({ 0,0,0 }, { 0, 0, 1 }, glm::vec3(0, 1, 0));
 
+		view = glm::rotate(view, -city->player.rotation[0], { 1, 0, 0 });
 		view = glm::rotate(view, city->player.rotation[1], { 0, 1, 0 });
+		view = glm::rotate(view, city->player.rotation[2], { 0, 0, 1 });
 		view = glm::translate(view, city->player.position);
 
 		glEnableVertexAttribArray(1);

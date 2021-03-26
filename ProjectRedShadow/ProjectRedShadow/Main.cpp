@@ -43,6 +43,7 @@ void KeyEvent(unsigned char, int, int);
 void KeyEventUp(unsigned char, int, int);
 void SpecialKeyEvent(int, int, int);
 void MouseEvent(int, int, int, int);
+void MouseMotionEvent(int, int);
 void ProcessVREvent(const vr::VREvent_t&);
 void StartVR();
 
@@ -231,18 +232,6 @@ void KeyEventUp(unsigned char key, int x, int y)
 	}
 }
 
-void MouseEvent(int button, int state, int x, int y)
-{
-	if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
-	{
-		space->player.MouseEnabled(true);
-	}
-	else if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
-	{
-		space->player.MouseEnabled(false);
-	}
-}
-
 void SpecialKeyEvent(int key, int x, int y)
 {
 	switch (key)
@@ -254,6 +243,24 @@ void SpecialKeyEvent(int key, int x, int y)
 		space->player.isSprinting = !space->player.isSprinting;
 		break;
 	}
+}
+
+void MouseEvent(int button, int state, int x, int y)
+{
+	if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
+	{
+		space->player.MouseEnabled(true);
+	}
+	else if (button == GLUT_RIGHT_BUTTON && state == GLUT_UP)
+	{
+		space->player.MouseEnabled(false);
+	}
+}
+
+void MouseMotionEvent(int x, int y)
+{
+	space->player.mousePositionOffset.x = ((float)x / (float)gamewindow->screenSize.x * 2.0f - 1.0f);
+	space->player.mousePositionOffset.y = ((float)y / (float)gamewindow->screenSize.y * 2.0f - 1.0f);
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -361,7 +368,7 @@ void HandleVRInput()
 	}
 }
 
-void reshape(int newWidth, int newHeight)
+void Reshape(int newWidth, int newHeight)
 {
 	gamewindow->screenSize.x = newWidth;
 	gamewindow->screenSize.y = newHeight;
@@ -406,7 +413,9 @@ int main(int argc, char *argv[])
 	glutKeyboardUpFunc(KeyEventUp);
 	glutSpecialFunc(SpecialKeyEvent);
 	glutMouseFunc(MouseEvent);
-	glutReshapeFunc(reshape);
+	glutMotionFunc(MouseMotionEvent);
+	glutPassiveMotionFunc(MouseMotionEvent);
+	glutReshapeFunc(Reshape);
 	Init();
 
 	space = new Space();
