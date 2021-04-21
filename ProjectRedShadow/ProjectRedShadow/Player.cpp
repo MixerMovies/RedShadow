@@ -75,8 +75,6 @@ void Player::Move(int elapsedTime)
 		
 		glm::vec4 pos = rotMat * glm::vec4(0, 0, 0, 1);
 		position = glm::vec3(pos.x, pos.y, pos.z);
-		std::cout << "rotation: " << rotation.x << "," << rotation.y << "," << rotation.z << std::endl;
-		std::cout << "position: " << position.x << "," << position.y << "," << position.z << std::endl;
 	}
 	else if (_movingBackward)
 	{
@@ -91,8 +89,6 @@ void Player::Move(int elapsedTime)
 
 		glm::vec4 pos = rotMat * glm::vec4(0, 0, 0, 1);
 		position = glm::vec3(pos.x, pos.y, pos.z);
-		std::cout << "rotation: " << rotation.x << "," << rotation.y << "," << rotation.z << std::endl;
-		std::cout << "position: " << position.x << "," << position.y << "," << position.z << std::endl;
 	}
 	if (_turningLeft)
 	{
