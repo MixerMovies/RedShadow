@@ -358,7 +358,7 @@ ObjModel::ObjModel(std::vector<float> vertices, std::vector<float> normals, std:
 {
 	std::vector<float> finalVertices = std::vector<float>();
 
-	for (int i = 0; i < vertices.size() / 3; i++)
+	for (unsigned int i = 0; i < vertices.size() / 3; i++)
 	{
 		finalVertices.push_back(vertices[i * 3]);
 		finalVertices.push_back(vertices[i * 3 + 1]);

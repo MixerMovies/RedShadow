@@ -251,7 +251,7 @@ void Gamewindow::UpdateHMDMatrixPose()
 
 	int m_iValidPoseCount = 0;
 	std::string m_strPoseClasses = "";
-	for (int nDevice = 0; nDevice < vr::k_unMaxTrackedDeviceCount; ++nDevice)
+	for (unsigned int nDevice = 0; nDevice < vr::k_unMaxTrackedDeviceCount; ++nDevice)
 	{
 		if (m_rTrackedDevicePose[nDevice].bPoseIsValid)
 		{
@@ -341,27 +341,27 @@ void Gamewindow::UpdateHMDMatrixPose()
 				std::vector<float> texcoords;
 				std::vector<uint16_t> indices;
 
-				for (int i = 0; i < controllerModel->unVertexCount; i++)
+				for (unsigned int i = 0; i < controllerModel->unVertexCount; i++)
 				{
 					vertices.push_back(controllerModel->rVertexData[i].vPosition.v[0]);
 					vertices.push_back(controllerModel->rVertexData[i].vPosition.v[1]);
 					vertices.push_back(controllerModel->rVertexData[i].vPosition.v[2]);
 				}
 
-				for (int i = 0; i < controllerModel->unVertexCount; i++)
+				for (unsigned int i = 0; i < controllerModel->unVertexCount; i++)
 				{
 					normals.push_back(controllerModel->rVertexData[i].vNormal.v[0]);
 					normals.push_back(controllerModel->rVertexData[i].vNormal.v[1]);
 					normals.push_back(controllerModel->rVertexData[i].vNormal.v[2]);
 				}
 
-				for (int i = 0; i < controllerModel->unVertexCount; i++)
+				for (unsigned int i = 0; i < controllerModel->unVertexCount; i++)
 				{
 					texcoords.push_back(controllerModel->rVertexData[i].rfTextureCoord[0]);
 					texcoords.push_back(controllerModel->rVertexData[i].rfTextureCoord[1]);
 				}
 
-				for (int i = 0; i < controllerModel->unTriangleCount * 3; i++)
+				for (unsigned int i = 0; i < controllerModel->unTriangleCount * 3; i++)
 				{
 					indices.push_back(controllerModel->rIndexData[i]);
 				}
@@ -380,23 +380,29 @@ void Gamewindow::UpdateHMDMatrixPose()
 
 void Gamewindow::RenderWorld(glm::mat4 view)
 {
-	for (int i = 0; i < city->worldModels.size(); i++)
+	std::map<float, Space::WorldObject> sorted;
+	for (unsigned int i = 0; i < city->worldModels.size(); i++)
 	{
-		glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].location);
-		model = glm::rotate(model, city->worldModels[i].rotation[0], glm::vec3(1, 0, 0));
-		model = glm::rotate(model, city->worldModels[i].rotation[1], glm::vec3(0, 1, 0));
-		model = glm::rotate(model, city->worldModels[i].rotation[2], glm::vec3(0, 0, 1));
-		model = glm::scale(model, glm::vec3(city->worldModels[i].scale.x, city->worldModels[i].scale.y, city->worldModels[i].scale.z));			//scale object
+		float distance = glm::length(city->player.position - city->worldModels[i].location);
+		sorted[distance] = city->worldModels[i];
+	}
+	for (std::map<float,Space::WorldObject>::reverse_iterator it = sorted.rbegin(); it != sorted.rend(); ++it)
+	{
+		glm::mat4 model = glm::translate(glm::mat4(), it->second.location);
+		model = glm::rotate(model, it->second.rotation[0], glm::vec3(1, 0, 0));
+		model = glm::rotate(model, it->second.rotation[1], glm::vec3(0, 1, 0));
+		model = glm::rotate(model, it->second.rotation[2], glm::vec3(0, 0, 1));
+		model = glm::scale(model, glm::vec3(it->second.scale.x, it->second.scale.y, it->second.scale.z));			//scale object
 
 		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(model)));										
 
 		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
 		glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
 
-		city->worldModels[i].objModel->draw(shaders[currentshader]);
+		it->second.objModel->draw(shaders[currentshader]);
 	}
 
-	for (int i = 0; i < city->lights.size(); i++)
+	for (unsigned int i = 0; i < city->lights.size(); i++)
 	{
 		glm::mat4 model = glm::translate(glm::mat4(), city->lights[i].position);
 		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));			//scale object
@@ -461,7 +467,7 @@ Gamewindow::EyeTextures Gamewindow::Display()
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glm::mat4 projection = glm::perspective(70.0f, screenSize.x / (float)screenSize.y, 0.01f, 2000.0f);
+		glm::mat4 projection = glm::perspective(70.0f, screenSize.x / (float)screenSize.y, 0.1f, 2000.0f);
 		glm::mat4 view = glm::lookAt({ 0,0,0 }, { 0, 0, 1 }, glm::vec3(0, 1, 0));
 
 		view = glm::rotate(view, -city->player.rotation[0], { 1, 0, 0 });
