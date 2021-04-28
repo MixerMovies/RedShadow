@@ -2,20 +2,17 @@
 
 #include <vector>
 
-Skybox::Skybox(int x, int y, int z, ObjModel* model)
+Skybox::Skybox(int x, int y, int z, int size, ObjModel* model)
 {
-	Skybox::x = x;
-	Skybox::y = y;
-	Skybox::z = z;
-	Skybox::model = model;
+	Skybox::size = size;
+	object = WorldObject();
+	object.location = glm::vec3(x, y, z);
+	object.rotation = glm::vec3(0, 0, 0);
+	object.objModel = model;
+	object.scale = glm::vec3(size, size, size);
 }
 
 
 Skybox::~Skybox()
 {
-}
-
-void Skybox::draw()
-{
-	//model->draw();
 }

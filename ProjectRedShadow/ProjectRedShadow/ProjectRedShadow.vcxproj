@@ -160,6 +160,7 @@
     <ClCompile Include="Space.cpp" />
     <ClCompile Include="Teleporter.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="WorldObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileLoader.h" />
@@ -177,6 +178,7 @@
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Teleporter.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="WorldObject.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="maps\TowerCity.map" />

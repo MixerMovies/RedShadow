@@ -5,14 +5,8 @@ Space::Space()
 	worldModels = std::vector<WorldObject>();
 	lights = std::vector<Light>();
 
-	WorldObject floorObject = WorldObject();
-	floorObject.objModel = worldFloor.GetObjModel();
-	floorObject.location = glm::vec3(0, 0, 0);
-	floorObject.rotation = glm::vec3(0, 0, 0);
-	floorObject.scale = glm::vec3(1000, 1000, 1000);
-	floorObject.name = "Floor";
-
-	worldModels.push_back(floorObject);
+	worldModels.push_back(worldFloor.GetWorldObject());
+	worldModels.push_back(skybox.object);
 
 	teleporters[0] = Teleporter();
 	teleporters[1] = Teleporter();

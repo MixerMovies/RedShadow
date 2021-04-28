@@ -380,13 +380,13 @@ void Gamewindow::UpdateHMDMatrixPose()
 
 void Gamewindow::RenderWorld(glm::mat4 view)
 {
-	std::map<float, Space::WorldObject> sorted;
+	std::map<float, WorldObject> sorted;
 	for (unsigned int i = 0; i < city->worldModels.size(); i++)
 	{
 		float distance = glm::length(city->player.position - city->worldModels[i].location);
 		sorted[distance] = city->worldModels[i];
 	}
-	for (std::map<float,Space::WorldObject>::reverse_iterator it = sorted.rbegin(); it != sorted.rend(); ++it)
+	for (std::map<float,WorldObject>::reverse_iterator it = sorted.rbegin(); it != sorted.rend(); ++it)
 	{
 		glm::mat4 model = glm::translate(glm::mat4(), it->second.location);
 		model = glm::rotate(model, it->second.rotation[0], glm::vec3(1, 0, 0));

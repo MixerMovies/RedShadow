@@ -3,22 +3,14 @@
 #include "Skybox.h"
 #include "Player.h"
 #include "Sound.h"
-#include "ObjModel.h"
 #include "Teleporter.h"
 #include "Light.h"
 #include "Floor.h"
+#include "WorldObject.h"
 
 class Space
 {
 public:
-	struct WorldObject
-	{
-		ObjModel* objModel = nullptr;
-		std::string name;
-		glm::vec3 location;
-		glm::vec3 rotation;
-		glm::vec3 scale;
-	};
 	Space();
 	float MaxScale = 1.0f;
 	Player player = Player();
@@ -27,12 +19,9 @@ public:
 	std::vector<Light> lights;
 	Teleporter teleporters[2];
 	WorldFloor worldFloor = WorldFloor(500000);
-	//Skybox skybox = Skybox(500, 500, 500, new ObjModel("models/Skyboxes/std-skybox.obj"));
+	Skybox skybox = Skybox(500, 500, 500, 50000, new ObjModel("models/Skyboxes/std-skybox.obj"));
 	float VRScale = MaxScale;
 	void Grow();
 	void Shrink();
 	~Space();
-private:
-	int currentModel = 0;
 };
-

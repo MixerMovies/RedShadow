@@ -46,7 +46,7 @@ void FileLoader::loadModel(Space* space, std::string element)
 	{
 		data.push_back(element);
 	}
-	Space::WorldObject worldObject;
+	WorldObject worldObject;
 	worldObject.objModel = new ObjModel(data[0]);
 	worldObject.name = data[1];
 	std::stringstream vstream(data[2]);
