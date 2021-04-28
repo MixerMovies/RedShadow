@@ -17,6 +17,10 @@ varying vec3 fragPos;
 
 void main()
 {
+	vec4 texture = texture2D(s_texture, texCoord);
+	if(texture.w * alpha < 0.1)
+		discard;
+
     vec3 normalized = normalize(normal);
 
     if(has_bump_map == 1)
@@ -37,5 +41,6 @@ void main()
 	vec3 finalSpec = specular * specularRes;
 
 	vec3 factor = ambient + finalDif + finalSpec;
-	gl_FragColor = vec4(factor,alpha) * texture2D(s_texture, texCoord) * lightColor;
+
+	gl_FragColor = vec4(factor,alpha) * texture * lightColor;
 }
