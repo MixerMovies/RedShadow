@@ -1,4 +1,4 @@
-#version 330 core
+#version 400 core
 
 varying vec3 color;
 uniform float time;
