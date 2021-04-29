@@ -18,8 +18,8 @@ public:
 	std::vector<WorldObject> worldModels;
 	std::vector<Light> lights;
 	Teleporter teleporters[2];
-	WorldFloor worldFloor = WorldFloor(500000);
-	Skybox skybox = Skybox(500, 500, 500, 50000, new ObjModel("models/Skyboxes/std-skybox.obj"));
+	WorldFloor worldFloor = WorldFloor(500);
+	Skybox skybox = Skybox(0, 0, 0, 500, new ObjModel("models/Skyboxes/std-skybox.obj"));
 	float VRScale = MaxScale;
 	void Grow();
 	void Shrink();

@@ -382,24 +382,24 @@ void Gamewindow::RenderWorld(glm::mat4 view)
 {
 	std::map<float, WorldObject> sorted;
 	for (unsigned int i = 0; i < city->worldModels.size(); i++)
-	{
+	/*{
 		float distance = glm::length(city->player.position - city->worldModels[i].location);
 		sorted[distance] = city->worldModels[i];
 	}
-	for (std::map<float,WorldObject>::reverse_iterator it = sorted.rbegin(); it != sorted.rend(); ++it)
+	for (std::map<float,WorldObject>::reverse_iterator it = sorted.rbegin(); it != sorted.rend(); ++it)*/
 	{
-		glm::mat4 model = glm::translate(glm::mat4(), it->second.location);
-		model = glm::rotate(model, it->second.rotation[0], glm::vec3(1, 0, 0));
-		model = glm::rotate(model, it->second.rotation[1], glm::vec3(0, 1, 0));
-		model = glm::rotate(model, it->second.rotation[2], glm::vec3(0, 0, 1));
-		model = glm::scale(model, glm::vec3(it->second.scale.x, it->second.scale.y, it->second.scale.z));			//scale object
+		glm::mat4 model = glm::translate(glm::mat4(), city->worldModels[i].location);
+		model = glm::rotate(model, city->worldModels[i].rotation[0], glm::vec3(1, 0, 0));
+		model = glm::rotate(model, city->worldModels[i].rotation[1], glm::vec3(0, 1, 0));
+		model = glm::rotate(model, city->worldModels[i].rotation[2], glm::vec3(0, 0, 1));
+		model = glm::scale(model, glm::vec3(city->worldModels[i].scale.x, city->worldModels[i].scale.y, city->worldModels[i].scale.z));			//scale object
 
 		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(model)));										
 
 		glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
 		glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
 
-		it->second.objModel->draw(shaders[currentshader]);
+		city->worldModels[i].objModel->draw(shaders[currentshader]);
 	}
 
 	for (unsigned int i = 0; i < city->lights.size(); i++)
