@@ -65,6 +65,8 @@ void Init()
 
 	glewInit();
 
+	std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
+
 	if (glDebugMessageCallback)
 	{
 		glDebugMessageCallback(&onDebug, NULL);
