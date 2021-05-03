@@ -53,7 +53,6 @@ public:
 	int currentshader = 0;
 	int currentPostShader = 0;
 	glm::ivec2 screenSize;
-	float rotation = 0;
 	bool postProcessingEnabled = false;
 private:
 	void RenderWorld(glm::mat4);

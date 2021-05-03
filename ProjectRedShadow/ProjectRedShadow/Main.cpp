@@ -85,8 +85,6 @@ void Idle()
 		HandleVRInput();
 	}
 
-	gamewindow->rotation += elapsed / 1000.0f;
-
 	space->player.Move(elapsed);
 	glutPostRedisplay();
 	lastTime = time;

@@ -9,6 +9,7 @@
 SoundTest test = SoundTest();
 GLuint fboTextureId;
 GLuint fboId;
+
 GLuint eyeLeftId;
 GLuint eyeLeftDepthId;
 GLuint eyeLeftTextureId;
@@ -85,7 +86,7 @@ Gamewindow::Gamewindow(Space* space, vr::IVRSystem* vrSystem)
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-	glEnableVertexAttribArray(0);							// positie
+	glEnableVertexAttribArray(0);							// position
 	glEnableVertexAttribArray(1);							// texcoord
 	glEnableVertexAttribArray(2);							// normal
 	glEnableVertexAttribArray(3);							// tangent
@@ -110,6 +111,8 @@ Gamewindow::Gamewindow(Space* space, vr::IVRSystem* vrSystem)
 	glBindRenderbuffer(GL_RENDERBUFFER, rboId);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 2048, 2048);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboId);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	initVRShaders();
 }
