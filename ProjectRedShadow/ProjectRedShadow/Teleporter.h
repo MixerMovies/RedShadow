@@ -17,7 +17,7 @@ public:
 	void setCurrentRotation(glm::vec3 rotation);
 	glm::vec3 getTeleportLocation();
 private:
-	ObjModel* _teleporterModel = new ObjModel("models/teleporter/Teleporter.obj");
+	ObjModel* _teleporterModel = new ObjModel("models/Projects/teleporter/Teleporter.obj");
 	glm::vec3 _currentRotation = { 0,0,0 };
 	glm::vec3 _currentLocation = { 0,0,0 };
 };

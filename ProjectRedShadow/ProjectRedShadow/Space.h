@@ -19,7 +19,7 @@ public:
 	std::vector<Light> lights;
 	Teleporter teleporters[2];
 	WorldFloor worldFloor = WorldFloor(500);
-	Skybox skybox = Skybox(0, 0, 0, 500, new ObjModel("models/Skyboxes/std-skybox.obj"));
+	Skybox skybox = Skybox(0, 0, 0, 500, new ObjModel("models/Projects/Skyboxes/std-skybox.obj"));
 	float VRScale = MaxScale;
 	void Grow();
 	void Shrink();
