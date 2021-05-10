@@ -1,6 +1,6 @@
 #version 400 core
 
-attribute vec3 a_position;
+in vec3 a_position;
 out vec2 texCoordIn;
 
 void main()

@@ -1,4 +1,4 @@
-#version 150
+#version 400 core
 uniform sampler2D s_texture;
 varying vec2 texCoord;
 

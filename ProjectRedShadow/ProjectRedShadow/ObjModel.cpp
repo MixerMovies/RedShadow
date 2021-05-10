@@ -475,11 +475,11 @@ void ObjModel::draw(Shader* shader)
 			glUniform1i(shader->getUniformLocation("has_bump_map"), 1);
 			glBindTexture(GL_TEXTURE_2D, material->bumpMap->textureId);
 		}
-		else
+		/*else //disabled for now, because it crashes post processing
 		{
 			glActiveTexture(GL_TEXTURE1);
 			glBindTexture(GL_TEXTURE_2D, -1);
-		}
+		}*/
 		
 		//if (size > 0)
 		//	glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_SHORT, 0);
