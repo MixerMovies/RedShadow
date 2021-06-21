@@ -13,6 +13,11 @@ FileLoader::FileLoader()
 {
 }
 
+/// <summary>
+/// Loads the map using the given location into the current space.
+/// </summary>
+/// <param name="mapLocation">the path to the location of the map</param>
+/// <param name="space">the space to load the objects of the map into</param>
 void FileLoader::loadMap(std::string mapLocation, Space* space)
 {
 	category = DEFAULT;
@@ -38,6 +43,11 @@ void FileLoader::loadMap(std::string mapLocation, Space* space)
 	}
 }
 
+/// <summary>
+/// Load a model into the current space.
+/// </summary>
+/// <param name="space">the space containing models</param>
+/// <param name="element">a string containing info about the model to be loaded</param>
 void FileLoader::loadModel(Space* space, std::string element)
 {
 	std::vector<std::string> data = std::vector<std::string>();
@@ -73,6 +83,11 @@ void FileLoader::loadModel(Space* space, std::string element)
 	space->worldModels.push_back(worldObject);
 }
 
+/// <summary>
+/// Loads the lights for the current scene
+/// </summary>
+/// <param name="space">The space to add new lights to</param>
+/// <param name="element">a string containing info about the light that needs to be added</param>
 void FileLoader::loadLight(Space* space, std::string element)
 {
 	std::vector<std::string> data = std::vector<std::string>();

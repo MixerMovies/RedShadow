@@ -5,48 +5,11 @@
 #include <vector>
 #include <algorithm>
 #include <glm.hpp>
+
+#include "Util.h"
 #include "FileLoader.h"
 
-
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
-
-std::string replace(std::string str, std::string toReplace, std::string replacement)
-{
-	size_t index = 0;
-	while (true) 
-	{
-		 index = str.find(toReplace, index);
-		 if (index == std::string::npos) 
-			 break;
-		 str.replace(index, toReplace.length(), replacement);
-		 ++index;
-	}
-	return str;
-}
-
-std::vector<std::string> split(std::string str, std::string sep)
-{
-	std::vector<std::string> ret;
-	size_t index;
-	while(true)
-	{
-		index = str.find(sep);
-		if(index == std::string::npos)
-			break;
-		ret.push_back(str.substr(0, index));
-		str = str.substr(index+1);
-	}
-	ret.push_back(str);
-	return ret;
-}
-
-inline std::string toLower(std::string data)
-{
-	std::transform(data.begin(), data.end(), data.begin(), ::tolower);
-	return data;
-}
-
-
 
 glm::vec4 calcTangentVector(
 	glm::vec3 pos1,		glm::vec3 pos2,		glm::vec3 pos3, 
@@ -149,12 +112,8 @@ glm::vec4 calcTangentVector(
 	return glm::vec4(t[0], t[1], t[2], handedness);
 }
 
-
-
 ObjModel::ObjModel(std::string fileName)
 {
-	emptyTexture = new Texture(FileLoader::getMainPath() + "\\Textures\\White.png");
-
 	std::string dirName = fileName;
 	if(dirName.rfind("/") != std::string::npos)
 		dirName = dirName.substr(0, dirName.rfind("/"));
@@ -190,9 +149,9 @@ ObjModel::ObjModel(std::string fileName)
 		std::string line;
 		std::getline(pFile, line);
 		
-		line = replace(line, "\t", " ");
+		line = Util::replace(line, "\t", " ");
 		while(line.find("  ") != std::string::npos)
-			line = replace(line, "  ", " ");
+			line = Util::replace(line, "  ", " ");
 		if(line == "")
 			continue;
 		if(line[0] == ' ')
@@ -206,8 +165,8 @@ ObjModel::ObjModel(std::string fileName)
 		if(line[0] == '#')
 			continue;
 
-		std::vector<std::string> params = split(line, " ");
-		params[0] = toLower(params[0]);
+		std::vector<std::string> params = Util::split(line, " ");
+		params[0] = Util::toLower(params[0]);
 
 		if(params[0] == "v")
 		{
@@ -228,9 +187,9 @@ ObjModel::ObjModel(std::string fileName)
 		}
 		else if(params[0] == "f")
 		{
-			std::vector<std::string> indices1 = split(params[1], "/");
-			std::vector<std::string> indices2 = split(params[2], "/");
-			std::vector<std::string> indices3 = split(params[3], "/");
+			std::vector<std::string> indices1 = Util::split(params[1], "/");
+			std::vector<std::string> indices2 = Util::split(params[2], "/");
+			std::vector<std::string> indices3 = Util::split(params[3], "/");
 			
 			glm::vec3 p1(vertices[(atoi(indices1[0].c_str())-1)*3+0],vertices[(atoi(indices1[0].c_str())-1)*3+1],vertices[(atoi(indices1[0].c_str())-1)*3+2]);
 			glm::vec3 p2(vertices[(atoi(indices2[0].c_str())-1)*3+0],vertices[(atoi(indices2[0].c_str())-1)*3+1],vertices[(atoi(indices2[0].c_str())-1)*3+2]);
@@ -254,7 +213,7 @@ ObjModel::ObjModel(std::string fileName)
 
 				for(size_t i = ii-3; i < ii; i++)
 				{
-					std::vector<std::string> indices = split(params[i == (ii-3) ? 1 : i], "/");
+					std::vector<std::string> indices = Util::split(params[i == (ii - 3) ? 1 : i], "/");
 					glm::vec3 p;
 					glm::vec2 t;
 					glm::vec3 n;
@@ -303,7 +262,7 @@ ObjModel::ObjModel(std::string fileName)
 		}
         else if(params[0] == "mtllib")
         {
-            loadMaterialFile(dirName + "/" + params[1], dirName);
+            MaterialInfo::loadMaterialFile(materials, dirName + "/" + params[1], dirName);
         }
 		else if(params[0] == "usemtl")
 		{
@@ -486,111 +445,4 @@ void ObjModel::draw(Shader* shader)
 		//else
 			glDrawArrays(GL_TRIANGLES, group->start, group->end - group->start);
 	}
-}
-
-void ObjModel::loadMaterialFile( std::string fileName, std::string dirName )
-{
-	std::ifstream pFile(fileName.c_str());
-
-	if (!pFile.is_open())
-	{
-		std::cout << "Could not open file " << fileName << std::endl;
-		return;
-	}
-
-	MaterialInfo* currentMaterial = NULL;
-
-	while(!pFile.eof())
-	{
-		std::string line;
-		std::getline(pFile, line);
-		
-		line = replace(line, "\t", " ");
-		while(line.find("  ") != std::string::npos)
-			line = replace(line, "  ", " ");
-		if(line == "")
-			continue;
-		if(line[0] == ' ')
-			line = line.substr(1);
-		if(line == "")
-			continue;
-		if(line[line.length()-1] == ' ')
-			line = line.substr(0, line.length()-1);
-		if(line == "")
-			continue;
-		if(line[0] == '#')
-			continue;
-
-		std::vector<std::string> params = split(line, " ");
-		params[0] = toLower(params[0]);
-
-		if(params[0] == "newmtl")
-		{
-			if(currentMaterial != NULL)
-			{
-				if (currentMaterial->texture == NULL)
-				{
-					currentMaterial->texture = emptyTexture;
-					currentMaterial->hasTexture = true;
-				}
-				materials.push_back(currentMaterial);
-			}
-			currentMaterial = new MaterialInfo();
-			currentMaterial->name = params[1];
-		}
-		else if(params[0] == "map_kd")
-		{
-			currentMaterial->texture = new Texture(dirName + "/" + params[1]);
-			currentMaterial->hasTexture = true;
-		}
-		else if(params[0] == "map_bump")
-		{
-			currentMaterial->bumpMap = new Texture(dirName + "/" + params[1]);
-		}
-		else if (params[0] == "ka")
-		{
-			currentMaterial->ambient[0] = std::stof(params[1]);
-			currentMaterial->ambient[1] = std::stof(params[2]);
-			currentMaterial->ambient[2] = std::stof(params[3]);
-		}
-		else if (params[0] == "kd")
-		{
-			currentMaterial->diffuse[0] = std::stof(params[1]);
-			currentMaterial->diffuse[1] = std::stof(params[2]);
-			currentMaterial->diffuse[2] = std::stof(params[3]);
-		}
-		else if (params[0] == "ks")
-		{
-			currentMaterial->specular[0] = std::stof(params[1]);
-			currentMaterial->specular[1] = std::stof(params[2]);
-			currentMaterial->specular[2] = std::stof(params[3]);
-		}
-		else if (params[0] == "ns")
-		{
-			currentMaterial->shininess = std::stof(params[1]);
-		}
-		else if (params[0] == "d")
-		{
-			currentMaterial->alpha = std::stof(params[1]);
-		}
-		else
-			std::cout<<"Didn't parse "<<params[0]<<" in material file "<<currentMaterial->name << " from model " << fileName<<std::endl;
-	}
-	
-	if (currentMaterial != NULL)
-	{
-		if (currentMaterial->texture == NULL)
-		{
-			currentMaterial->texture = emptyTexture;
-			currentMaterial->hasTexture = true;
-		}
-		materials.push_back(currentMaterial);
-	}
-}
-
-ObjModel::MaterialInfo::MaterialInfo()
-{
-	texture = NULL;
-	bumpMap = NULL;
-	hasTexture = false;
 }

@@ -150,6 +150,7 @@
     <ClCompile Include="Gamewindow.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MaterialInfo.cpp" />
     <ClCompile Include="ObjModel.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Ray.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="Space.cpp" />
     <ClCompile Include="Teleporter.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Util.cpp" />
     <ClCompile Include="WorldObject.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +169,7 @@
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Gamewindow.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="MaterialInfo.h" />
     <ClInclude Include="ObjModel.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Ray.h" />
@@ -178,6 +181,7 @@
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Teleporter.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Util.h" />
     <ClInclude Include="WorldObject.h" />
   </ItemGroup>
   <ItemGroup>

@@ -108,6 +108,12 @@
     <ClCompile Include="WorldObject.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
+    <ClCompile Include="MaterialInfo.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gamewindow.h">
@@ -157,6 +163,12 @@
     </ClInclude>
     <ClInclude Include="WorldObject.h">
       <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialInfo.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Util.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
