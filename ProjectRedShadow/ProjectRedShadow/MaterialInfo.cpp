@@ -92,6 +92,12 @@ void MaterialInfo::loadMaterialFile(std::vector<MaterialInfo*>& materials, std::
 			currentMaterial->specular[1] = std::stof(params[2]);
 			currentMaterial->specular[2] = std::stof(params[3]);
 		}
+		else if (params[0] == "ke")
+		{
+			currentMaterial->emission[0] = std::stof(params[1]);
+			currentMaterial->emission[1] = std::stof(params[2]);
+			currentMaterial->emission[2] = std::stof(params[3]);
+		}
 		else if (params[0] == "ns")
 		{
 			currentMaterial->shininess = std::stof(params[1]);
@@ -99,6 +105,14 @@ void MaterialInfo::loadMaterialFile(std::vector<MaterialInfo*>& materials, std::
 		else if (params[0] == "d")
 		{
 			currentMaterial->alpha = std::stof(params[1]);
+		}
+		else if (params[0] == "illum")
+		{
+			currentMaterial->illum = std::stoi(params[1]);
+		}
+		else if (params[0] == "ni")
+		{
+			currentMaterial->optical_density = std::stof(params[1]);
 		}
 		else
 			std::cout << "Didn't parse " << params[0] << " in material file " << currentMaterial->name << " from model " << fileName << std::endl;
