@@ -172,128 +172,128 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\blackandwhite.fs">
-      <Filter>Shaders\Post</Filter>
-    </None>
-    <None Include="Shaders\blackandwhite.vs">
-      <Filter>Shaders\Post</Filter>
-    </None>
-    <None Include="Shaders\blur.fs">
-      <Filter>Shaders\Post</Filter>
-    </None>
-    <None Include="Shaders\blur.vs">
-      <Filter>Shaders\Post</Filter>
-    </None>
-    <None Include="Shaders\colourwarp.fs">
-      <Filter>Shaders\Post</Filter>
-    </None>
-    <None Include="Shaders\colourwarp.vs">
-      <Filter>Shaders\Post</Filter>
-    </None>
-    <None Include="Shaders\filmgrain.fs">
-      <Filter>Shaders\Post</Filter>
-    </None>
-    <None Include="Shaders\filmgrain.vs">
-      <Filter>Shaders\Post</Filter>
-    </None>
-    <None Include="Shaders\laplace.fs">
-      <Filter>Shaders\Post</Filter>
-    </None>
-    <None Include="Shaders\laplace.vs">
-      <Filter>Shaders\Post</Filter>
-    </None>
-    <None Include="Shaders\negative.fs">
-      <Filter>Shaders\Post</Filter>
-    </None>
-    <None Include="Shaders\negative.vs">
-      <Filter>Shaders\Post</Filter>
-    </None>
-    <None Include="Shaders\procedural.fs">
-      <Filter>Shaders\Standard</Filter>
-    </None>
-    <None Include="Shaders\procedural.vs">
-      <Filter>Shaders\Standard</Filter>
-    </None>
-    <None Include="Shaders\rainbow.fs">
-      <Filter>Shaders\Standard</Filter>
-    </None>
-    <None Include="Shaders\rainbow.vs">
-      <Filter>Shaders\Standard</Filter>
-    </None>
-    <None Include="Shaders\screenwarp.fs">
-      <Filter>Shaders\Post</Filter>
-    </None>
-    <None Include="Shaders\screenwarp.vs">
-      <Filter>Shaders\Post</Filter>
-    </None>
-    <None Include="Shaders\sharpening.vs">
-      <Filter>Shaders\Post</Filter>
-    </None>
-    <None Include="Shaders\sharpening.fs">
-      <Filter>Shaders\Post</Filter>
-    </None>
-    <None Include="Shaders\simple.fs">
-      <Filter>Shaders\Standard</Filter>
-    </None>
-    <None Include="Shaders\simple.vs">
-      <Filter>Shaders\Standard</Filter>
-    </None>
-    <None Include="Shaders\specular.fs">
-      <Filter>Shaders\Standard</Filter>
-    </None>
-    <None Include="Shaders\specular.vs">
-      <Filter>Shaders\Standard</Filter>
-    </None>
-    <None Include="Shaders\texture.vs">
-      <Filter>Shaders\Standard</Filter>
-    </None>
-    <None Include="Shaders\texture.fs">
-      <Filter>Shaders\Standard</Filter>
-    </None>
-    <None Include="Shaders\textureanim.fs">
-      <Filter>Shaders\Standard</Filter>
-    </None>
-    <None Include="Shaders\toon.fs">
-      <Filter>Shaders\Standard</Filter>
-    </None>
-    <None Include="Shaders\textureanim.vs">
-      <Filter>Shaders\Standard</Filter>
-    </None>
-    <None Include="Shaders\toon.vs">
-      <Filter>Shaders\Standard</Filter>
-    </None>
-    <None Include="Shaders\tvgrain.fs">
-      <Filter>Shaders\Standard</Filter>
-    </None>
-    <None Include="Shaders\tvgrain.vs">
-      <Filter>Shaders\Standard</Filter>
-    </None>
-    <None Include="Shaders\explosion.gs">
-      <Filter>Shaders\Geometry</Filter>
-    </None>
-    <None Include="Shaders\standard.gs">
-      <Filter>Shaders\Geometry</Filter>
-    </None>
-    <None Include="Shaders\test.fs">
-      <Filter>Shaders\Standard</Filter>
-    </None>
-    <None Include="Shaders\test.vs">
-      <Filter>Shaders\Standard</Filter>
-    </None>
-    <None Include="Shaders\standardpost.gs">
-      <Filter>Shaders\Geometry</Filter>
-    </None>
-    <None Include="Shaders\implosion.gs">
-      <Filter>Shaders\Geometry</Filter>
-    </None>
-    <None Include="Shaders\scope.vs">
-      <Filter>Shaders\Post</Filter>
-    </None>
-    <None Include="Shaders\scope.fs">
-      <Filter>Shaders\Post</Filter>
-    </None>
     <None Include="maps\TowerCity.map">
       <Filter>Maps</Filter>
+    </None>
+    <None Include="Shaders\Geometry\explosion.gs">
+      <Filter>Shaders\Geometry</Filter>
+    </None>
+    <None Include="Shaders\Geometry\implosion.gs">
+      <Filter>Shaders\Geometry</Filter>
+    </None>
+    <None Include="Shaders\Geometry\standard.gs">
+      <Filter>Shaders\Geometry</Filter>
+    </None>
+    <None Include="Shaders\Geometry\standardpost.gs">
+      <Filter>Shaders\Geometry</Filter>
+    </None>
+    <None Include="Shaders\Post\blackandwhite.fs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\blackandwhite.vs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\blur.fs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\blur.vs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\colourwarp.fs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\colourwarp.vs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\filmgrain.fs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\filmgrain.vs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\laplace.fs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\laplace.vs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\negative.fs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\negative.vs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\scope.fs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\scope.vs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\screenwarp.fs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\screenwarp.vs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\sharpening.fs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\sharpening.vs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Standard\procedural.fs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\procedural.vs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\rainbow.fs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\rainbow.vs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\simple.fs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\simple.vs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\specular.fs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\specular.vs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\test.fs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\test.vs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\texture.fs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\texture.vs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\textureanim.fs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\textureanim.vs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\toon.fs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\toon.vs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\tvgrain.fs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\tvgrain.vs">
+      <Filter>Shaders\Standard</Filter>
     </None>
   </ItemGroup>
 </Project>
