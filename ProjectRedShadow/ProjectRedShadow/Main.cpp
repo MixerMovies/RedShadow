@@ -404,9 +404,10 @@ void ProcessVREvent(const vr::VREvent_t & event)
 
 int main(int argc, char *argv[])
 {
-	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
+	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_MULTISAMPLE);
 	glutInit(&argc, argv);
 
+	glutSetOption(GLUT_MULTISAMPLE, 4);
 	glutInitWindowSize(1920, 1080);
 	gameWindowInt = glutCreateWindow("Tower City");
 	glutIdleFunc(Idle);
