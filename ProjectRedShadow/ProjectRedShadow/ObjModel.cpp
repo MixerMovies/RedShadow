@@ -4,7 +4,8 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <glm.hpp>
+#include <GL/freeglut_std.h>
+#include "gtc/type_ptr.hpp"
 
 #include "Util.h"
 #include "FileLoader.h"
@@ -375,45 +376,29 @@ ObjModel::~ObjModel(void)
 {
 }
 
-void ObjModel::draw(Shader* shader)
+void ObjModel::draw(ShaderMatrices matrices, Shader* shader)
 {
     glBindVertexArray(_vertexArray);
-
-	/*MaterialInfo* material = materials[groups[0]->materialIndex];
-
-	glUniform1f(shader->getUniformLocation("shininess"), material->shininess);
-	glUniform1i(shader->getUniformLocation("has_bump_map"), 0);
-
-	if (material->hasTexture)
-	{
-		glUniform1f(shader->getUniformLocation("ambient"), material->ambient[0]);
-		glUniform1f(shader->getUniformLocation("intensity"), 1);
-		glUniform1f(shader->getUniformLocation("alpha"), material->alpha);
-		glUniform3fv(shader->getUniformLocation("diffuse"), 1, material->diffuse);
-
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, material->texture->textureId);
-	}
-	if (material->bumpMap != NULL)
-	{
-		glActiveTexture(GL_TEXTURE1);
-		glUniform1i(shader->getUniformLocation("has_bump_map"), 1);
-		glBindTexture(GL_TEXTURE_2D, material->bumpMap->textureId);
-	}
-	else
-	{
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, -1);
-	}
-
-	//if (size > 0)
-		//glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_SHORT, 0);
-	//else
-		glDrawArrays(GL_TRIANGLES, 0, size);*/	
 
 	for (ObjGroup* group : groups)
 	{
 		MaterialInfo* material = materials[group->materialIndex];
+
+		shader->use();
+
+		glUniform3f(shader->getUniformLocation("viewPosition"), matrices.viewPosition[0], matrices.viewPosition[1], matrices.viewPosition[2]);
+		glUniform3f(shader->getUniformLocation("lightPosition"), matrices.lightPosition.x, matrices.lightPosition.y, matrices.lightPosition.z);
+		glUniform4f(shader->getUniformLocation("lightColor"), matrices.lightColour.x, matrices.lightColour.y, matrices.lightColour.z, 1);
+
+		glUniform1f(shader->getUniformLocation("time"), glutGet(GLUT_ELAPSED_TIME) / 1000.0f);
+		glUniform1i(shader->getUniformLocation("s_texture"), 0);
+		glUniform1i(shader->getUniformLocation("bump_map"), 1);
+
+		glUniformMatrix4fv(shader->getUniformLocation("viewMatrix"), 1, 0, glm::value_ptr(matrices.view));
+		glUniformMatrix4fv(shader->getUniformLocation("projectionMatrix"), 1, 0, glm::value_ptr(matrices.projection));
+
+		glUniformMatrix4fv(shader->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(matrices.model));
+		glUniformMatrix3fv(shader->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(matrices.normalMatrix));
 
 		glUniform1f(shader->getUniformLocation("shininess"), material->shininess);
 		glUniform1i(shader->getUniformLocation("has_bump_map"), 0);

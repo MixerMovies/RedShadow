@@ -2,10 +2,17 @@
 
 #include <vector>
 
+#include "Shader.h"
 #include "Texture.h"
 
 class MaterialInfo
 {
+private:
+	//TODO: please initialize those somewhere
+	static std::vector<Shader*> shaders;
+
+public:
+
 	enum Illum
 	{
 		COLOR_ON_AMBIENT_OFF = 0,
@@ -21,9 +28,9 @@ class MaterialInfo
 		INVISIBLE_SURFACES_SHADOW_CAST = 10
 	};
 
-public:
 	MaterialInfo();
 	static void loadMaterialFile(std::vector<MaterialInfo*>& materials, std::string fileName, std::string dirName);
+	static Shader* getShader(Illum illum) { return shaders[illum]; };
 	std::string name;
 	Texture* texture;
 	Texture* bumpMap;
