@@ -384,6 +384,9 @@ void ObjModel::draw(ShaderMatrices matrices, Shader* shader)
 	{
 		MaterialInfo* material = materials[group->materialIndex];
 
+		if (shader == nullptr)
+			shader = material->getShader();
+
 		shader->use();
 
 		glUniform3f(shader->getUniformLocation("viewPosition"), matrices.viewPosition[0], matrices.viewPosition[1], matrices.viewPosition[2]);

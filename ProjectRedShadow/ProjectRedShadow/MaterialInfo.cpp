@@ -6,17 +6,46 @@
 #include "Util.h"
 #include "FileLoader.h"
 
+std::vector<Shader*> MaterialInfo::shaders = std::vector<Shader*>();
+
 MaterialInfo::MaterialInfo()
 {
+	if (MaterialInfo::shaders.empty())
+		initShaders();
+
 	texture = NULL;
 	bumpMap = NULL;
 	hasTexture = false;
 }
 
-void MaterialInfo::loadMaterialFile(std::vector<MaterialInfo*>& materials, std::string fileName, std::string dirName)
+void MaterialInfo::initShaders()
 {
-	Texture* emptyTexture = new Texture(FileLoader::getMainPath() + "\\Textures\\White.png");
+	Shader* shader1 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
+	shaders.push_back(shader1);
+	Shader* shader2 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
+	shaders.push_back(shader2);
+	Shader* shader3 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
+	shaders.push_back(shader3);
+	Shader* shader4 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
+	shaders.push_back(shader4);
+	Shader* shader5 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
+	shaders.push_back(shader5);
+	Shader* shader6 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
+	shaders.push_back(shader6);
+	Shader* shader7 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
+	shaders.push_back(shader7);
+	Shader* shader8 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
+	shaders.push_back(shader8);
+	Shader* shader9 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
+	shaders.push_back(shader9);
+	Shader* shader10 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
+	shaders.push_back(shader10);
+	Shader* shader11 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
+	shaders.push_back(shader11);
+}
 
+void MaterialInfo::loadMaterialFile(std::vector<MaterialInfo*>& materials, std::string fileName, std::string dirName, Shader* shader)
+{
 	std::ifstream pFile(fileName.c_str());
 
 	if (!pFile.is_open())
@@ -55,12 +84,7 @@ void MaterialInfo::loadMaterialFile(std::vector<MaterialInfo*>& materials, std::
 		{
 			if (currentMaterial != NULL)
 			{
-				if (currentMaterial->texture == NULL)
-				{
-					currentMaterial->texture = emptyTexture;
-					currentMaterial->hasTexture = true;
-				}
-				materials.push_back(currentMaterial);
+				finishCurrentMaterial(currentMaterial, shader, materials);
 			}
 			currentMaterial = new MaterialInfo();
 			currentMaterial->name = params[1];
@@ -108,7 +132,7 @@ void MaterialInfo::loadMaterialFile(std::vector<MaterialInfo*>& materials, std::
 		}
 		else if (params[0] == "illum")
 		{
-			currentMaterial->illum = std::stoi(params[1]);
+			currentMaterial->illum = static_cast<Illum>(std::stoi(params[1]));
 		}
 		else if (params[0] == "ni")
 		{
@@ -120,11 +144,26 @@ void MaterialInfo::loadMaterialFile(std::vector<MaterialInfo*>& materials, std::
 
 	if (currentMaterial != NULL)
 	{
-		if (currentMaterial->texture == NULL)
-		{
-			currentMaterial->texture = emptyTexture;
-			currentMaterial->hasTexture = true;
-		}
-		materials.push_back(currentMaterial);
+		finishCurrentMaterial(currentMaterial, shader, materials);
 	}
+}
+
+void MaterialInfo::finishCurrentMaterial(MaterialInfo* currentMaterial, Shader* shader, std::vector<MaterialInfo*>& materials)
+{
+	Texture* emptyTexture = new Texture(FileLoader::getMainPath() + "\\Textures\\White.png");
+
+	if (currentMaterial->texture == NULL)
+	{
+		currentMaterial->texture = emptyTexture;
+		currentMaterial->hasTexture = true;
+	}
+
+	if (currentMaterial->currentShader != nullptr)
+		currentMaterial->currentShader = shader;
+	else
+	{
+		currentMaterial->currentShader = MaterialInfo::getShaderByIllum(currentMaterial->illum);
+	}
+
+	materials.push_back(currentMaterial);
 }

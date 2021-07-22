@@ -2,14 +2,16 @@
 
 #include <vector>
 
-#include "Shader.h"
 #include "Texture.h"
+#include "Shader.h"
 
 class MaterialInfo
 {
 private:
-	//TODO: please initialize those somewhere
 	static std::vector<Shader*> shaders;
+	static void initShaders();
+
+	Shader* currentShader = nullptr;
 
 public:
 
@@ -28,9 +30,6 @@ public:
 		INVISIBLE_SURFACES_SHADOW_CAST = 10
 	};
 
-	MaterialInfo();
-	static void loadMaterialFile(std::vector<MaterialInfo*>& materials, std::string fileName, std::string dirName);
-	static Shader* getShader(Illum illum) { return shaders[illum]; };
 	std::string name;
 	Texture* texture;
 	Texture* bumpMap;
@@ -42,5 +41,12 @@ public:
 	float alpha = 1.0f;
 	float optical_density = 1.0f;
 	bool hasTexture;
-	unsigned int illum = 2;
+	Illum illum = HIGHLIGHT_ON;
+
+	MaterialInfo();
+	Shader* getShader() { return currentShader; };
+
+	static void loadMaterialFile(std::vector<MaterialInfo*>& materials, std::string fileName, std::string dirName, Shader* shader = nullptr);
+	static void finishCurrentMaterial(MaterialInfo* currentMaterial, Shader* shader, std::vector<MaterialInfo*>& materials);
+	static Shader* getShaderByIllum(Illum illum) { return shaders[illum]; };
 };

@@ -64,6 +64,7 @@ Gamewindow::Gamewindow(Space* space, vr::IVRSystem* vrSystem)
 	shaders.push_back(shader9);
 	Shader* shader10 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/implosion.gs");
 	shaders.push_back(shader10);
+	shaders.push_back(nullptr);
 	//post processing shaders
 	Shader* pShader1 = new Shader("Shaders/Post/blur.vs", "Shaders/Post/blur.fs", "Shaders/Geometry/standardpost.gs");
 	postProcessingShaders.push_back(pShader1);
