@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <iostream>
 
 #include "Texture.h"
 #include "Shader.h"
@@ -8,7 +9,18 @@
 class MaterialInfo
 {
 private:
-	static std::vector<Shader*> shaders;
+	struct IllumShaderOptions
+	{
+		IllumShaderOptions(Shader* Default, Shader* BumpMap) 
+		{
+			DefaultShader = Default;
+			BumpMapShader = BumpMap;
+		};
+		Shader* DefaultShader;
+		Shader* BumpMapShader;
+	};
+
+	static std::vector<IllumShaderOptions*> shaders;
 	static void initShaders();
 
 	Shader* currentShader = nullptr;
@@ -45,8 +57,22 @@ public:
 
 	MaterialInfo();
 	Shader* getShader() { return currentShader; };
+	void setShader(Shader* shader) { currentShader = shader; };
 
 	static void loadMaterialFile(std::vector<MaterialInfo*>& materials, std::string fileName, std::string dirName, Shader* shader = nullptr);
 	static void finishCurrentMaterial(MaterialInfo* currentMaterial, Shader* shader, std::vector<MaterialInfo*>& materials);
-	static Shader* getShaderByIllum(Illum illum) { return shaders[illum]; };
+	static Shader* getShaderByIllum(Illum illum, bool hasBumpMap = false) 
+	{ 
+		if (hasBumpMap)
+		{
+			if (shaders[illum]->BumpMapShader != nullptr)
+				return shaders[illum]->BumpMapShader;
+			else
+			{
+				std::cout << illum << " doesn't have a bump map shader" << std::endl;
+				return shaders[illum]->DefaultShader;
+			}
+		}
+		return shaders[illum]->DefaultShader;
+	};
 };

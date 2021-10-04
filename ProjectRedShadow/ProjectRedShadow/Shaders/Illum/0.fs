@@ -7,5 +7,5 @@ in vec2 texCoord;
 
 void main()
 {
-    gl_FragColor = texture(s_texture, texCoord) * (vec4(diffuse, 1) + vec4(ambient, 1));
+    gl_FragColor = texture(s_texture, texCoord) * vec4(diffuse, 1);
 }

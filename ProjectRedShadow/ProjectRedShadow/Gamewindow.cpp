@@ -43,6 +43,7 @@ Gamewindow::Gamewindow(Space* space, vr::IVRSystem* vrSystem)
 	city->music = test.LoadSound("Sound/OdeToJoy(Remix).wav");
 	//city->music->Play();
 
+	shaders.push_back(nullptr);		//added null pointer shader to test objects with shaders (it will skip this one and use the shaders of the object itself instead)
 	//basic shaders
 	Shader* shader = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
 	shaders.push_back(shader);
@@ -64,7 +65,6 @@ Gamewindow::Gamewindow(Space* space, vr::IVRSystem* vrSystem)
 	shaders.push_back(shader9);
 	Shader* shader10 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/implosion.gs");
 	shaders.push_back(shader10);
-	shaders.push_back(nullptr);
 	//post processing shaders
 	Shader* pShader1 = new Shader("Shaders/Post/blur.vs", "Shaders/Post/blur.fs", "Shaders/Geometry/standardpost.gs");
 	postProcessingShaders.push_back(pShader1);
@@ -371,7 +371,7 @@ void Gamewindow::UpdateHMDMatrixPose()
 				}
 
 				Texture* texture = new Texture(controllerModel->diffuseTextureId, pTexture->unHeight, pTexture->unWidth, pTexture->rubTextureMapData);
-				ObjModel* model = new ObjModel( vertices, normals, texcoords, indices, texture);
+				ObjModel* model = new ObjModel( vertices, normals, texcoords, indices, texture, MaterialInfo::getShaderByIllum(MaterialInfo::Illum::HIGHLIGHT_ON));
 				m_rHand[eHand].m_pRenderModel = model;
 
 				vr::VRRenderModels()->FreeRenderModel(controllerModel);
@@ -403,6 +403,7 @@ void Gamewindow::RenderWorld(glm::mat4 view, glm::mat4 projection)
 		matrices.view = view;
 		matrices.viewPosition = city->player.position;
 
+		//std::cout << city->worldModels[i].name << std::endl;
 		city->worldModels[i].objModel->draw(matrices, shaders[currentshader]);
 	}
 

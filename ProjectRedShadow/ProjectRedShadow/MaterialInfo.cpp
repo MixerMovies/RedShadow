@@ -6,7 +6,7 @@
 #include "Util.h"
 #include "FileLoader.h"
 
-std::vector<Shader*> MaterialInfo::shaders = std::vector<Shader*>();
+std::vector<MaterialInfo::IllumShaderOptions*> MaterialInfo::shaders = std::vector<IllumShaderOptions*>();
 
 MaterialInfo::MaterialInfo()
 {
@@ -20,28 +20,29 @@ MaterialInfo::MaterialInfo()
 
 void MaterialInfo::initShaders()
 {
-	Shader* shader1 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
-	shaders.push_back(shader1);
-	Shader* shader2 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
-	shaders.push_back(shader2);
-	Shader* shader3 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
-	shaders.push_back(shader3);
-	Shader* shader4 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
-	shaders.push_back(shader4);
-	Shader* shader5 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
-	shaders.push_back(shader5);
-	Shader* shader6 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
-	shaders.push_back(shader6);
-	Shader* shader7 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
-	shaders.push_back(shader7);
-	Shader* shader8 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
-	shaders.push_back(shader8);
-	Shader* shader9 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
-	shaders.push_back(shader9);
-	Shader* shader10 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
-	shaders.push_back(shader10);
-	Shader* shader11 = new Shader("Shaders/Standard/texture.vs", "Shaders/Standard/texture.fs", "Shaders/Geometry/standard.gs");
-	shaders.push_back(shader11);
+	IllumShaderOptions* illum0 = new IllumShaderOptions (new Shader("Shaders/Illum/0.vs", "Shaders/Illum/0.fs", "Shaders/Geometry/standard.gs"), nullptr);
+	shaders.push_back(illum0);
+	IllumShaderOptions* illum1 = new IllumShaderOptions(new Shader("Shaders/Illum/1.vs", "Shaders/Illum/1.fs", "Shaders/Geometry/standard.gs"), nullptr);
+	shaders.push_back(illum1);
+	IllumShaderOptions* illum2 = new IllumShaderOptions(new Shader("Shaders/Illum/2.vs", "Shaders/Illum/2.fs", "Shaders/Geometry/standard.gs"), 
+		new Shader("Shaders/Illum/2.vs", "Shaders/Illum/2-bumpmap.fs", "Shaders/Geometry/standard.gs"));
+	shaders.push_back(illum2);
+	IllumShaderOptions* illum3 = new IllumShaderOptions(new Shader("Shaders/Illum/2.vs", "Shaders/Illum/2.fs", "Shaders/Geometry/standard.gs"), nullptr);
+	shaders.push_back(illum3);
+	IllumShaderOptions* illum4 = new IllumShaderOptions(new Shader("Shaders/Illum/2.vs", "Shaders/Illum/2.fs", "Shaders/Geometry/standard.gs"), nullptr);
+	shaders.push_back(illum4);
+	IllumShaderOptions* illum5 = new IllumShaderOptions(new Shader("Shaders/Illum/2.vs", "Shaders/Illum/2.fs", "Shaders/Geometry/standard.gs"), nullptr);
+	shaders.push_back(illum5);
+	IllumShaderOptions* illum6 = new IllumShaderOptions(new Shader("Shaders/Illum/2.vs", "Shaders/Illum/2.fs", "Shaders/Geometry/standard.gs"), nullptr);
+	shaders.push_back(illum6);
+	IllumShaderOptions* illum7 = new IllumShaderOptions(new Shader("Shaders/Illum/2.vs", "Shaders/Illum/2.fs", "Shaders/Geometry/standard.gs"), nullptr);
+	shaders.push_back(illum7);
+	IllumShaderOptions* illum8 = new IllumShaderOptions(new Shader("Shaders/Illum/8.vs", "Shaders/Illum/8.fs", "Shaders/Geometry/standard.gs"), nullptr);
+	shaders.push_back(illum8);
+	IllumShaderOptions* illum9 = new IllumShaderOptions(new Shader("Shaders/Illum/9.vs", "Shaders/Illum/9.fs", "Shaders/Geometry/standard.gs"), nullptr);
+	shaders.push_back(illum9);
+	IllumShaderOptions* illum10 = new IllumShaderOptions(new Shader("Shaders/Illum/2.vs", "Shaders/Illum/2.fs", "Shaders/Geometry/standard.gs"), nullptr);
+	shaders.push_back(illum10);
 }
 
 void MaterialInfo::loadMaterialFile(std::vector<MaterialInfo*>& materials, std::string fileName, std::string dirName, Shader* shader)
@@ -133,6 +134,7 @@ void MaterialInfo::loadMaterialFile(std::vector<MaterialInfo*>& materials, std::
 		else if (params[0] == "illum")
 		{
 			currentMaterial->illum = static_cast<Illum>(std::stoi(params[1]));
+			std::cout << currentMaterial->illum << std::endl;
 		}
 		else if (params[0] == "ni")
 		{
@@ -162,7 +164,7 @@ void MaterialInfo::finishCurrentMaterial(MaterialInfo* currentMaterial, Shader* 
 		currentMaterial->currentShader = shader;
 	else
 	{
-		currentMaterial->currentShader = MaterialInfo::getShaderByIllum(currentMaterial->illum);
+		currentMaterial->currentShader = MaterialInfo::getShaderByIllum(currentMaterial->illum, currentMaterial->bumpMap != nullptr);
 	}
 
 	materials.push_back(currentMaterial);

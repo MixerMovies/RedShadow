@@ -58,6 +58,9 @@
     <Filter Include="Header Files\VR">
       <UniqueIdentifier>{c75cce6d-a27b-45b3-afb4-130fcabbbb9e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\Illum">
+      <UniqueIdentifier>{2ed6342c-bf0d-4e42-8287-a7a8c3efd599}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -294,6 +297,48 @@
     </None>
     <None Include="Shaders\Standard\tvgrain.vs">
       <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Illum\0.fs">
+      <Filter>Shaders\Illum</Filter>
+    </None>
+    <None Include="Shaders\Illum\0.vs">
+      <Filter>Shaders\Illum</Filter>
+    </None>
+    <None Include="Shaders\Illum\1.fs">
+      <Filter>Shaders\Illum</Filter>
+    </None>
+    <None Include="Shaders\Illum\1.vs">
+      <Filter>Shaders\Illum</Filter>
+    </None>
+    <None Include="Shaders\Illum\2.fs">
+      <Filter>Shaders\Illum</Filter>
+    </None>
+    <None Include="Shaders\Illum\2.vs">
+      <Filter>Shaders\Illum</Filter>
+    </None>
+    <None Include="Shaders\Standard\cubemap.fs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\cubemap.vs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Geometry\cubemap.gs">
+      <Filter>Shaders\Geometry</Filter>
+    </None>
+    <None Include="Shaders\Illum\8.fs">
+      <Filter>Shaders\Illum</Filter>
+    </None>
+    <None Include="Shaders\Illum\8.vs">
+      <Filter>Shaders\Illum</Filter>
+    </None>
+    <None Include="Shaders\Illum\9.fs">
+      <Filter>Shaders\Illum</Filter>
+    </None>
+    <None Include="Shaders\Illum\9.vs">
+      <Filter>Shaders\Illum</Filter>
+    </None>
+    <None Include="Shaders\Illum\2-bumpmap.fs">
+      <Filter>Shaders\Illum</Filter>
     </None>
   </ItemGroup>
 </Project>

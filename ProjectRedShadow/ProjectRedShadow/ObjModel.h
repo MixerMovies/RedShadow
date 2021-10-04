@@ -45,7 +45,7 @@ public:
 	};
 
 	ObjModel(std::string filename);
-	ObjModel(std::vector<float> vertices, std::vector<float> normals, std::vector<float> textureCoordinats, std::vector<uint16_t> indices, Texture* texture);
+	ObjModel(std::vector<float> vertices, std::vector<float> normals, std::vector<float> textureCoordinats, std::vector<uint16_t> indices, Texture* texture, Shader* shader);
 	~ObjModel(void);
 
 	void draw(ShaderMatrices matrices, Shader* shader = nullptr);

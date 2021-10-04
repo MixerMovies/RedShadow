@@ -186,6 +186,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="maps\TowerCity.map" />
+    <None Include="Shaders\Geometry\cubemap.gs" />
+    <None Include="Shaders\Illum\0.fs" />
+    <None Include="Shaders\Illum\0.vs" />
+    <None Include="Shaders\Illum\1.fs" />
+    <None Include="Shaders\Illum\1.vs" />
+    <None Include="Shaders\Illum\2-bumpmap.fs" />
+    <None Include="Shaders\Illum\2.fs" />
+    <None Include="Shaders\Illum\2.vs" />
+    <None Include="Shaders\Illum\8.fs" />
+    <None Include="Shaders\Illum\8.vs" />
+    <None Include="Shaders\Illum\9.fs" />
+    <None Include="Shaders\Illum\9.vs" />
     <None Include="Shaders\Post\blackandwhite.fs" />
     <None Include="Shaders\Post\blackandwhite.vs" />
     <None Include="Shaders\Post\blur.fs" />
@@ -200,6 +212,8 @@
     <None Include="Shaders\Post\filmgrain.vs" />
     <None Include="Shaders\Post\negative.fs" />
     <None Include="Shaders\Post\negative.vs" />
+    <None Include="Shaders\Standard\cubemap.fs" />
+    <None Include="Shaders\Standard\cubemap.vs" />
     <None Include="Shaders\Standard\procedural.vs" />
     <None Include="Shaders\Standard\procedural.fs" />
     <None Include="Shaders\Standard\rainbow.fs" />

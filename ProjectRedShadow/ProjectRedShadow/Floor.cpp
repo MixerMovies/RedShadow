@@ -61,7 +61,8 @@ void WorldFloor::GenerateFloor()
 	indices.push_back(4);
 	indices.push_back(1);
 
-	_generatedModel = new ObjModel(vertices, normals, textureCoordinates, indices, new Texture(FileLoader::getMainPath() + "\\Textures\\White.png") );
+	_generatedModel = new ObjModel(vertices, normals, textureCoordinates, indices, new Texture(FileLoader::getMainPath() + "\\Textures\\White.png"), 
+		MaterialInfo::getShaderByIllum(MaterialInfo::Illum::HIGHLIGHT_ON));
 	_wObject = WorldObject();
 	_wObject.objModel = new ObjModel("models/Projects/floor/floor.obj");
 	_wObject.location = glm::vec3(0, -1, 0);
