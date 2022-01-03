@@ -4,7 +4,8 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <glm.hpp>
+#include <GL/freeglut_std.h>
+#include "gtc/type_ptr.hpp"
 
 #include "Util.h"
 #include "FileLoader.h"
@@ -313,7 +314,7 @@ ObjModel::ObjModel(std::string fileName)
     glBindVertexArray(0);        
 }
 
-ObjModel::ObjModel(std::vector<float> vertices, std::vector<float> normals, std::vector<float> textureCoordinats, std::vector<uint16_t> indices, Texture* texture)
+ObjModel::ObjModel(std::vector<float> vertices, std::vector<float> normals, std::vector<float> textureCoordinats, std::vector<uint16_t> indices, Texture* texture, Shader* shader)
 {
 	std::vector<float> finalVertices = std::vector<float>();
 
@@ -341,6 +342,7 @@ ObjModel::ObjModel(std::vector<float> vertices, std::vector<float> normals, std:
 	
 	material->texture = texture;
 	material->hasTexture = true;
+	material->setShader(shader);
 	materials.push_back(material);
 
 	glGenVertexArrays(1, &_vertexArray);
@@ -375,63 +377,62 @@ ObjModel::~ObjModel(void)
 {
 }
 
-void ObjModel::draw(Shader* shader)
+void ObjModel::draw(ShaderMatrices matrices, Shader* shader)
 {
     glBindVertexArray(_vertexArray);
-
-	/*MaterialInfo* material = materials[groups[0]->materialIndex];
-
-	glUniform1f(shader->getUniformLocation("shininess"), material->shininess);
-	glUniform1i(shader->getUniformLocation("has_bump_map"), 0);
-
-	if (material->hasTexture)
-	{
-		glUniform1f(shader->getUniformLocation("ambient"), material->ambient[0]);
-		glUniform1f(shader->getUniformLocation("intensity"), 1);
-		glUniform1f(shader->getUniformLocation("alpha"), material->alpha);
-		glUniform3fv(shader->getUniformLocation("diffuse"), 1, material->diffuse);
-
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, material->texture->textureId);
-	}
-	if (material->bumpMap != NULL)
-	{
-		glActiveTexture(GL_TEXTURE1);
-		glUniform1i(shader->getUniformLocation("has_bump_map"), 1);
-		glBindTexture(GL_TEXTURE_2D, material->bumpMap->textureId);
-	}
-	else
-	{
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, -1);
-	}
-
-	//if (size > 0)
-		//glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_SHORT, 0);
-	//else
-		glDrawArrays(GL_TRIANGLES, 0, size);*/	
 
 	for (ObjGroup* group : groups)
 	{
 		MaterialInfo* material = materials[group->materialIndex];
 
-		glUniform1f(shader->getUniformLocation("shininess"), material->shininess);
-		glUniform1i(shader->getUniformLocation("has_bump_map"), 0);
+		Shader* groupShader = shader;
 
-		glUniform1f(shader->getUniformLocation("alpha"), material->alpha);
-		glUniform3fv(shader->getUniformLocation("ambient"), 1, material->ambient);
-		glUniform3fv(shader->getUniformLocation("specular"), 1, material->specular);
-		glUniform3fv(shader->getUniformLocation("diffuse"), 1, material->diffuse);
+		if (groupShader == nullptr)
+			groupShader = material->getShader();
+
+		groupShader->use();
+
+		glUniform3f(groupShader->getUniformLocation("viewPosition"), matrices.viewPosition[0], matrices.viewPosition[1], matrices.viewPosition[2]);
+		glUniform3f(groupShader->getUniformLocation("lightPosition"), matrices.lightPosition.x, matrices.lightPosition.y, matrices.lightPosition.z);
+		glUniform4f(groupShader->getUniformLocation("lightColor"), matrices.lightColour.x, matrices.lightColour.y, matrices.lightColour.z, 1);
+
+		glUniform1f(groupShader->getUniformLocation("time"), glutGet(GLUT_ELAPSED_TIME) / 1000.0f);
+		glUniform1i(groupShader->getUniformLocation("s_texture"), 0);
+		glUniform1i(groupShader->getUniformLocation("bump_map"), 1);
+		glUniform1i(groupShader->getUniformLocation("cubemap"), 0);
+
+		glUniformMatrix4fv(groupShader->getUniformLocation("viewMatrix"), 1, 0, glm::value_ptr(matrices.view));
+		glUniformMatrix4fv(groupShader->getUniformLocation("projectionMatrix"), 1, 0, glm::value_ptr(matrices.projection));
+
+		glUniformMatrix4fv(groupShader->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(matrices.model));
+		glUniformMatrix3fv(groupShader->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(matrices.normalMatrix));
+
+		glUniform1f(groupShader->getUniformLocation("shininess"), material->shininess);
+		glUniform1i(groupShader->getUniformLocation("has_bump_map"), 0);
+
+		glUniform1f(groupShader->getUniformLocation("alpha"), material->alpha);
+		glUniform3fv(groupShader->getUniformLocation("ambient"), 1, material->ambient);
+		glUniform3fv(groupShader->getUniformLocation("specular"), 1, material->specular);
+		glUniform3fv(groupShader->getUniformLocation("diffuse"), 1, material->diffuse);
 
 		if(material->hasTexture)
 		{
 			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, material->texture->textureId);
+			if (material->texture->isCubeMap())
+			{
+				glDepthMask(GL_FALSE);
+				//glBindVertexArray(skyboxVAO);
+				glBindTexture(GL_TEXTURE_CUBE_MAP, material->texture->textureId);
+				glDepthMask(GL_TRUE);
+			}
+			else
+			{
+				glBindTexture(GL_TEXTURE_2D, material->texture->textureId);
+			}
 		}
 		if(material->bumpMap != NULL)
 		{
 			glActiveTexture(GL_TEXTURE1);
-			glUniform1i(shader->getUniformLocation("has_bump_map"), 1);
 			glBindTexture(GL_TEXTURE_2D, material->bumpMap->textureId);
 		}
 		/*else //disabled for now, because it crashes post processing
@@ -443,6 +444,8 @@ void ObjModel::draw(Shader* shader)
 		//if (size > 0)
 		//	glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_SHORT, 0);
 		//else
-			glDrawArrays(GL_TRIANGLES, group->start, group->end - group->start);
+		glDrawArrays(GL_TRIANGLES, group->start, group->end - group->start);
+
+		groupShader = nullptr;
 	}
 }

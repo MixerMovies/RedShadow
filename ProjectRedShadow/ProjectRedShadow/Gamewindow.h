@@ -55,7 +55,7 @@ public:
 	glm::ivec2 screenSize;
 	bool postProcessingEnabled = false;
 private:
-	void RenderWorld(glm::mat4);
-	void RenderControllers(glm::mat4);
+	void RenderWorld(glm::mat4 view, glm::mat4 projection);
+	void RenderControllers(glm::mat4 view, glm::mat4 projection);
 	void UpdateHMDMatrixPose();
 };
