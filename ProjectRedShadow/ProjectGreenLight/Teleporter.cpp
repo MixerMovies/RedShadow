@@ -1,7 +1,7 @@
 #include "Teleporter.h"
 
 #include <iostream>
-#include "Ray.h"
+#include "../ProjectRedShadow/Ray.h"
 
 Teleporter::Teleporter()
 {

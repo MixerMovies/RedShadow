@@ -1,3 +1,5 @@
+#include "pch.h"
+
 #include "Ray.h"
 
 #include <iostream>

@@ -96,7 +96,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>libs/bullet/src;libs/glew/include;libs/freeglut/include;libs/OpenAL/include;libs/glm/glm;libs/openvr/headers</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../libs/bullet/src;../libs/glew/include;../libs/freeglut/include;../libs/OpenAL/include;../libs/glm/glm;../libs/openvr/headers</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <FunctionLevelLinking>
@@ -105,7 +105,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>ProjectRedShadow.lib;BulletDynamics_vs2010_x64_debug.lib;BulletCollision_vs2010_x64_debug.lib;LinearMath_vs2010_x64_debug.lib;freeglut.lib;OpenAL32.lib;glew32.lib;openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../x64/Debug;libs/bullet/bin;libs/openvr/lib/win64;libs/freeglut/lib/x64;libs/OpenAL/libs/Win64;libs/glew/lib/Release/x64</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../x64/Debug;../libs/bullet/bin;../libs/openvr/lib/win64;../libs/freeglut/lib/x64;../libs/OpenAL/libs/Win64;../libs/glew/lib/Release/x64</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -133,7 +133,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>libs/bullet/src;libs/glew/include;libs/freeglut/include;libs/OpenAL/include;libs/glm/glm;libs/openvr/headers</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../libs/bullet/src;../libs/glew/include;../libs/freeglut/include;../libs/OpenAL/include;../libs/glm/glm;../libs/openvr/headers</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PreprocessorDefinitions>BT_THREADSAFE=1;BT_USE_DOUBLE_PRECISION;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -141,7 +141,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>../x64/Debug;libs/bullet/bin;libs/openvr/lib/win64;libs/freeglut/lib/x64; libs/OpenAL/libs/Win64; libs/glew/lib/Release/x64;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../x64/Release;../libs/bullet/bin;../libs/openvr/lib/win64;../libs/freeglut/lib/x64;../libs/OpenAL/libs/Win64;../libs/glew/lib/Release/x64</AdditionalLibraryDirectories>
       <AdditionalDependencies>ProjectRedShadow.lib;BulletDynamics_vs2010_x64_release.lib;BulletCollision_vs2010_x64_release.lib;LinearMath_vs2010_x64_release.lib;freeglut.lib;OpenAL32.lib;glew32.lib;openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -153,7 +153,6 @@
     <ClCompile Include="MaterialInfo.cpp" />
     <ClCompile Include="ObjModel.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="Sound.cpp" />
@@ -171,7 +170,6 @@
     <ClInclude Include="MaterialInfo.h" />
     <ClInclude Include="ObjModel.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Ray.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="Sound.h" />

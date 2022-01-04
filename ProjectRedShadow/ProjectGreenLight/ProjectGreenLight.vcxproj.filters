@@ -84,9 +84,6 @@
     <ClCompile Include="FileLoader.cpp">
       <Filter>Source Files\IO</Filter>
     </ClCompile>
-    <ClCompile Include="Ray.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
@@ -148,9 +145,6 @@
     </ClInclude>
     <ClInclude Include="Teleporter.h">
       <Filter>Header Files\VR</Filter>
-    </ClInclude>
-    <ClInclude Include="Ray.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WorldObject.h">
       <Filter>Header Files\World</Filter>

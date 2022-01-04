@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Util">
+      <UniqueIdentifier>{3d0809f1-3551-43e2-882f-5fcb6e777c47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util">
+      <UniqueIdentifier>{065280c7-b2e6-48d0-9b89-a65512efc163}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -21,8 +27,11 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Ray.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
     <ClInclude Include="Util.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -32,8 +41,11 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Ray.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
     <ClCompile Include="Util.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Util</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
