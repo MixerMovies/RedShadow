@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -17,133 +17,228 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>16.0</VCProjectVersion>
-    <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{cbe952f3-4554-429c-a7bc-ee54fbfc154f}</ProjectGuid>
+    <ProjectGuid>{2AAC8FDD-F378-49C8-A3F7-45691681DD0D}</ProjectGuid>
     <RootNamespace>ProjectGreenLight</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>ProjectGreenLight</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="Shared" >
+  <ImportGroup Label="Shared">
   </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
-
+  <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>
+      </SDLCheck>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>libs/glew/include;libs/freeglut/include;libs/OpenAL/include;libs/glm/glm;libs/openvr/headers</AdditionalIncludeDirectories>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <FunctionLevelLinking>
+      </FunctionLevelLinking>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader />
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>libs/openvr/lib/win32;libs/freeglut/lib;libs/OpenAL/libs/Win32;libs/glew/lib/Release/Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;OpenAL32.lib;openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>libs/bullet/src;libs/glew/include;libs/freeglut/include;libs/OpenAL/include;libs/glm/glm;libs/openvr/headers</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <FunctionLevelLinking>
+      </FunctionLevelLinking>
+      <PreprocessorDefinitions>BT_THREADSAFE=1;BT_USE_DOUBLE_PRECISION;_DEBUG=1;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>ProjectRedShadow.lib;BulletDynamics_vs2010_x64_debug.lib;BulletCollision_vs2010_x64_debug.lib;LinearMath_vs2010_x64_debug.lib;freeglut.lib;OpenAL32.lib;glew32.lib;openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../x64/Debug;libs/bullet/bin;libs/openvr/lib/win64;libs/freeglut/lib/x64;libs/OpenAL/libs/Win64;libs/glew/lib/Release/x64</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>libs/glew/include;libs/freeglut/include;libs/OpenAL/include;libs/glm/glm;libs/openvr/headers</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>libs/openvr/lib/win32;libs/freeglut/lib; libs/OpenAL/libs/Win32; libs/glew/lib/Release/Win32;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;OpenAL32.lib;glew32.lib;openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>libs/bullet/src;libs/glew/include;libs/freeglut/include;libs/OpenAL/include;libs/glm/glm;libs/openvr/headers</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PreprocessorDefinitions>BT_THREADSAFE=1;BT_USE_DOUBLE_PRECISION;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>libs/bullet/bin;libs/openvr/lib/win64;libs/freeglut/lib/x64; libs/OpenAL/libs/Win64; libs/glew/lib/Release/x64;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>BulletDynamics_vs2010_x64_release.lib;BulletCollision_vs2010_x64_release.lib;LinearMath_vs2010_x64_release.lib;freeglut.lib;OpenAL32.lib;glew32.lib;openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-
-  <ItemGroup></ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="FileLoader.cpp" />
+    <ClCompile Include="Floor.cpp" />
+    <ClCompile Include="Gamewindow.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MaterialInfo.cpp" />
+    <ClCompile Include="ObjModel.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Ray.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Skybox.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="SoundTest.cpp" />
+    <ClCompile Include="Space.cpp" />
+    <ClCompile Include="Teleporter.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="WorldObject.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FileLoader.h" />
+    <ClInclude Include="Floor.h" />
+    <ClInclude Include="Gamewindow.h" />
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="MaterialInfo.h" />
+    <ClInclude Include="ObjModel.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Ray.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="Skybox.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="SoundTest.h" />
+    <ClInclude Include="Space.h" />
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="Teleporter.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="WorldObject.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="maps\TowerCity.map" />
+    <None Include="Shaders\Geometry\cubemap.gs" />
+    <None Include="Shaders\Illum\0.fs" />
+    <None Include="Shaders\Illum\0.vs" />
+    <None Include="Shaders\Illum\1.fs" />
+    <None Include="Shaders\Illum\1.vs" />
+    <None Include="Shaders\Illum\2-bumpmap.fs" />
+    <None Include="Shaders\Illum\2.fs" />
+    <None Include="Shaders\Illum\2.vs" />
+    <None Include="Shaders\Illum\8.fs" />
+    <None Include="Shaders\Illum\8.vs" />
+    <None Include="Shaders\Illum\9.fs" />
+    <None Include="Shaders\Illum\9.vs" />
+    <None Include="Shaders\Post\blackandwhite.fs" />
+    <None Include="Shaders\Post\blackandwhite.vs" />
+    <None Include="Shaders\Post\blur.fs" />
+    <None Include="Shaders\Post\blur.vs" />
+    <None Include="Shaders\Post\colourwarp.fs" />
+    <None Include="Shaders\Post\colourwarp.vs" />
+    <None Include="Shaders\Geometry\explosion.gs" />
+    <None Include="Shaders\Geometry\implosion.gs" />
+    <None Include="Shaders\Post\laplace.fs" />
+    <None Include="Shaders\Post\laplace.vs" />
+    <None Include="Shaders\Post\filmgrain.fs" />
+    <None Include="Shaders\Post\filmgrain.vs" />
+    <None Include="Shaders\Post\negative.fs" />
+    <None Include="Shaders\Post\negative.vs" />
+    <None Include="Shaders\Standard\cubemap.fs" />
+    <None Include="Shaders\Standard\cubemap.vs" />
+    <None Include="Shaders\Standard\procedural.vs" />
+    <None Include="Shaders\Standard\procedural.fs" />
+    <None Include="Shaders\Standard\rainbow.fs" />
+    <None Include="Shaders\Standard\rainbow.vs" />
+    <None Include="Shaders\Post\scope.fs" />
+    <None Include="Shaders\Post\scope.vs" />
+    <None Include="Shaders\Post\screenwarp.fs" />
+    <None Include="Shaders\Post\screenwarp.vs" />
+    <None Include="Shaders\Post\sharpening.fs" />
+    <None Include="Shaders\Post\sharpening.vs" />
+    <None Include="Shaders\Standard\simple.fs" />
+    <None Include="Shaders\Standard\simple.vs" />
+    <None Include="Shaders\Standard\specular.fs" />
+    <None Include="Shaders\Standard\specular.vs" />
+    <None Include="Shaders\Geometry\standard.gs" />
+    <None Include="Shaders\Geometry\standardpost.gs" />
+    <None Include="Shaders\Standard\test.fs" />
+    <None Include="Shaders\Standard\test.vs" />
+    <None Include="Shaders\Standard\texture.fs" />
+    <None Include="Shaders\Standard\texture.vs" />
+    <None Include="Shaders\Standard\textureanim.fs" />
+    <None Include="Shaders\Standard\textureanim.vs" />
+    <None Include="Shaders\Standard\toon.fs" />
+    <None Include="Shaders\Standard\toon.vs" />
+    <None Include="Shaders\Standard\tvgrain.fs" />
+    <None Include="Shaders\Standard\tvgrain.vs" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

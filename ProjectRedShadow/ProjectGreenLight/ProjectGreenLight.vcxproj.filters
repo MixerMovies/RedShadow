@@ -3,15 +3,333 @@
   <ItemGroup>
     <Filter Include="Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Graphics">
+      <UniqueIdentifier>{8bc66143-fef6-4f1a-b449-3db8cff6a1f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{79698f17-1db2-4f47-b53f-49f1faa1eaaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Sound">
+      <UniqueIdentifier>{c69b0f95-7df8-4fd7-940e-8565e5ca5d89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sound">
+      <UniqueIdentifier>{3f8b5a45-2466-4c0d-bb40-4ba0a784d7f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{df6199bf-894a-444f-901f-235fc313c35c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Post">
+      <UniqueIdentifier>{6fab7276-5ad4-4409-8077-db4118ac0628}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Standard">
+      <UniqueIdentifier>{8aaaa35e-e16f-448e-909a-9f9c799ad173}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Geometry">
+      <UniqueIdentifier>{734e9404-aed9-4d4f-bce8-256cc60d92ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IO">
+      <UniqueIdentifier>{0f6f31e3-96c9-4ecc-8754-16563b4f9583}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO">
+      <UniqueIdentifier>{12d9fbf3-5768-4c05-b35d-784a92f2490e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Maps">
+      <UniqueIdentifier>{dc32d9fb-e37d-4e3d-97fb-13ed481e955a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\World">
+      <UniqueIdentifier>{c0666bb8-381f-4523-9283-2e74a99ba715}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VR">
+      <UniqueIdentifier>{af759832-b233-4b57-987d-dcf7445b27c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\World">
+      <UniqueIdentifier>{d3ca935c-5e11-43b0-9c67-9ca03d90224d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VR">
+      <UniqueIdentifier>{c75cce6d-a27b-45b3-afb4-130fcabbbb9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Illum">
+      <UniqueIdentifier>{2ed6342c-bf0d-4e42-8287-a7a8c3efd599}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Gamewindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjModel.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Source Files\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundTest.cpp">
+      <Filter>Source Files\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="FileLoader.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Ray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Floor.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Space.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Teleporter.cpp">
+      <Filter>Source Files\VR</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldObject.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialInfo.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Gamewindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjModel.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Header Files\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundTest.h">
+      <Filter>Header Files\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="FileLoader.h">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Floor.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Space.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Teleporter.h">
+      <Filter>Header Files\VR</Filter>
+    </ClInclude>
+    <ClInclude Include="Ray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldObject.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialInfo.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="maps\TowerCity.map">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="Shaders\Geometry\explosion.gs">
+      <Filter>Shaders\Geometry</Filter>
+    </None>
+    <None Include="Shaders\Geometry\implosion.gs">
+      <Filter>Shaders\Geometry</Filter>
+    </None>
+    <None Include="Shaders\Geometry\standard.gs">
+      <Filter>Shaders\Geometry</Filter>
+    </None>
+    <None Include="Shaders\Geometry\standardpost.gs">
+      <Filter>Shaders\Geometry</Filter>
+    </None>
+    <None Include="Shaders\Post\blackandwhite.fs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\blackandwhite.vs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\blur.fs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\blur.vs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\colourwarp.fs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\colourwarp.vs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\filmgrain.fs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\filmgrain.vs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\laplace.fs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\laplace.vs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\negative.fs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\negative.vs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\scope.fs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\scope.vs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\screenwarp.fs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\screenwarp.vs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\sharpening.fs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Post\sharpening.vs">
+      <Filter>Shaders\Post</Filter>
+    </None>
+    <None Include="Shaders\Standard\procedural.fs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\procedural.vs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\rainbow.fs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\rainbow.vs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\simple.fs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\simple.vs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\specular.fs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\specular.vs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\test.fs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\test.vs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\texture.fs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\texture.vs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\textureanim.fs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\textureanim.vs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\toon.fs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\toon.vs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\tvgrain.fs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\tvgrain.vs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Illum\0.fs">
+      <Filter>Shaders\Illum</Filter>
+    </None>
+    <None Include="Shaders\Illum\0.vs">
+      <Filter>Shaders\Illum</Filter>
+    </None>
+    <None Include="Shaders\Illum\1.fs">
+      <Filter>Shaders\Illum</Filter>
+    </None>
+    <None Include="Shaders\Illum\1.vs">
+      <Filter>Shaders\Illum</Filter>
+    </None>
+    <None Include="Shaders\Illum\2.fs">
+      <Filter>Shaders\Illum</Filter>
+    </None>
+    <None Include="Shaders\Illum\2.vs">
+      <Filter>Shaders\Illum</Filter>
+    </None>
+    <None Include="Shaders\Standard\cubemap.fs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Standard\cubemap.vs">
+      <Filter>Shaders\Standard</Filter>
+    </None>
+    <None Include="Shaders\Geometry\cubemap.gs">
+      <Filter>Shaders\Geometry</Filter>
+    </None>
+    <None Include="Shaders\Illum\8.fs">
+      <Filter>Shaders\Illum</Filter>
+    </None>
+    <None Include="Shaders\Illum\8.vs">
+      <Filter>Shaders\Illum</Filter>
+    </None>
+    <None Include="Shaders\Illum\9.fs">
+      <Filter>Shaders\Illum</Filter>
+    </None>
+    <None Include="Shaders\Illum\9.vs">
+      <Filter>Shaders\Illum</Filter>
+    </None>
+    <None Include="Shaders\Illum\2-bumpmap.fs">
+      <Filter>Shaders\Illum</Filter>
+    </None>
   </ItemGroup>
 </Project>

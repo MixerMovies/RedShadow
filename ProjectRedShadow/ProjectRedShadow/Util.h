@@ -1,9 +1,11 @@
 #pragma once
 
+#include "framework.h"
+
 #include <string>
 #include <vector>
 
-class Util
+class RED_EXPORT Util
 {
 public:
 	static std::string toLower(std::string data);

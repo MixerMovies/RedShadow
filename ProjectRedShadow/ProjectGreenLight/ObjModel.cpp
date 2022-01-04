@@ -7,7 +7,7 @@
 #include <GL/freeglut_std.h>
 #include "gtc/type_ptr.hpp"
 
-#include "Util.h"
+#include "../ProjectRedShadow/Util.h"
 #include "FileLoader.h"
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))

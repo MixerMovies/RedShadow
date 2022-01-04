@@ -4,6 +4,8 @@
 #include "Space.h"
 #include "FileLoader.h"
 
+#include "../ProjectRedShadow/framework.h"
+
 #include <iostream>
 
 #include <openvr.h>
