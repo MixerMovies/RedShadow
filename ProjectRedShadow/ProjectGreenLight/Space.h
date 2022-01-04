@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Skybox.h"
-#include "Player.h"
-#include "Sound.h"
+#include "../ProjectRedShadow/Player.h"
+#include "../ProjectRedShadow/Sound.h"
 #include "Teleporter.h"
 #include "Light.h"
 #include "Floor.h"

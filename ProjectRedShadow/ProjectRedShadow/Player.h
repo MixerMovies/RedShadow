@@ -1,9 +1,11 @@
 #pragma once
 
+#include "framework.h"
+
 #include <glm.hpp>
 #include <array>
 
-class Player
+class RED_EXPORT Player
 {
 public:
 	Player();

@@ -19,12 +19,6 @@
     <Filter Include="Source Files\Graphics">
       <UniqueIdentifier>{79698f17-1db2-4f47-b53f-49f1faa1eaaa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Sound">
-      <UniqueIdentifier>{c69b0f95-7df8-4fd7-940e-8565e5ca5d89}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Sound">
-      <UniqueIdentifier>{3f8b5a45-2466-4c0d-bb40-4ba0a784d7f8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shaders">
       <UniqueIdentifier>{df6199bf-894a-444f-901f-235fc313c35c}</UniqueIdentifier>
     </Filter>
@@ -75,17 +69,8 @@
     <ClCompile Include="ObjModel.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Sound.cpp">
-      <Filter>Source Files\Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="SoundTest.cpp">
-      <Filter>Source Files\Sound</Filter>
-    </ClCompile>
     <ClCompile Include="FileLoader.cpp">
       <Filter>Source Files\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files\World</Filter>
     </ClCompile>
     <ClCompile Include="Skybox.cpp">
       <Filter>Source Files\World</Filter>
@@ -119,12 +104,6 @@
     <ClInclude Include="Shader.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Sound.h">
-      <Filter>Header Files\Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundTest.h">
-      <Filter>Header Files\Sound</Filter>
-    </ClInclude>
     <ClInclude Include="FileLoader.h">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
@@ -132,9 +111,6 @@
       <Filter>Header Files\World</Filter>
     </ClInclude>
     <ClInclude Include="Light.h">
-      <Filter>Header Files\World</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
     <ClInclude Include="Space.h">

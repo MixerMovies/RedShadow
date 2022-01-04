@@ -1,7 +1,7 @@
 ﻿#define _USE_MATH_DEFINES
 
 #include "Gamewindow.h"
-#include "SoundTest.h"
+#include "../ProjectRedShadow/SoundTest.h"
 #include "FileLoader.h"
 
 #include <math.h>

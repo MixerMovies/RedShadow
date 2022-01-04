@@ -1,5 +1,7 @@
 #define _USE_MATH_DEFINES
 
+#include "pch.h"
+
 #include "Player.h"
 #include <math.h>
 #include "glm.hpp"

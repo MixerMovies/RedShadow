@@ -1,4 +1,7 @@
 #pragma once
+
+#include "framework.h"
+
 #define _CRT_SECURE_NO_WARNINGS
 #include "Sound.h"
 #include <cstdio>
@@ -9,12 +12,12 @@
 
 using namespace std;
 
-class SoundTest
+class RED_EXPORT SoundTest
 {
 public:
 	SoundTest();
 	Sound* LoadSound(char*);
-	void printError(char*, int = 0);
+	void printError(const char*, int = 0);
 	~SoundTest();
 private:
 	ALCdevice *device;

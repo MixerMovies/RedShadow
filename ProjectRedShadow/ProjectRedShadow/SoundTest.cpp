@@ -1,3 +1,5 @@
+#include "pch.h"
+
 #include "SoundTest.h"
 
 SoundTest::SoundTest() :
@@ -23,7 +25,7 @@ SoundTest::SoundTest() :
 Sound* SoundTest::LoadSound(char* path)
 {
 	FILE *fp = NULL;
-	fp = fopen(path, "rb");
+	fopen_s(&fp, path, "rb");
 	char type[4];
 	DWORD size, chunkSize;
 	short formatType, channels;
@@ -135,7 +137,7 @@ Sound* SoundTest::LoadSound(char* path)
 	return sound;
 }
 
-void SoundTest::printError(char* msg, int error)
+void SoundTest::printError(const char* msg, int error)
 {
 	cout << msg << "\n";
 }

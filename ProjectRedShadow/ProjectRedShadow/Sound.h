@@ -3,7 +3,7 @@
 #include <al.h>
 #include <alc.h>
 
-class Sound
+class RED_EXPORT Sound
 {
 public:
 	Sound(ALuint source, ALuint buffer);
