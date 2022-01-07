@@ -156,7 +156,6 @@
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="Space.cpp" />
     <ClCompile Include="Teleporter.cpp" />
-    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="WorldObject.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -169,9 +168,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="Space.h" />
-    <ClInclude Include="stb_image.h" />
     <ClInclude Include="Teleporter.h" />
-    <ClInclude Include="Texture.h" />
     <ClInclude Include="WorldObject.h" />
   </ItemGroup>
   <ItemGroup>
