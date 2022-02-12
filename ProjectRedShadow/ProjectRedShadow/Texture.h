@@ -1,12 +1,14 @@
 #pragma once
 
+#include "framework.h"
+
 #include <windows.h>
 #include <gl/glew.h>
 #include <gl/GL.h>
 #include <string>
 #include <vector>
 
-class Texture
+class RED_EXPORT Texture
 {
 private:
 	bool is_cubemap = false;

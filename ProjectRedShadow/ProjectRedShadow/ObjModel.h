@@ -7,9 +7,9 @@
 #include <gl/GL.h>
 #include <glm.hpp>
 
-#include "Shader.h"
-#include "../ProjectRedShadow/Texture.h"
-#include "MaterialInfo.h"
+//#include "Shader.h"
+#include "Texture.h"
+//#include "MaterialInfo.h"
 
 class ObjModel
 {
@@ -25,7 +25,7 @@ private:
 	};
 
 	std::vector<ObjGroup*> groups;
-	std::vector<MaterialInfo*> materials;
+	//std::vector<MaterialInfo*> materials;
 	GLuint _vertexArray;
 	GLsizei size = 0;
 
@@ -45,9 +45,9 @@ public:
 	};
 
 	ObjModel(std::string filename);
-	ObjModel(std::vector<float> vertices, std::vector<float> normals, std::vector<float> textureCoordinats, std::vector<uint16_t> indices, Texture* texture, Shader* shader);
+	ObjModel(std::vector<float> vertices, std::vector<float> normals, std::vector<float> textureCoordinats, std::vector<uint16_t> indices, Texture* texture); //, Shader* shader);
 	~ObjModel(void);
 
-	void draw(ShaderMatrices matrices, Shader* shader = nullptr);
+	void draw(ShaderMatrices matrices); //, Shader* shader = nullptr);
 };
 
