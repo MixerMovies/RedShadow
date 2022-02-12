@@ -7,7 +7,7 @@
 #include <gl/GL.h>
 #include <glm.hpp>
 
-#include "Shader.h"
+#include "../ProjectRedShadow/Shader.h"
 #include "../ProjectRedShadow/Texture.h"
 #include "MaterialInfo.h"
 

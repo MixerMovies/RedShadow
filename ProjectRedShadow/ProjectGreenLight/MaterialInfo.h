@@ -4,7 +4,7 @@
 #include <iostream>
 
 #include "../ProjectRedShadow/Texture.h"
-#include "Shader.h"
+#include "../ProjectRedShadow/Shader.h"
 
 class MaterialInfo
 {

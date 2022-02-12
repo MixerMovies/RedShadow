@@ -1,5 +1,8 @@
 #pragma once
 
+//TODO: For some reason when not including this file (or the cpp variant) the project doesn't build anymore and Texture.h can't find openGL functions.
+//It might be a good idea to figure out why this happens, so this file can be replaced in the future when necessary.
+
 #include <vector>
 
 #include <windows.h>
@@ -7,7 +10,7 @@
 #include <gl/GL.h>
 #include <glm.hpp>
 
-//#include "Shader.h"
+#include "Shader.h"
 #include "Texture.h"
 //#include "MaterialInfo.h"
 
@@ -48,6 +51,6 @@ public:
 	ObjModel(std::vector<float> vertices, std::vector<float> normals, std::vector<float> textureCoordinats, std::vector<uint16_t> indices, Texture* texture); //, Shader* shader);
 	~ObjModel(void);
 
-	void draw(ShaderMatrices matrices); //, Shader* shader = nullptr);
+	void draw(ShaderMatrices matrices, Shader* shader = nullptr);
 };
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Shader.h"
+#include "../ProjectRedShadow/Shader.h"
 #include "GL\freeglut.h"
 #include "glm.hpp"
 #include "gtc/matrix_transform.hpp"
