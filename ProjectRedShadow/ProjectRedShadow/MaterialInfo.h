@@ -1,12 +1,14 @@
 #pragma once
 
+#include "framework.h"
+
 #include <vector>
 #include <iostream>
 
-#include "../ProjectRedShadow/Texture.h"
-#include "../ProjectRedShadow/Shader.h"
+#include "Texture.h"
+#include "Shader.h"
 
-class MaterialInfo
+class RED_EXPORT MaterialInfo
 {
 private:
 	struct IllumShaderOptions
@@ -61,18 +63,5 @@ public:
 
 	static void loadMaterialFile(std::vector<MaterialInfo*>& materials, std::string fileName, std::string dirName, Shader* shader = nullptr);
 	static void finishCurrentMaterial(MaterialInfo* currentMaterial, Shader* shader, std::vector<MaterialInfo*>& materials);
-	static Shader* getShaderByIllum(Illum illum, bool hasBumpMap = false) 
-	{ 
-		if (hasBumpMap)
-		{
-			if (shaders[illum]->BumpMapShader != nullptr)
-				return shaders[illum]->BumpMapShader;
-			else
-			{
-				std::cout << illum << " doesn't have a bump map shader" << std::endl;
-				return shaders[illum]->DefaultShader;
-			}
-		}
-		return shaders[illum]->DefaultShader;
-	};
+	static Shader* getShaderByIllum(Illum illum, bool hasBumpMap = false);
 };

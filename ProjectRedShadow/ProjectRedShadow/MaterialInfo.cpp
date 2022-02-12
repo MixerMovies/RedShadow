@@ -20,7 +20,7 @@ MaterialInfo::MaterialInfo()
 
 void MaterialInfo::initShaders()
 {
-	IllumShaderOptions* illum0 = new IllumShaderOptions (new Shader("Shaders/Illum/0.vs", "Shaders/Illum/0.fs", "Shaders/Geometry/standard.gs"), nullptr);
+	IllumShaderOptions* illum0 = new IllumShaderOptions(new Shader("Shaders/Illum/0.vs", "Shaders/Illum/0.fs", "Shaders/Geometry/standard.gs"), nullptr);
 	shaders.push_back(illum0);
 	IllumShaderOptions* illum1 = new IllumShaderOptions(new Shader("Shaders/Illum/1.vs", "Shaders/Illum/1.fs", "Shaders/Geometry/standard.gs"), nullptr);
 	shaders.push_back(illum1);
@@ -168,4 +168,19 @@ void MaterialInfo::finishCurrentMaterial(MaterialInfo* currentMaterial, Shader* 
 	}
 
 	materials.push_back(currentMaterial);
+}
+
+Shader* MaterialInfo::getShaderByIllum(Illum illum, bool hasBumpMap)
+{
+	if (hasBumpMap)
+	{
+		if (shaders[illum]->BumpMapShader != nullptr)
+			return shaders[illum]->BumpMapShader;
+		else
+		{
+			std::cout << illum << " doesn't have a bump map shader" << std::endl;
+			return shaders[illum]->DefaultShader;
+		}
+	}
+	return shaders[illum]->DefaultShader;
 }

@@ -37,6 +37,12 @@
     <Filter Include="Source Files\Graphics">
       <UniqueIdentifier>{7fab3518-c8ff-4c95-9199-be671f6b99c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\IO">
+      <UniqueIdentifier>{d1c7d72c-712f-4b0a-97d5-ceb82aee2253}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO">
+      <UniqueIdentifier>{d2a1743a-29c0-46eb-85e0-705a2dc1263f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -72,6 +78,12 @@
     <ClInclude Include="Shader.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="MaterialInfo.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="FileLoader.h">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -103,6 +115,12 @@
     </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialInfo.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="FileLoader.cpp">
+      <Filter>Source Files\IO</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

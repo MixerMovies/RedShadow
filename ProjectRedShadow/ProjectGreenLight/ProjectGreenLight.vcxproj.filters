@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Graphics">
-      <UniqueIdentifier>{8bc66143-fef6-4f1a-b449-3db8cff6a1f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Graphics">
-      <UniqueIdentifier>{79698f17-1db2-4f47-b53f-49f1faa1eaaa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shaders">
       <UniqueIdentifier>{df6199bf-894a-444f-901f-235fc313c35c}</UniqueIdentifier>
     </Filter>
@@ -30,12 +24,6 @@
     </Filter>
     <Filter Include="Shaders\Geometry">
       <UniqueIdentifier>{734e9404-aed9-4d4f-bce8-256cc60d92ec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\IO">
-      <UniqueIdentifier>{0f6f31e3-96c9-4ecc-8754-16563b4f9583}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\IO">
-      <UniqueIdentifier>{12d9fbf3-5768-4c05-b35d-784a92f2490e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Maps">
       <UniqueIdentifier>{dc32d9fb-e37d-4e3d-97fb-13ed481e955a}</UniqueIdentifier>
@@ -63,12 +51,6 @@
     <ClCompile Include="Gamewindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ObjModel.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="FileLoader.cpp">
-      <Filter>Source Files\IO</Filter>
-    </ClCompile>
     <ClCompile Include="Skybox.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
@@ -84,19 +66,10 @@
     <ClCompile Include="WorldObject.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
-    <ClCompile Include="MaterialInfo.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gamewindow.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjModel.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="FileLoader.h">
-      <Filter>Header Files\IO</Filter>
     </ClInclude>
     <ClInclude Include="Floor.h">
       <Filter>Header Files\World</Filter>
@@ -115,9 +88,6 @@
     </ClInclude>
     <ClInclude Include="WorldObject.h">
       <Filter>Header Files\World</Filter>
-    </ClInclude>
-    <ClInclude Include="MaterialInfo.h">
-      <Filter>Header Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

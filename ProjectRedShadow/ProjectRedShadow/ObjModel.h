@@ -1,7 +1,6 @@
 #pragma once
 
-//TODO: For some reason when not including this file (or the cpp variant) the project doesn't build anymore and Texture.h can't find openGL functions.
-//It might be a good idea to figure out why this happens, so this file can be replaced in the future when necessary.
+#include "framework.h"
 
 #include <vector>
 
@@ -12,9 +11,9 @@
 
 #include "Shader.h"
 #include "Texture.h"
-//#include "MaterialInfo.h"
+#include "MaterialInfo.h"
 
-class ObjModel
+class RED_EXPORT ObjModel
 {
 private:
 
@@ -28,7 +27,7 @@ private:
 	};
 
 	std::vector<ObjGroup*> groups;
-	//std::vector<MaterialInfo*> materials;
+	std::vector<MaterialInfo*> materials;
 	GLuint _vertexArray;
 	GLsizei size = 0;
 
@@ -48,7 +47,7 @@ public:
 	};
 
 	ObjModel(std::string filename);
-	ObjModel(std::vector<float> vertices, std::vector<float> normals, std::vector<float> textureCoordinats, std::vector<uint16_t> indices, Texture* texture); //, Shader* shader);
+	ObjModel(std::vector<float> vertices, std::vector<float> normals, std::vector<float> textureCoordinats, std::vector<uint16_t> indices, Texture* texture, Shader* shader);
 	~ObjModel(void);
 
 	void draw(ShaderMatrices matrices, Shader* shader = nullptr);

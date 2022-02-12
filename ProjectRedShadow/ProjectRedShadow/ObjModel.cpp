@@ -8,7 +8,7 @@
 #include "gtc/type_ptr.hpp"
 
 #include "Util.h"
-//#include "FileLoader.h"
+#include "FileLoader.h"
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
@@ -263,7 +263,7 @@ ObjModel::ObjModel(std::string fileName)
 		}
         else if(params[0] == "mtllib")
         {
-            //MaterialInfo::loadMaterialFile(materials, dirName + "/" + params[1], dirName);
+            MaterialInfo::loadMaterialFile(materials, dirName + "/" + params[1], dirName);
         }
 		else if(params[0] == "usemtl")
 		{
@@ -273,7 +273,7 @@ ObjModel::ObjModel(std::string fileName)
 			currentGroup->start = finalVertices.size()/12;
 			currentGroup->materialIndex = -1;
 
-			/*for (size_t i = 0; i < materials.size(); i++)
+			for(size_t i = 0; i < materials.size(); i++)
 			{
 				MaterialInfo* info = materials[i];
 				if(info->name == params[1])
@@ -281,7 +281,7 @@ ObjModel::ObjModel(std::string fileName)
 					currentGroup->materialIndex = i;
 					break;
 				}
-			}*/
+			}
 			if(currentGroup->materialIndex == -1)
 				std::cout<<"Could not find material name "<<params[1]<<std::endl;
 		}
@@ -314,7 +314,7 @@ ObjModel::ObjModel(std::string fileName)
     glBindVertexArray(0);        
 }
 
-ObjModel::ObjModel(std::vector<float> vertices, std::vector<float> normals, std::vector<float> textureCoordinats, std::vector<uint16_t> indices, Texture* texture) //, Shader* shader)
+ObjModel::ObjModel(std::vector<float> vertices, std::vector<float> normals, std::vector<float> textureCoordinats, std::vector<uint16_t> indices, Texture* texture, Shader* shader)
 {
 	std::vector<float> finalVertices = std::vector<float>();
 
@@ -338,12 +338,12 @@ ObjModel::ObjModel(std::vector<float> vertices, std::vector<float> normals, std:
 	currentGroup->materialIndex = 0;
 	groups.push_back(currentGroup);
 
-	/*MaterialInfo* material = new MaterialInfo();
+	MaterialInfo* material = new MaterialInfo();
 	
 	material->texture = texture;
 	material->hasTexture = true;
 	material->setShader(shader);
-	materials.push_back(material);*/
+	materials.push_back(material);
 
 	glGenVertexArrays(1, &_vertexArray);
 	glBindVertexArray(_vertexArray);
@@ -377,7 +377,7 @@ ObjModel::~ObjModel(void)
 {
 }
 
-/*void ObjModel::draw(ShaderMatrices matrices)//, Shader* shader)
+void ObjModel::draw(ShaderMatrices matrices, Shader* shader)
 {
     glBindVertexArray(_vertexArray);
 
@@ -444,8 +444,8 @@ ObjModel::~ObjModel(void)
 		//if (size > 0)
 		//	glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_SHORT, 0);
 		//else
-		//glDrawArrays(GL_TRIANGLES, group->start, group->end - group->start);
+		glDrawArrays(GL_TRIANGLES, group->start, group->end - group->start);
 
-		//groupShader = nullptr;
-	//}
-//}
+		groupShader = nullptr;
+	}
+}

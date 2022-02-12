@@ -18,7 +18,7 @@ FileLoader::FileLoader()
 /// </summary>
 /// <param name="mapLocation">the path to the location of the map</param>
 /// <param name="space">the space to load the objects of the map into</param>
-void FileLoader::loadMap(std::string mapLocation, Space* space)
+/*void FileLoader::loadMap(std::string mapLocation, Space* space)
 {
 	category = DEFAULT;
 	std::ifstream stream;
@@ -112,7 +112,7 @@ void FileLoader::loadLight(Space* space, std::string element)
 		i++;
 	}
 	space->lights.push_back(light);
-}
+}*/
 
 FileLoader::~FileLoader()
 {

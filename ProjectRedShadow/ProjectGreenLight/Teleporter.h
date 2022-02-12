@@ -1,7 +1,7 @@
 #pragma once
 
 #include <gl/glew.h>
-#include "ObjModel.h"
+#include "../ProjectRedShadow/ObjModel.h"
 #include <glm.hpp>
 
 class Teleporter
