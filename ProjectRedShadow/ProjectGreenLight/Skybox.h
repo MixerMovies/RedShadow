@@ -2,7 +2,7 @@
 
 #include <gl\glew.h>
 #include <glm.hpp>
-#include "WorldObject.h"
+#include "../ProjectRedShadow/WorldObject.h"
 
 class Skybox : public WorldObject
 {

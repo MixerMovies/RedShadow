@@ -6,7 +6,7 @@
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
 #include <vector>
-#include "Space.h"
+#include "../ProjectRedShadow/Space.h"
 #include "../ProjectRedShadow/ObjModel.h"
 #pragma comment(lib, "glew32.lib")
 #include <openvr.h>

@@ -1,10 +1,12 @@
 #pragma once
 
+#include "framework.h"
+
 #include <gl/glew.h>
-#include "../ProjectRedShadow/ObjModel.h"
+#include "ObjModel.h"
 #include <glm.hpp>
 
-class Teleporter
+class RED_EXPORT Teleporter
 {
 public:
 	bool startTeleporting = false;

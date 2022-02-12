@@ -38,7 +38,7 @@ Gamewindow::Gamewindow(Space* space, vr::IVRSystem* vrSystem)
 	m_pHMD = vrSystem;
 
 	city = space;
-	//FileLoader::loadMap("TowerCity", space);
+	FileLoader::loadMap("TowerCity", space);
 	
 	city->music = test.LoadSound("Sound/OdeToJoy(Remix).wav");
 	//city->music->Play();
@@ -396,8 +396,8 @@ void Gamewindow::RenderWorld(glm::mat4 view, glm::mat4 projection)
 
 		//TODO: don't hardcode lights please
 		ObjModel::ShaderMatrices matrices = ObjModel::ShaderMatrices();
-		matrices.lightColour = {255,255,255}; //city->lights[0].color;
-		matrices.lightPosition = {0,0,0}; //city->lights[0].position;
+		matrices.lightColour = city->lights[0].color;
+		matrices.lightPosition = city->lights[0].position;
 		matrices.model = model;
 		matrices.normalMatrix = normalMatrix;
 		matrices.projection = projection;

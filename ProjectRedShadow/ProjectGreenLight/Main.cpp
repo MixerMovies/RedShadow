@@ -1,7 +1,7 @@
 #include "GL\glew.h"
 #include "GL\freeglut.h"
 #include "Gamewindow.h"
-#include "Space.h"
+#include "../ProjectRedShadow/Space.h"
 #include "../ProjectRedShadow/FileLoader.h"
 
 #include "../ProjectRedShadow/framework.h"

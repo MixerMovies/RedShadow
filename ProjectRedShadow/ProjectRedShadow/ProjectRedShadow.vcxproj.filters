@@ -43,6 +43,12 @@
     <Filter Include="Source Files\IO">
       <UniqueIdentifier>{d2a1743a-29c0-46eb-85e0-705a2dc1263f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\VR">
+      <UniqueIdentifier>{cbeede87-367a-498d-91fe-ad95f6be783d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VR">
+      <UniqueIdentifier>{64086fcd-e67b-4a6e-a8c4-5e0893f473b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -84,6 +90,18 @@
     <ClInclude Include="FileLoader.h">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
+    <ClInclude Include="Space.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldObject.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Teleporter.h">
+      <Filter>Header Files\VR</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Source Files\World</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -121,6 +139,15 @@
     </ClCompile>
     <ClCompile Include="FileLoader.cpp">
       <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Space.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldObject.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Teleporter.cpp">
+      <Filter>Source Files\VR</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

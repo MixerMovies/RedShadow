@@ -2,9 +2,9 @@
 
 #include <filesystem>
 #include <string>
-//#include "Space.h"
+#include "Space.h"
 
-class FileLoader
+class RED_EXPORT FileLoader
 {
 private:
 	enum Category { MODEL, LIGHT, DEFAULT };
@@ -12,9 +12,9 @@ private:
 public:
 	FileLoader();
 	static std::string getMainPath() { return std::filesystem::current_path().string(); }
-	//static void loadMap(std::string, Space*);
+	static void loadMap(std::string, Space*);
 	~FileLoader();
 private:
-	//static void loadModel(Space*, std::string);
-	//static void loadLight(Space*, std::string);
+	static void loadModel(Space*, std::string);
+	static void loadLight(Space*, std::string);
 };

@@ -5,8 +5,8 @@ Space::Space()
 	worldModels = std::vector<WorldObject>();
 	lights = std::vector<Light>();
 
-	worldModels.push_back(worldFloor.GetWorldObject());
-	worldModels.push_back(skybox);
+	//worldModels.push_back(worldFloor.GetWorldObject());
+	//worldModels.push_back(skybox);
 
 	teleporters[0] = Teleporter();
 	teleporters[1] = Teleporter();

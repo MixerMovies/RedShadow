@@ -31,14 +31,8 @@
     <Filter Include="Source Files\World">
       <UniqueIdentifier>{c0666bb8-381f-4523-9283-2e74a99ba715}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\VR">
-      <UniqueIdentifier>{af759832-b233-4b57-987d-dcf7445b27c6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\World">
       <UniqueIdentifier>{d3ca935c-5e11-43b0-9c67-9ca03d90224d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\VR">
-      <UniqueIdentifier>{c75cce6d-a27b-45b3-afb4-130fcabbbb9e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Shaders\Illum">
       <UniqueIdentifier>{2ed6342c-bf0d-4e42-8287-a7a8c3efd599}</UniqueIdentifier>
@@ -57,15 +51,6 @@
     <ClCompile Include="Floor.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
-    <ClCompile Include="Space.cpp">
-      <Filter>Source Files\World</Filter>
-    </ClCompile>
-    <ClCompile Include="Teleporter.cpp">
-      <Filter>Source Files\VR</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldObject.cpp">
-      <Filter>Source Files\World</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gamewindow.h">
@@ -74,19 +59,7 @@
     <ClInclude Include="Floor.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>Header Files\World</Filter>
-    </ClInclude>
-    <ClInclude Include="Space.h">
-      <Filter>Header Files\World</Filter>
-    </ClInclude>
     <ClInclude Include="Skybox.h">
-      <Filter>Header Files\World</Filter>
-    </ClInclude>
-    <ClInclude Include="Teleporter.h">
-      <Filter>Header Files\VR</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldObject.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
   </ItemGroup>

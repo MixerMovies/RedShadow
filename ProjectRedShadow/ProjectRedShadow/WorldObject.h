@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../ProjectRedShadow/ObjModel.h"
+#include "ObjModel.h"
 #include <glm.hpp>
 
 class WorldObject

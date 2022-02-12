@@ -1,7 +1,7 @@
 #pragma once
 
 #include <glm.hpp>
-#include "../ProjectRedShadow/ObjModel.h"
+#include "ObjModel.h"
 
 class Light
 {
