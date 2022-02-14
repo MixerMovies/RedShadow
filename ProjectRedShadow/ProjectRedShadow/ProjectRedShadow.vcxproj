@@ -162,6 +162,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="FileLoader.h" />
+    <ClInclude Include="Floor.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="MaterialInfo.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Skybox.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundTest.h" />
     <ClInclude Include="Space.h" />
@@ -182,6 +184,7 @@
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="FileLoader.cpp" />
+    <ClCompile Include="Floor.cpp" />
     <ClCompile Include="MaterialInfo.cpp" />
     <ClCompile Include="ObjModel.cpp" />
     <ClCompile Include="pch.cpp">
@@ -193,6 +196,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SoundTest.cpp" />
     <ClCompile Include="Space.cpp" />

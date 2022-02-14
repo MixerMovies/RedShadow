@@ -2,9 +2,9 @@
 
 #include <gl\glew.h>
 #include <glm.hpp>
-#include "../ProjectRedShadow/WorldObject.h"
+#include "WorldObject.h"
 
-class Skybox : public WorldObject
+class RED_EXPORT Skybox : public WorldObject
 {
 private:
 	void CreateSkybox();

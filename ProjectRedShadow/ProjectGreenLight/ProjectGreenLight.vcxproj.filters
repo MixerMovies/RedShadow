@@ -28,12 +28,6 @@
     <Filter Include="Maps">
       <UniqueIdentifier>{dc32d9fb-e37d-4e3d-97fb-13ed481e955a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\World">
-      <UniqueIdentifier>{c0666bb8-381f-4523-9283-2e74a99ba715}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\World">
-      <UniqueIdentifier>{d3ca935c-5e11-43b0-9c67-9ca03d90224d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shaders\Illum">
       <UniqueIdentifier>{2ed6342c-bf0d-4e42-8287-a7a8c3efd599}</UniqueIdentifier>
     </Filter>
@@ -45,22 +39,10 @@
     <ClCompile Include="Gamewindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Skybox.cpp">
-      <Filter>Source Files\World</Filter>
-    </ClCompile>
-    <ClCompile Include="Floor.cpp">
-      <Filter>Source Files\World</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gamewindow.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Floor.h">
-      <Filter>Header Files\World</Filter>
-    </ClInclude>
-    <ClInclude Include="Skybox.h">
-      <Filter>Header Files\World</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

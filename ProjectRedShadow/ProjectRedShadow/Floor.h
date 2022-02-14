@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../ProjectRedShadow/WorldObject.h"
+#include "WorldObject.h"
 
 class WorldFloor
 {

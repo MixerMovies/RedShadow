@@ -2,12 +2,12 @@
 
 #include "framework.h"
 
-//#include "Skybox.h"
+#include "Skybox.h"
 #include "Player.h"
 #include "Sound.h"
 #include "Teleporter.h"
 #include "Light.h"
-//#include "Floor.h"
+#include "Floor.h"
 #include "WorldObject.h"
 
 class RED_EXPORT Space
@@ -20,8 +20,8 @@ public:
 	std::vector<WorldObject> worldModels;
 	std::vector<Light> lights;
 	Teleporter teleporters[2];
-	//WorldFloor worldFloor = WorldFloor(500);
-	//Skybox skybox = Skybox(0, 0, 0, 500);
+	WorldFloor worldFloor = WorldFloor(500);
+	Skybox skybox = Skybox(0, 0, 0, 500);
 	float VRScale = MaxScale;
 	void Grow();
 	void Shrink();

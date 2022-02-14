@@ -102,6 +102,12 @@
     <ClInclude Include="Light.h">
       <Filter>Source Files\World</Filter>
     </ClInclude>
+    <ClInclude Include="Floor.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -148,6 +154,12 @@
     </ClCompile>
     <ClCompile Include="Teleporter.cpp">
       <Filter>Source Files\VR</Filter>
+    </ClCompile>
+    <ClCompile Include="Floor.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>Source Files\World</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
