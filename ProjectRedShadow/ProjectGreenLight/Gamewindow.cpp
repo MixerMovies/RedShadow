@@ -22,7 +22,6 @@ GLuint eyeRightTextureId;
 GLuint eyeRightResolveTextureId;
 GLuint eyeRightResolveFramebufferId;
 
-vr::IVRSystem* m_pHMD;
 vr::TrackedDevicePose_t m_rTrackedDevicePose[vr::k_unMaxTrackedDeviceCount];
 glm::mat4 m_rmat4DevicePose[vr::k_unMaxTrackedDeviceCount];
 char m_rDevClassChar[vr::k_unMaxTrackedDeviceCount];   // for each device, a character representing its class
@@ -33,9 +32,9 @@ float currentTime = 0;
 
 Space* city;
 
-Gamewindow::Gamewindow(Space* space, vr::IVRSystem* vrSystem)
+Gamewindow::Gamewindow(Space* space, VRUtil* vr)
 {
-	m_pHMD = vrSystem;
+	vrUtil = vr;
 
 	city = space;
 	FileLoader::loadMap("TowerCity", space);
@@ -180,75 +179,11 @@ void Gamewindow::initVRShaders()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Gets a Matrix Projection Eye with respect to nEye.
-//-----------------------------------------------------------------------------
-glm::mat4 GetHMDMatrixProjectionEye(vr::Hmd_Eye nEye)
-{
-
-	vr::HmdMatrix44_t mat = m_pHMD->GetProjectionMatrix(nEye, 0.01f, 2000.0f);
-
-	return glm::mat4(
-		mat.m[0][0], mat.m[1][0], mat.m[2][0], mat.m[3][0],
-		mat.m[0][1], mat.m[1][1], mat.m[2][1], mat.m[3][1],
-		mat.m[0][2], mat.m[1][2], mat.m[2][2], mat.m[3][2],
-		mat.m[0][3], mat.m[1][3], mat.m[2][3], mat.m[3][3]
-	);
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: Gets an HMDMatrixPoseEye with respect to nEye.
-//-----------------------------------------------------------------------------
-glm::mat4 GetHMDMatrixPoseEye(vr::Hmd_Eye nEye)
-{
-
-	vr::HmdMatrix34_t matEyeRight = m_pHMD->GetEyeToHeadTransform(nEye);
-	glm::mat4 matrixObj(
-		matEyeRight.m[0][0], matEyeRight.m[1][0], matEyeRight.m[2][0], 0.0,
-		matEyeRight.m[0][1], matEyeRight.m[1][1], matEyeRight.m[2][1], 0.0,
-		matEyeRight.m[0][2], matEyeRight.m[1][2], matEyeRight.m[2][2], 0.0,
-		matEyeRight.m[0][3], matEyeRight.m[1][3], matEyeRight.m[2][3], 1.0f
-	);
-
-	return glm::inverse(matrixObj);
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: Converts a SteamVR matrix to our local matrix class
-//-----------------------------------------------------------------------------
-glm::mat4 Gamewindow::ConvertSteamVRMatrixToMatrix4(const vr::HmdMatrix34_t &matPose)
-{
-	glm::mat4 matrixObj(
-		matPose.m[0][0], matPose.m[1][0], matPose.m[2][0], 0.0,
-		matPose.m[0][1], matPose.m[1][1], matPose.m[2][1], 0.0,
-		matPose.m[0][2], matPose.m[1][2], matPose.m[2][2], 0.0,
-		matPose.m[0][3], matPose.m[1][3], matPose.m[2][3], 1.0f
-	);
-	return matrixObj;
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: Helper to get a string from a tracked device property and turn it
-//			into a std::string
-//-----------------------------------------------------------------------------
-std::string GetTrackedDeviceString(vr::TrackedDeviceIndex_t unDevice, vr::TrackedDeviceProperty prop, vr::TrackedPropertyError *peError = NULL)
-{
-	uint32_t unRequiredBufferLen = vr::VRSystem()->GetStringTrackedDeviceProperty(unDevice, prop, NULL, 0, peError);
-	if (unRequiredBufferLen == 0)
-		return "";
-
-	char *pchBuffer = new char[unRequiredBufferLen];
-	unRequiredBufferLen = vr::VRSystem()->GetStringTrackedDeviceProperty(unDevice, prop, pchBuffer, unRequiredBufferLen, peError);
-	std::string sResult = pchBuffer;
-	delete[] pchBuffer;
-	return sResult;
-}
-
-//-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void Gamewindow::UpdateHMDMatrixPose()
 {
-	if (!m_pHMD)
+	if (!vrUtil->HasVRSystem())
 		return;
 
 	vr::VRCompositor()->WaitGetPoses(m_rTrackedDevicePose, vr::k_unMaxTrackedDeviceCount, NULL, 0);
@@ -260,10 +195,10 @@ void Gamewindow::UpdateHMDMatrixPose()
 		if (m_rTrackedDevicePose[nDevice].bPoseIsValid)
 		{
 			m_iValidPoseCount++;
-			m_rmat4DevicePose[nDevice] = Gamewindow::ConvertSteamVRMatrixToMatrix4(m_rTrackedDevicePose[nDevice].mDeviceToAbsoluteTracking);
+			m_rmat4DevicePose[nDevice] = vrUtil->ConvertSteamVRMatrixToMatrix4(m_rTrackedDevicePose[nDevice].mDeviceToAbsoluteTracking);
 			if (m_rDevClassChar[nDevice] == 0)
 			{
-				switch (m_pHMD->GetTrackedDeviceClass(nDevice))
+				switch (vrUtil->GetVRSystem()->GetTrackedDeviceClass(nDevice))
 				{
 				case vr::TrackedDeviceClass_Controller:        m_rDevClassChar[nDevice] = 'C'; break;
 				case vr::TrackedDeviceClass_HMD:               m_rDevClassChar[nDevice] = 'H'; break;
@@ -294,7 +229,7 @@ void Gamewindow::UpdateHMDMatrixPose()
 		}
 		else
 		{
-			m_rHand[eHand].m_rmat4Pose = Gamewindow::ConvertSteamVRMatrixToMatrix4(poseData.pose.mDeviceToAbsoluteTracking);
+			m_rHand[eHand].m_rmat4Pose = vrUtil->ConvertSteamVRMatrixToMatrix4(poseData.pose.mDeviceToAbsoluteTracking);
 			glm::vec3 position = glm::vec3(m_rHand[eHand].m_rmat4Pose[3][0], m_rHand[eHand].m_rmat4Pose[3][1], m_rHand[eHand].m_rmat4Pose[3][2]);
 			city->teleporters[eHand].setCurrentLocation(position);
 			glm::mat4 rotated = glm::rotate(m_rHand[eHand].m_rmat4Pose, (float)M_PI_2, glm::vec3(1, 0, 0));
@@ -305,7 +240,7 @@ void Gamewindow::UpdateHMDMatrixPose()
 			if (vr::VRInput()->GetOriginTrackedDeviceInfo(poseData.activeOrigin, &originInfo, sizeof(originInfo)) == vr::VRInputError_None
 				&& originInfo.trackedDeviceIndex != vr::k_unTrackedDeviceIndexInvalid && m_rHand[eHand].m_pRenderModel == nullptr)
 			{
-				std::string sRenderModelName = GetTrackedDeviceString(originInfo.trackedDeviceIndex, vr::Prop_RenderModelName_String);
+				std::string sRenderModelName = vrUtil->GetTrackedDeviceString(originInfo.trackedDeviceIndex, vr::Prop_RenderModelName_String);
 
 				vr::RenderModel_t *controllerModel;
 				vr::EVRRenderModelError error;
@@ -466,7 +401,7 @@ void Gamewindow::RenderControllers(glm::mat4 view, glm::mat4 projection)
 
 Gamewindow::EyeTextures Gamewindow::Display()
 {
-	if (!m_pHMD)
+	if (!vrUtil->HasVRSystem())
 	{
 		if (postProcessingEnabled)
 		{
@@ -532,12 +467,12 @@ Gamewindow::EyeTextures Gamewindow::Display()
 		glViewport(0, 0, 1000, 1000);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glm::mat4 projection2 = GetHMDMatrixProjectionEye(vr::Eye_Left);
-		glm::mat4 view2 = GetHMDMatrixPoseEye(vr::Eye_Left) * m_mat4HMDPose;
+		glm::mat4 projection2 = vrUtil->GetHMDMatrixProjectionEye(vr::Eye_Left);
+		glm::mat4 view2 = vrUtil->GetHMDMatrixPoseEye(vr::Eye_Left) * m_mat4HMDPose;
 
 		RenderControllers(view2, projection2);
 
-		view2 = GetHMDMatrixPoseEye(vr::Eye_Left) * m_mat4HMDPose;
+		view2 = vrUtil->GetHMDMatrixPoseEye(vr::Eye_Left) * m_mat4HMDPose;
 		view2 = glm::scale(view2, glm::vec3(city->VRScale, city->VRScale, city->VRScale));
 
 		view2 = glm::rotate(view2, city->player.rotation[1], { 0, 1, 0 });
@@ -569,12 +504,12 @@ Gamewindow::EyeTextures Gamewindow::Display()
 		glViewport(0, 0, 1000, 1000);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glm::mat4 projection3 = GetHMDMatrixProjectionEye(vr::Eye_Right);
-		glm::mat4 view3 = GetHMDMatrixPoseEye(vr::Eye_Right) * m_mat4HMDPose;
+		glm::mat4 projection3 = vrUtil->GetHMDMatrixProjectionEye(vr::Eye_Right);
+		glm::mat4 view3 = vrUtil->GetHMDMatrixPoseEye(vr::Eye_Right) * m_mat4HMDPose;
 
 		RenderControllers(view3, projection3);
 
-		view3 = GetHMDMatrixPoseEye(vr::Eye_Right) * m_mat4HMDPose;
+		view3 = vrUtil->GetHMDMatrixPoseEye(vr::Eye_Right) * m_mat4HMDPose;
 		view3 = glm::scale(view3, glm::vec3(city->VRScale, city->VRScale, city->VRScale));
 
 		view3 = glm::rotate(view3, city->player.rotation[1], { 0, 1, 0 });
@@ -629,9 +564,4 @@ void Gamewindow::NextPostShader()
 void Gamewindow::PreviousPostShader()
 {
 	currentPostShader = (currentPostShader + postProcessingShaders.size() - 1) % postProcessingShaders.size();
-}
-
-void Gamewindow::setVRSystem(vr::IVRSystem * ivrSystem)
-{
-	m_pHMD = ivrSystem;
 }

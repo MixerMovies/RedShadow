@@ -9,11 +9,13 @@
 #include "../ProjectRedShadow/Space.h"
 #include "../ProjectRedShadow/ObjModel.h"
 #pragma comment(lib, "glew32.lib")
-#include <openvr.h>
+#include "../ProjectRedShadow/VRUtil.h"
 
 class Gamewindow
 {
 public:
+	VRUtil* vrUtil;
+
 	struct EyeTextures
 	{
 		GLuint leftEye;
@@ -38,7 +40,7 @@ public:
 	};
 	ControllerInfo_t m_rHand[2];
 
-	Gamewindow(Space* space, vr::IVRSystem* vrSystem);
+	Gamewindow(Space* space, VRUtil* vr);
 	~Gamewindow();
 	void initVRShaders();
 	EyeTextures Display();
@@ -46,8 +48,6 @@ public:
 	void PreviousShader();
 	void NextPostShader();
 	void PreviousPostShader();
-	void setVRSystem(vr::IVRSystem*);
-	static glm::mat4 ConvertSteamVRMatrixToMatrix4(const vr::HmdMatrix34_t &);
 	std::vector<Shader*> shaders;
 	std::vector<Shader*> postProcessingShaders;
 	int currentshader = 0;

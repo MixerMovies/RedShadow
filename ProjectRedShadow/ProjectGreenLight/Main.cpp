@@ -9,6 +9,7 @@
 #include <iostream>
 
 #include <openvr.h>
+#include "../ProjectRedShadow/VRUtil.h"
 
 //#define STARTVRMODE
 
@@ -18,7 +19,7 @@ Space* space;
 float lastTime;
 bool wireframeEnabled = false;
 
-vr::IVRSystem *ivrSystem;
+VRUtil *vrUtil;
 bool _vrEnabled = false;
 
 vr::VRActionHandle_t _actionWireframe;
@@ -82,7 +83,7 @@ void Idle()
 	float time = glutGet(GLUT_ELAPSED_TIME);
 	float elapsed = time - lastTime;
 
-	if (ivrSystem)
+	if (vrUtil->HasVRSystem())
 	{
 		HandleVRInput();
 	}
@@ -144,7 +145,7 @@ void KeyEvent(unsigned char key, int x, int y)
 		gamewindow->NextPostShader();
 		break;
 	case '-':
-		if(ivrSystem)
+		if(vrUtil->HasVRSystem())
 		vr::VRInput()->TriggerHapticVibrationAction(_actionShock, 0, 2, 4, 1, vr::k_ulInvalidInputValueHandle);
 		break;
 	case 't':
@@ -168,7 +169,7 @@ void KeyEvent(unsigned char key, int x, int y)
 void StartVR()
 {
 	vr::EVRInitError eError = vr::VRInitError_None;
-	ivrSystem = vr::VR_Init(&eError, vr::VRApplication_Scene);
+	vr::IVRSystem* ivrSystem = vr::VR_Init(&eError, vr::VRApplication_Scene);
 
 	if (eError != vr::VRInitError_None)
 	{
@@ -209,7 +210,7 @@ void StartVR()
 
 	vr::VRCompositor()->ShowMirrorWindow();
 
-	gamewindow->setVRSystem(ivrSystem);
+	vrUtil->SetVRSystem(ivrSystem);
 	_vrEnabled = true;
 }
 
@@ -267,33 +268,11 @@ void MouseMotionEvent(int x, int y)
 	space->player.mousePositionOffset.y = ((float)y / (float)gamewindow->screenSize.y * 2.0f - 1.0f);
 }
 
-//---------------------------------------------------------------------------------------------------------------------
-// Purpose: Returns true if the action is active and its state is true
-//---------------------------------------------------------------------------------------------------------------------
-bool GetDigitalActionState(vr::VRActionHandle_t action, vr::VRInputValueHandle_t *pDevicePath = nullptr)
-{
-	vr::InputDigitalActionData_t actionData;
-	vr::EVRInputError error = vr::VRInput()->GetDigitalActionData(action, &actionData, sizeof(actionData), vr::k_ulInvalidInputValueHandle);
-	if (pDevicePath)
-	{
-		*pDevicePath = vr::k_ulInvalidInputValueHandle;
-		if (actionData.bActive)
-		{
-			vr::InputOriginInfo_t originInfo;
-			if (vr::VRInputError_None == vr::VRInput()->GetOriginTrackedDeviceInfo(actionData.activeOrigin, &originInfo, sizeof(originInfo)))
-			{
-				*pDevicePath = originInfo.devicePath;
-			}
-		}
-	}
-	return actionData.bActive && actionData.bState;
-}
-
 void HandleVRInput()
 {
 	// Process SteamVR events
 	vr::VREvent_t event;
-	while (ivrSystem->PollNextEvent(&event, sizeof(event)))
+	while (vrUtil->GetVRSystem()->PollNextEvent(&event, sizeof(event)))
 	{
 		ProcessVREvent(event); 
 	}
@@ -303,41 +282,41 @@ void HandleVRInput()
 	vr::EVRInputError error = vr::VRInput()->UpdateActionState(&actionSet, sizeof(actionSet), 1);
 
 	vr::VRInputValueHandle_t ulWireframe;
-	if (GetDigitalActionState(_actionWireframe, &ulWireframe))
+	if (vrUtil->GetDigitalActionState(_actionWireframe, &ulWireframe))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	if (GetDigitalActionState(_actionPreviousShader) && !goToPreviousShader)
+	if (vrUtil->GetDigitalActionState(_actionPreviousShader) && !goToPreviousShader)
 	{
 		gamewindow->PreviousShader();
 		goToPreviousShader = true;
 	}
-	else if (!GetDigitalActionState(_actionPreviousShader) && goToPreviousShader)
+	else if (!vrUtil->GetDigitalActionState(_actionPreviousShader) && goToPreviousShader)
 	{
 		goToPreviousShader = false;
 	}
 	
-	if (GetDigitalActionState(_actionNextShader) && !goToNextShader)
+	if (vrUtil->GetDigitalActionState(_actionNextShader) && !goToNextShader)
 	{
 		gamewindow->NextShader();
 		goToNextShader = true;
 	}
-	else if (!GetDigitalActionState(_actionNextShader) && goToNextShader)
+	else if (!vrUtil->GetDigitalActionState(_actionNextShader) && goToNextShader)
 	{
 		goToNextShader = false;
 	}
 
-	if (GetDigitalActionState(_actionGoForward))
+	if (vrUtil->GetDigitalActionState(_actionGoForward))
 		space->player.GoForward();
-	else if (GetDigitalActionState(_actionGoBackward))
+	else if (vrUtil->GetDigitalActionState(_actionGoBackward))
 		space->player.GoBackward();
 	else
 		space->player.Stop();
 
-	if (GetDigitalActionState(_actionTurnLeft))
+	if (vrUtil->GetDigitalActionState(_actionTurnLeft))
 		space->player.TurnLeft(true);
-	else if (GetDigitalActionState(_actionTurnRight))
+	else if (vrUtil->GetDigitalActionState(_actionTurnRight))
 		space->player.TurnRight(true);
 	else
 	{
@@ -345,15 +324,15 @@ void HandleVRInput()
 		space->player.TurnRight(false);
 	}
 
-	if (GetDigitalActionState(_actionGrow))
+	if (vrUtil->GetDigitalActionState(_actionGrow))
 		space->Grow();
-	else if (GetDigitalActionState(_actionShrink))
+	else if (vrUtil->GetDigitalActionState(_actionShrink))
 		space->Shrink();
 
 	//Hand specific interaction
 	for (int i = Gamewindow::EHand::Left; i <= Gamewindow::EHand::Right; i++)
 	{
-		if (GetDigitalActionState(gamewindow->m_rHand[i].m_actionTeleport))
+		if (vrUtil->GetDigitalActionState(gamewindow->m_rHand[i].m_actionTeleport))
 		{
 			space->teleporters[i].startTeleporting = true;
 		}
@@ -424,7 +403,8 @@ int main(int argc, char *argv[])
 	Init();
 
 	space = new Space();
-	gamewindow = new Gamewindow(space, ivrSystem);
+	vrUtil = new VRUtil();
+	gamewindow = new Gamewindow(space, vrUtil);
 
 #ifdef STARTVRMODE
 	StartVR();

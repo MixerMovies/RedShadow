@@ -125,15 +125,15 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../libs/glm/glm;../libs/OpenAL/include;../libs/glew/include;../libs/freeglut/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../libs/glm/glm;../libs/OpenAL/include;../libs/glew/include;../libs/freeglut/include;../libs/openvr/headers</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>../libs/freeglut/lib/x64;../libs/OpenAL/libs/Win64;../libs/glew/lib/Release/x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>freeglut.lib;OpenAL32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../libs/freeglut/lib/x64;../libs/OpenAL/libs/Win64;../libs/glew/lib/Release/x64;../libs/openvr/lib/win64;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>freeglut.lib;OpenAL32.lib;glew32.lib;openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -147,7 +147,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../libs/glm/glm;../libs/OpenAL/include;../libs/glew/include;../libs/freeglut/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../libs/glm/glm;../libs/OpenAL/include;../libs/glew/include;../libs/freeglut/include;../libs/openvr/headers</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -156,8 +156,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>../libs/OpenAL/libs/Win64;../libs/freeglut/lib/x64;../libs/glew/lib/Release/x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;OpenAL32.lib;freeglut.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../libs/OpenAL/libs/Win64;../libs/freeglut/lib/x64;../libs/glew/lib/Release/x64;../libs/openvr/lib/win64;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;OpenAL32.lib;freeglut.lib;glew32.lib;openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -178,6 +178,7 @@
     <ClInclude Include="Teleporter.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Util.h" />
+    <ClInclude Include="VRUtil.h" />
     <ClInclude Include="WorldObject.h" />
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +197,7 @@
     <ClCompile Include="Teleporter.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Util.cpp" />
+    <ClCompile Include="VRUtil.cpp" />
     <ClCompile Include="WorldObject.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

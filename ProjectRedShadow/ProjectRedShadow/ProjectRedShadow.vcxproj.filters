@@ -105,6 +105,9 @@
     <ClInclude Include="Skybox.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
+    <ClInclude Include="VRUtil.h">
+      <Filter>Header Files\VR</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -154,6 +157,9 @@
     </ClCompile>
     <ClCompile Include="Skybox.cpp">
       <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="VRUtil.cpp">
+      <Filter>Source Files\VR</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
