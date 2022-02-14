@@ -1,5 +1,3 @@
-#include "pch.h"
-
 #include "Sound.h"
 #include <iostream>
 

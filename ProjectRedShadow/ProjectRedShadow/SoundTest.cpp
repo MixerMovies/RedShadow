@@ -1,5 +1,3 @@
-#include "pch.h"
-
 #include "SoundTest.h"
 
 SoundTest::SoundTest() :

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "framework.h"
+
 #include <al.h>
 #include <alc.h>
 

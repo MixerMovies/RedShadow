@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iostream>
 
-#include "../ProjectRedShadow/Util.h"
+#include "Util.h"
 #include "FileLoader.h"
 
 std::vector<MaterialInfo::IllumShaderOptions*> MaterialInfo::shaders = std::vector<IllumShaderOptions*>();
