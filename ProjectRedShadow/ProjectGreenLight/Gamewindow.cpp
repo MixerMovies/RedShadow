@@ -7,9 +7,16 @@
 #include <math.h>
 
 SoundTest test = SoundTest();
+
+//Shadows
+GLuint depthMapFBO;
+const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
+
+//Post Processing
 GLuint fboTextureId;
 GLuint fboId;
 
+//VR
 GLuint eyeLeftId;
 GLuint eyeLeftDepthId;
 GLuint eyeLeftTextureId;
@@ -91,6 +98,26 @@ Gamewindow::Gamewindow(Space* space, VRUtil* vr)
 	glEnableVertexAttribArray(2);							// normal
 	glEnableVertexAttribArray(3);							// tangent
 
+	//Depth map for shadows
+	glGenFramebuffers(1, &depthMapFBO);
+		
+	unsigned int depthMap;
+	glGenTextures(1, &depthMap);
+	glBindTexture(GL_TEXTURE_2D, depthMap);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
+		SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
+	glDrawBuffer(GL_NONE);
+	glReadBuffer(GL_NONE);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	//Post Processing
 	glGenTextures(1, &fboTextureId);
 	glBindTexture(GL_TEXTURE_2D, fboTextureId);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2048, 2048, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
@@ -399,6 +426,53 @@ void Gamewindow::RenderControllers(glm::mat4 view, glm::mat4 projection)
 	}
 }
 
+void Gamewindow::RenderEye(GLuint eyeId, vr::EVREye evrEye, GLuint eyeResolveFramebufferId)
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, eyeId);
+	glViewport(0, 0, 1000, 1000);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glm::mat4 projection = vrUtil->GetHMDMatrixProjectionEye(evrEye);
+	glm::mat4 view = vrUtil->GetHMDMatrixPoseEye(evrEye) * m_mat4HMDPose;
+
+	RenderControllers(view, projection);
+
+	view = vrUtil->GetHMDMatrixPoseEye(evrEye) * m_mat4HMDPose;
+	view = glm::scale(view, glm::vec3(city->VRScale, city->VRScale, city->VRScale));
+
+	view = glm::rotate(view, city->player.rotation[1], { 0, 1, 0 });
+	view = glm::translate(view, glm::vec3(city->player.position.x, 0, city->player.position.z));
+
+	RenderWorld(view, projection);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, eyeId);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, eyeResolveFramebufferId);
+
+	glBlitFramebuffer(0, 0, 1000, 1000, 0, 0, 1000, 1000,
+		GL_COLOR_BUFFER_BIT,
+		GL_LINEAR);
+
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+}
+
+void Gamewindow::ConfigureMatrices(glm::mat4& view, glm::mat4& projection)
+{
+	projection = glm::perspective(70.0f, screenSize.x / (float)screenSize.y, 0.1f, 2000.0f);
+	view = glm::lookAt({ 0,0,0 }, { 0, 0, 1 }, glm::vec3(0, 1, 0));
+
+	view = glm::rotate(view, -city->player.rotation[0], { 1, 0, 0 });
+	view = glm::rotate(view, city->player.rotation[1], { 0, 1, 0 });
+	view = glm::rotate(view, city->player.rotation[2], { 0, 0, 1 });
+	view = glm::translate(view, city->player.position);
+
+	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
+	glEnableVertexAttribArray(3);
+}
+
 Gamewindow::EyeTextures Gamewindow::Display()
 {
 	if (!vrUtil->HasVRSystem())
@@ -409,24 +483,25 @@ Gamewindow::EyeTextures Gamewindow::Display()
 			glViewport(0, 0, 2048, 2048);
 		}
 
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		//Render to depth map
+		glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+		glClear(GL_DEPTH_BUFFER_BIT);
 
-		glm::mat4 projection = glm::perspective(70.0f, screenSize.x / (float)screenSize.y, 0.1f, 2000.0f);
-		glm::mat4 view = glm::lookAt({ 0,0,0 }, { 0, 0, 1 }, glm::vec3(0, 1, 0));
+		glm::mat4 view;
+		glm::mat4 projection;
 
-		view = glm::rotate(view, -city->player.rotation[0], { 1, 0, 0 });
-		view = glm::rotate(view, city->player.rotation[1], { 0, 1, 0 });
-		view = glm::rotate(view, city->player.rotation[2], { 0, 0, 1 });
-		view = glm::translate(view, city->player.position);
-
-		glEnableVertexAttribArray(1);
-		glEnableVertexAttribArray(2);
-		glEnableVertexAttribArray(3);
-
+		ConfigureMatrices(view, projection);
 		RenderWorld(view, projection);
 
-		/*glm::mat4 model = glm::translate(glm::mat4(), glm::vec3(0, 0, 0));
-		model = glm::scale(model, glm::vec3(city->skybox.x, city->skybox.y, city->skybox.z));*/
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		//Normal rendering
+		glViewport(0, 0, screenSize.x, screenSize.y);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		ConfigureMatrices(view, projection);
+		RenderWorld(view, projection);
 
 		glBindVertexArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -459,79 +534,9 @@ Gamewindow::EyeTextures Gamewindow::Display()
 	}
 	else
 	{
-		// Left Eye
-
-		//glEnable(GL_MULTISAMPLE);
-
-		glBindFramebuffer(GL_FRAMEBUFFER, eyeLeftId);
-		glViewport(0, 0, 1000, 1000);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		glm::mat4 projection2 = vrUtil->GetHMDMatrixProjectionEye(vr::Eye_Left);
-		glm::mat4 view2 = vrUtil->GetHMDMatrixPoseEye(vr::Eye_Left) * m_mat4HMDPose;
-
-		RenderControllers(view2, projection2);
-
-		view2 = vrUtil->GetHMDMatrixPoseEye(vr::Eye_Left) * m_mat4HMDPose;
-		view2 = glm::scale(view2, glm::vec3(city->VRScale, city->VRScale, city->VRScale));
-
-		view2 = glm::rotate(view2, city->player.rotation[1], { 0, 1, 0 });
-		view2 = glm::translate(view2, glm::vec3(city->player.position.x, 0, city->player.position.z));
-
-		//city->skybox.draw();
-
-		RenderWorld(view2, projection2);
-
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-		//glDisable(GL_MULTISAMPLE);
-
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, eyeLeftId);
-		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, eyeLeftResolveFramebufferId);
-
-		glBlitFramebuffer(0, 0, 1000, 1000, 0, 0, 1000, 1000,
-			GL_COLOR_BUFFER_BIT,
-			GL_LINEAR);
-
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
-		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-
-		//glEnable(GL_MULTISAMPLE);
-
-		// Right Eye
-
-		glBindFramebuffer(GL_FRAMEBUFFER, eyeRightId);
-		glViewport(0, 0, 1000, 1000);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		glm::mat4 projection3 = vrUtil->GetHMDMatrixProjectionEye(vr::Eye_Right);
-		glm::mat4 view3 = vrUtil->GetHMDMatrixPoseEye(vr::Eye_Right) * m_mat4HMDPose;
-
-		RenderControllers(view3, projection3);
-
-		view3 = vrUtil->GetHMDMatrixPoseEye(vr::Eye_Right) * m_mat4HMDPose;
-		view3 = glm::scale(view3, glm::vec3(city->VRScale, city->VRScale, city->VRScale));
-
-		view3 = glm::rotate(view3, city->player.rotation[1], { 0, 1, 0 });
-		view3 = glm::translate(view3, glm::vec3(city->player.position.x, 0, city->player.position.z));
-
-		//city->skybox.draw();
-
-		RenderWorld(view3, projection3);
-
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-		//glDisable(GL_MULTISAMPLE);
-
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, eyeRightId);
-		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, eyeRightResolveFramebufferId);
-
-		glBlitFramebuffer(0, 0, 1000, 1000, 0, 0, 1000, 1000,
-			GL_COLOR_BUFFER_BIT,
-			GL_LINEAR);
-
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
-		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+		//Render both eyes
+		RenderEye(eyeLeftId, vr::Eye_Left, eyeLeftResolveFramebufferId);
+		RenderEye(eyeRightId, vr::Eye_Right, eyeRightResolveFramebufferId);
 
 		UpdateHMDMatrixPose();
 	}

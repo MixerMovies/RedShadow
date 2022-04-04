@@ -57,5 +57,7 @@ public:
 private:
 	void RenderWorld(glm::mat4 view, glm::mat4 projection);
 	void RenderControllers(glm::mat4 view, glm::mat4 projection);
+	void RenderEye(GLuint eyeId, vr::EVREye evrEye, GLuint eyeResolveFramebufferId);
 	void UpdateHMDMatrixPose();
+	void ConfigureMatrices(glm::mat4& view, glm::mat4& projection);
 };
