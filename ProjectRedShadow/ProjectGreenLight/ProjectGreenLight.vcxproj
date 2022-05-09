@@ -155,6 +155,7 @@
   <ItemGroup>
     <None Include="maps\TowerCity.map" />
     <None Include="Shaders\Geometry\cubemap.gs" />
+    <None Include="Shaders\Geometry\standarddepth.gs" />
     <None Include="Shaders\Illum\0.fs" />
     <None Include="Shaders\Illum\0.vs" />
     <None Include="Shaders\Illum\1.fs" />
@@ -180,6 +181,8 @@
     <None Include="Shaders\Post\filmgrain.vs" />
     <None Include="Shaders\Post\negative.fs" />
     <None Include="Shaders\Post\negative.vs" />
+    <None Include="Shaders\Special\depth.fs" />
+    <None Include="Shaders\Special\depth.vs" />
     <None Include="Shaders\Standard\cubemap.fs" />
     <None Include="Shaders\Standard\cubemap.vs" />
     <None Include="Shaders\Standard\procedural.vs" />

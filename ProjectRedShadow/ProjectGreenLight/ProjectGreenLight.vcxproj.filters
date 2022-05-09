@@ -31,6 +31,9 @@
     <Filter Include="Shaders\Illum">
       <UniqueIdentifier>{2ed6342c-bf0d-4e42-8287-a7a8c3efd599}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\Special">
+      <UniqueIdentifier>{05ae6fb8-7ee7-46b4-bf77-c3605c9767a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -210,6 +213,15 @@
     </None>
     <None Include="Shaders\Illum\2-bumpmap.fs">
       <Filter>Shaders\Illum</Filter>
+    </None>
+    <None Include="Shaders\Special\depth.vs">
+      <Filter>Shaders\Special</Filter>
+    </None>
+    <None Include="Shaders\Special\depth.fs">
+      <Filter>Shaders\Special</Filter>
+    </None>
+    <None Include="Shaders\Geometry\standarddepth.gs">
+      <Filter>Shaders\Geometry</Filter>
     </None>
   </ItemGroup>
 </Project>

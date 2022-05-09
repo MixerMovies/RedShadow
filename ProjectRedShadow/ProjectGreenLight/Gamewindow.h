@@ -60,4 +60,5 @@ private:
 	void RenderEye(GLuint eyeId, vr::EVREye evrEye, GLuint eyeResolveFramebufferId);
 	void UpdateHMDMatrixPose();
 	void ConfigureMatrices(glm::mat4& view, glm::mat4& projection);
+	void ConfigureDepthMatrices(glm::mat4& view, glm::mat4& projection);
 };
