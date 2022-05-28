@@ -10,8 +10,10 @@ class RED_EXPORT Player
 public:
 	Player();
 	float speed = 0.01f;
-	float sprintingMultiplier = 10.0f;
+	float sprintingMultiplier = 2.0f;
+	float noClipSpeedUpMultiplier = 10.0f;
 	bool isSprinting = false;
+	bool isNoClipActivated = false;
 	glm::vec3 position = { 0, -1.6, 0 };
 	glm::vec3 rotation = { 0, 0, 0 };
 	glm::vec2 mousePositionOffset = { 0, 0 };
@@ -30,5 +32,7 @@ private:
 	bool _turningRight = false;
 	bool _mouseActivated = false;
 	glm::vec2 _mouseStartingPosition = { 0, 0 };
+	void MoveNoClip(int elapsedTime);
+	void MovePhysical(int elapsedTime);
 };
 

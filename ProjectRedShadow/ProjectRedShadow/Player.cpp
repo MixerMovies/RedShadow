@@ -51,6 +51,14 @@ void Player::Stop()
 
 void Player::Move(int elapsedTime)
 {
+	if (isNoClipActivated)
+		MoveNoClip(elapsedTime);
+	else
+		MovePhysical(elapsedTime);
+}
+
+void Player::MoveNoClip(int elapsedTime)
+{
 	if (_mouseActivated)
 	{
 		float xOffset = _mouseStartingPosition.x - mousePositionOffset.x;
@@ -68,11 +76,11 @@ void Player::Move(int elapsedTime)
 		rotMat = glm::rotate(rotMat, rotation.z, glm::vec3(0, 0, 1));
 		rotMat = glm::rotate(rotMat, -rotation.y, glm::vec3(0, 1, 0));
 		rotMat = glm::rotate(rotMat, rotation.x, glm::vec3(1, 0, 0));
-		if(isSprinting)
-			rotMat = glm::translate(rotMat, glm::vec3(0, 0, -speed * sprintingMultiplier * elapsedTime));
+		if (isSprinting)
+			rotMat = glm::translate(rotMat, glm::vec3(0, 0, -speed * noClipSpeedUpMultiplier * elapsedTime));
 		else
 			rotMat = glm::translate(rotMat, glm::vec3(0, 0, -speed * elapsedTime));
-		
+
 		glm::vec4 pos = rotMat * glm::vec4(0, 0, 0, 1);
 		position = glm::vec3(pos.x, pos.y, pos.z);
 	}
@@ -83,6 +91,53 @@ void Player::Move(int elapsedTime)
 		rotMat = glm::rotate(rotMat, -rotation.y, glm::vec3(0, 1, 0));
 		rotMat = glm::rotate(rotMat, rotation.x, glm::vec3(1, 0, 0));
 		if (isSprinting)
+			rotMat = glm::translate(rotMat, glm::vec3(0, 0, speed * noClipSpeedUpMultiplier * elapsedTime));
+		else
+			rotMat = glm::translate(rotMat, glm::vec3(0, 0, speed * elapsedTime));
+
+		glm::vec4 pos = rotMat * glm::vec4(0, 0, 0, 1);
+		position = glm::vec3(pos.x, pos.y, pos.z);
+	}
+	if (_turningLeft)
+	{
+		rotation[1] -= (float)0.005 * elapsedTime;
+	}
+	if (_turningRight)
+	{
+		rotation[1] += (float)0.005 * elapsedTime;
+	}
+}
+
+void Player::MovePhysical(int elapsedTime)
+{
+	if (_mouseActivated)
+	{
+		float xOffset = _mouseStartingPosition.x - mousePositionOffset.x;
+		float yOffset = _mouseStartingPosition.y - mousePositionOffset.y;
+
+		rotation[0] += yOffset;
+		rotation[1] += xOffset;
+
+		_mouseStartingPosition.x = mousePositionOffset.x;
+		_mouseStartingPosition.y = mousePositionOffset.y;
+	}
+	if (_movingForward)
+	{
+		glm::mat4 rotMat = glm::translate(glm::mat4(), position);
+		rotMat = glm::rotate(rotMat, -rotation.y, glm::vec3(0, 1, 0));
+		if (isSprinting)
+			rotMat = glm::translate(rotMat, glm::vec3(0, 0, -speed * sprintingMultiplier * elapsedTime));
+		else
+			rotMat = glm::translate(rotMat, glm::vec3(0, 0, -speed * elapsedTime));
+
+		glm::vec4 pos = rotMat * glm::vec4(0, 0, 0, 1);
+		position = glm::vec3(pos.x, pos.y, pos.z);
+	}
+	else if (_movingBackward)
+	{
+		glm::mat4 rotMat = glm::translate(glm::mat4(), position);
+		rotMat = glm::rotate(rotMat, -rotation.y, glm::vec3(0, 1, 0));
+		if (isSprinting)
 			rotMat = glm::translate(rotMat, glm::vec3(0, 0, speed * sprintingMultiplier * elapsedTime));
 		else
 			rotMat = glm::translate(rotMat, glm::vec3(0, 0, speed * elapsedTime));
@@ -92,11 +147,27 @@ void Player::Move(int elapsedTime)
 	}
 	if (_turningLeft)
 	{
-		rotation[1] -= (float) 0.005 * elapsedTime;
+		glm::mat4 rotMat = glm::translate(glm::mat4(), position);
+		rotMat = glm::rotate(rotMat, -rotation.y - (float)M_PI_2, glm::vec3(0, 1, 0));
+		if (isSprinting)
+			rotMat = glm::translate(rotMat, glm::vec3(0, 0, speed * sprintingMultiplier * elapsedTime));
+		else
+			rotMat = glm::translate(rotMat, glm::vec3(0, 0, speed * elapsedTime));
+
+		glm::vec4 pos = rotMat * glm::vec4(0, 0, 0, 1);
+		position = glm::vec3(pos.x, pos.y, pos.z);
 	}
 	if (_turningRight)
 	{
-		rotation[1] += (float) 0.005 * elapsedTime;
+		glm::mat4 rotMat = glm::translate(glm::mat4(), position);
+		rotMat = glm::rotate(rotMat, -rotation.y + (float)M_PI_2, glm::vec3(0, 1, 0));
+		if (isSprinting)
+			rotMat = glm::translate(rotMat, glm::vec3(0, 0, speed * sprintingMultiplier * elapsedTime));
+		else
+			rotMat = glm::translate(rotMat, glm::vec3(0, 0, speed * elapsedTime));
+
+		glm::vec4 pos = rotMat * glm::vec4(0, 0, 0, 1);
+		position = glm::vec3(pos.x, pos.y, pos.z);
 	}
 }
 
