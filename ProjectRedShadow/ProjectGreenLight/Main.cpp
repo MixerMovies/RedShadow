@@ -234,6 +234,10 @@ void KeyEventUp(unsigned char key, int x, int y)
 	case 'S':
 		space->player.Stop();
 		break;
+	case 'n':
+	case 'N':
+		space->player.isNoClipActivated = !space->player.isNoClipActivated;
+		break;
 	}
 }
 
