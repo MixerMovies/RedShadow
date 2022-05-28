@@ -385,13 +385,10 @@ void Gamewindow::RenderControllers(glm::mat4 view, glm::mat4 projection)
 
 		if (city->teleporters[eHand].startTeleporting)
 		{
-			model = glm::translate(glm::mat4(), city->teleporters[eHand].getTeleportLocation());
-			model = glm::scale(model, glm::vec3(0.01, 0.01, 0.01));
+			matrices.model = glm::translate(glm::mat4(), city->teleporters[eHand].getTeleportLocation());
+			matrices.model = glm::scale(matrices.model, glm::vec3(0.01, 0.01, 0.01));
 
-			normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * model)));
-
-			glUniformMatrix4fv(shaders[currentshader]->getUniformLocation("modelMatrix"), 1, 0, glm::value_ptr(model));
-			glUniformMatrix3fv(shaders[currentshader]->getUniformLocation("normalMatrix"), 1, 0, glm::value_ptr(normalMatrix));
+			matrices.normalMatrix = glm::transpose(glm::inverse(glm::mat3(view * matrices.model)));
 
 			if (city->teleporters[eHand].getModel() != nullptr)
 				city->teleporters[eHand].getModel()->draw(matrices, shaders[currentshader]);
